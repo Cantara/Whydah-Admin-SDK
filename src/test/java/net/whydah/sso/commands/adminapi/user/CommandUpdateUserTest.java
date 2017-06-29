@@ -1,26 +1,19 @@
 package net.whydah.sso.commands.adminapi.user;
 
-import static org.junit.Assert.assertTrue;
-
-import java.util.Random;
-import java.util.UUID;
-
-import net.whydah.sso.commands.systemtestbase.SystemTestBaseConfig;
 import net.whydah.sso.commands.userauth.CommandGetUsertokenByUserticket;
-import net.whydah.sso.commands.userauth.CommandGetUsertokenByUsertokenId;
-import net.whydah.sso.commands.userauth.CommandRefreshUserToken;
-import net.whydah.sso.commands.userauth.CommandRefreshUserTokenTest;
 import net.whydah.sso.user.mappers.UserIdentityMapper;
 import net.whydah.sso.user.mappers.UserTokenMapper;
 import net.whydah.sso.user.types.UserCredential;
 import net.whydah.sso.user.types.UserIdentity;
 import net.whydah.sso.user.types.UserToken;
-
+import net.whydah.sso.util.SystemTestBaseConfig;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import ch.qos.logback.core.db.dialect.MySQLDialect;
+import java.util.UUID;
+
+import static org.junit.Assert.assertTrue;
 
 public class CommandUpdateUserTest {
 	  static SystemTestBaseConfig config;

@@ -1,12 +1,9 @@
 package net.whydah.sso.commands.adminapi.user;
 
-import static org.junit.Assert.assertTrue;
-import net.whydah.sso.commands.adminapi.application.CommandListApplications;
 import net.whydah.sso.commands.appauth.CommandVerifyUASAccessByApplicationTokenId;
-import net.whydah.sso.commands.systemtestbase.SystemTestBaseConfig;
 import net.whydah.sso.user.mappers.UserTokenMapper;
 import net.whydah.sso.user.types.UserToken;
-
+import net.whydah.sso.util.SystemTestBaseConfig;
 import org.junit.BeforeClass;
 import org.junit.Test;
 

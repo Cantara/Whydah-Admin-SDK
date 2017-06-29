@@ -1,4 +1,4 @@
-package net.whydah.sso.commands.systemtestbase;
+package net.whydah.sso.util;
 
 import net.whydah.sso.application.helpers.ApplicationXpathHelper;
 import net.whydah.sso.application.mappers.ApplicationTokenMapper;
@@ -10,8 +10,6 @@ import net.whydah.sso.user.helpers.UserXpathHelper;
 import net.whydah.sso.user.mappers.UserTokenMapper;
 import net.whydah.sso.user.types.UserCredential;
 import net.whydah.sso.user.types.UserToken;
-import net.whydah.sso.util.SSLTool;
-import net.whydah.sso.util.SystemTestUtil;
 
 import java.lang.reflect.Field;
 import java.net.URI;
@@ -70,10 +68,7 @@ public class SystemTestBaseConfig {
         SSLTool.disableCertificateValidation();
         //
         setRemoteTest();
-        if (!SystemTestUtil.noLocalWhydahRunning()) {
-            //setLocalTest();
-        }
-        //setLocalTest();
+
     }
 
     public void setRemoteTest(){

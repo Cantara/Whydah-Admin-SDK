@@ -1,12 +1,12 @@
 package net.whydah.sso.commands.adminapi.user;
 
 import net.whydah.sso.application.mappers.ApplicationTokenMapper;
-import net.whydah.sso.commands.systemtestbase.SystemTestBaseConfig;
 import net.whydah.sso.commands.userauth.CommandGetUsertokenByUserticket;
 import net.whydah.sso.commands.userauth.CommandSendSmsPin;
 import net.whydah.sso.user.mappers.UserIdentityMapper;
 import net.whydah.sso.user.types.UserIdentity;
 import net.whydah.sso.user.types.UserToken;
+import net.whydah.sso.util.SystemTestBaseConfig;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.slf4j.Logger;

@@ -2,16 +2,13 @@ package net.whydah.sso.commands.adminapi.user.role;
 
 import net.whydah.sso.application.helpers.ApplicationXpathHelper;
 import net.whydah.sso.commands.appauth.CommandLogonApplication;
-import net.whydah.sso.commands.extensions.crmapi.CommandGetCRMCustomerTest;
-import net.whydah.sso.commands.systemtestbase.SystemTestBaseConfig;
 import net.whydah.sso.commands.userauth.CommandLogonUserByUserCredential;
-import net.whydah.sso.commands.userauth.CommandRefreshUserToken;
 import net.whydah.sso.user.helpers.UserXpathHelper;
 import net.whydah.sso.user.mappers.UserRoleMapper;
 import net.whydah.sso.user.mappers.UserTokenMapper;
 import net.whydah.sso.user.types.UserApplicationRoleEntry;
 import net.whydah.sso.user.types.UserToken;
-
+import net.whydah.sso.util.SystemTestBaseConfig;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -25,7 +22,7 @@ import static org.junit.Assert.assertTrue;
 
 public class CommandAddUserRoleTest {
 
-    private static final Logger log = LoggerFactory.getLogger(CommandGetCRMCustomerTest.class);
+    private static final Logger log = LoggerFactory.getLogger(CommandAddUserRoleTest.class);
     public static SystemTestBaseConfig config;
 
     @BeforeClass

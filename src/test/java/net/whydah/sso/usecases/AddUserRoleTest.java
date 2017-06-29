@@ -1,18 +1,14 @@
 package net.whydah.sso.usecases;
 
 import net.whydah.sso.application.helpers.ApplicationHelper;
-import net.whydah.sso.application.helpers.ApplicationXpathHelper;
 import net.whydah.sso.application.mappers.ApplicationMapper;
 import net.whydah.sso.application.types.Application;
 import net.whydah.sso.commands.adminapi.application.CommandAddApplication;
 import net.whydah.sso.commands.adminapi.application.CommandListApplications;
-import net.whydah.sso.commands.appauth.CommandLogonApplication;
-import net.whydah.sso.commands.systemtestbase.SystemTestBaseConfig;
 import net.whydah.sso.commands.userauth.CommandGetUsertokenByUsertokenId;
-import net.whydah.sso.commands.userauth.CommandLogonUserByUserCredential;
 import net.whydah.sso.session.baseclasses.BaseWhydahServiceClient;
 import net.whydah.sso.user.helpers.UserXpathHelper;
-
+import net.whydah.sso.util.SystemTestBaseConfig;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -20,8 +16,8 @@ import org.junit.Test;
 import java.util.List;
 import java.util.UUID;
 
-import static net.whydah.sso.commands.systemtestbase.SystemTestBaseConfig.SYSTEST_PROPERTY_ANONYMOUSTOKEN;
-import static net.whydah.sso.commands.systemtestbase.SystemTestBaseConfig.SYSTEST_PROPERTY_fulltokenapplications;
+import static net.whydah.sso.util.SystemTestBaseConfig.SYSTEST_PROPERTY_ANONYMOUSTOKEN;
+import static net.whydah.sso.util.SystemTestBaseConfig.SYSTEST_PROPERTY_fulltokenapplications;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 

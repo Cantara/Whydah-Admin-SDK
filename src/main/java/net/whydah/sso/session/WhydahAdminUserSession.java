@@ -14,22 +14,22 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
-public class WhydahUserSession {
+public class WhydahAdminUserSession {
 
 
-    private static final Logger log = LoggerFactory.getLogger(WhydahUserSession.class);
+    private static final Logger log = LoggerFactory.getLogger(WhydahAdminUserSession.class);
     private static final int SESSION_CHECK_INTERVAL = 60;
     private WhydahApplicationSession was;
     private UserCredential userCredential;
     private String userTokenId;
     private String userTokenXML;
 
-    private WhydahUserSession() {
+    private WhydahAdminUserSession() {
 
     }
 
 
-    public WhydahUserSession(WhydahApplicationSession was, UserCredential userCredential) {
+    public WhydahAdminUserSession(WhydahApplicationSession was, UserCredential userCredential) {
         if (was == null || was.getActiveApplicationTokenId() == null || was.getActiveApplicationTokenId().length() < 4) {
             log.error("Error, unable to initialize new user session, application session invalid:" + was.getActiveApplicationTokenId());
 
