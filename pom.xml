@@ -73,7 +73,7 @@
 
     <properties>
         <service.name>Whydah-Admin-SDK</service.name>
-        <whydah-java-sdk-version>2.2.24</whydah-java-sdk-version>
+        <whydah.sdk.version>2.2.24</whydah.sdk.version>
         <additionalparam>-Xdoclint:none</additionalparam>
     </properties>
 
@@ -81,7 +81,7 @@
         <dependency>
             <groupId>net.whydah.sso</groupId>
             <artifactId>Whydah-Java-SDK</artifactId>
-            <version>${whydah-java-sdk-version}</version>
+            <version>${whydah.sdk.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>asm</groupId>
