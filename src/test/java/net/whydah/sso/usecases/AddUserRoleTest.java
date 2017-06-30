@@ -6,7 +6,7 @@ import net.whydah.sso.application.types.Application;
 import net.whydah.sso.commands.adminapi.application.CommandAddApplication;
 import net.whydah.sso.commands.adminapi.application.CommandListApplications;
 import net.whydah.sso.commands.userauth.CommandGetUsertokenByUsertokenId;
-import net.whydah.sso.session.baseclasses.BaseWhydahServiceClient;
+import net.whydah.sso.session.baseclasses.BaseAdminWhydahServiceClient;
 import net.whydah.sso.user.helpers.UserXpathHelper;
 import net.whydah.sso.util.SystemTestBaseConfig;
 import org.junit.BeforeClass;
@@ -23,7 +23,7 @@ import static org.junit.Assert.assertTrue;
 
 public class AddUserRoleTest {
 	static SystemTestBaseConfig config;
-	static BaseWhydahServiceClient client;
+	static BaseAdminWhydahServiceClient client;
 
     static final String ROLE_NAME = "Mydata-" + UUID.randomUUID().toString();
 
@@ -33,7 +33,7 @@ public class AddUserRoleTest {
 		
 		if (config.isSystemTestEnabled()) {
 
-			client = new BaseWhydahServiceClient(config.tokenServiceUri.toString(), config.userAdminServiceUri.toString(), config.TEMPORARY_APPLICATION_ID, config.TEMPORARY_APPLICATION_NAME, config.TEMPORARY_APPLICATION_SECRET);
+			client = new BaseAdminWhydahServiceClient(config.tokenServiceUri.toString(), config.userAdminServiceUri.toString(), config.TEMPORARY_APPLICATION_ID, config.TEMPORARY_APPLICATION_NAME, config.TEMPORARY_APPLICATION_SECRET);
 			client.getWAS().updateApplinks();
 		}
 	}
