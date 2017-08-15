@@ -35,6 +35,7 @@ public class WhydahAdminUserSession {
 
         }
 
+
         this.was = was;
         this.userCredential = userCredential;
         initializeUserSession();
