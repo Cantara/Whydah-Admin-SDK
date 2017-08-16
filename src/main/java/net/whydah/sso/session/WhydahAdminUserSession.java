@@ -4,7 +4,7 @@ import net.whydah.sso.commands.userauth.CommandValidateUsertokenId;
 import net.whydah.sso.user.helpers.UserTokenXpathHelper;
 import net.whydah.sso.user.helpers.UserXpathHelper;
 import net.whydah.sso.user.types.UserCredential;
-import net.whydah.sso.util.WhydahUtil;
+import net.whydah.sso.util.WhydahAdminUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -102,11 +102,11 @@ public class WhydahAdminUserSession {
 
     private void renewWhydahUserSession() {
         log.info("Renew user session");
-        userTokenXML = WhydahUtil.logOnUser(was, userCredential);
+        userTokenXML = WhydahAdminUtil.logOnUser(was, userCredential);
         if (!hasActiveSession()) {
             log.error("Error, unable to initialize new user session, userTokenXML:" + userTokenXML);
             for (int n = 0; n < 7 || hasActiveSession(); n++) {
-                userTokenXML = WhydahUtil.logOnUser(was, userCredential);
+                userTokenXML = WhydahAdminUtil.logOnUser(was, userCredential);
                 log.warn("Retrying renewing user session");
                 try {
                     Thread.sleep(1000 * n);
@@ -123,7 +123,7 @@ public class WhydahAdminUserSession {
             log.info("Renew user session successfull.  userTokenXml:" + userTokenXML);
             Long expires = UserXpathHelper.getTimestampFromUserTokenXml(userTokenXML) + UserXpathHelper.getLifespanFromUserTokenXml(userTokenXML);
             if (expiresBeforeNextSchedule(expires)) {
-                this.userTokenXML = WhydahUtil.extendUserSession(was, userCredential);
+                this.userTokenXML = WhydahAdminUtil.extendUserSession(was, userCredential);
                 userTokenId = UserXpathHelper.getUserTokenId(this.userTokenXML);
             }
         }
@@ -132,7 +132,7 @@ public class WhydahAdminUserSession {
 
     private void initializeUserSession() {
         log.info("Initializing new user session");
-        userTokenXML = WhydahUtil.logOnUser(was, userCredential);
+        userTokenXML = WhydahAdminUtil.logOnUser(was, userCredential);
         if (userTokenXML == null || userTokenXML.length() < 4) {
             log.error("Error, unable to initialize new user session, userTokenXML:" + userTokenXML);
         } else {

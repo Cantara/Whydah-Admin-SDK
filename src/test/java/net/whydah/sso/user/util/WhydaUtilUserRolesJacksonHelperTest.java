@@ -8,7 +8,7 @@ import net.whydah.sso.user.helpers.UserXpathHelper;
 import net.whydah.sso.user.types.UserApplicationRoleEntry;
 import net.whydah.sso.user.types.UserCredential;
 import net.whydah.sso.user.types.UserIdentity;
-import net.whydah.sso.util.WhydahUtil;
+import net.whydah.sso.util.WhydahAdminUtil;
 import org.junit.Before;
 import org.slf4j.Logger;
 
@@ -60,7 +60,7 @@ public class WhydaUtilUserRolesJacksonHelperTest {
         //Use token for add user
         String username = "_temp_username4Role_" + System.currentTimeMillis();
         UserIdentity userIdentity = new UserIdentity(username, "first", "last", "ref", username + "@example.com", "+4712345678");
-        String userTokenXml = WhydahUtil.addUser(userAdminServiceUri, myApplicationTokenID, adminUserTokenId, userIdentity);
+        String userTokenXml = WhydahAdminUtil.addUser(userAdminServiceUri, myApplicationTokenID, adminUserTokenId, userIdentity);
         assertNotNull(userTokenXml);
         String createdUserId = UserXpathHelper.getUserIdFromUserTokenXml(userTokenXml);
         log.debug("Created userId {}", createdUserId);
@@ -70,7 +70,7 @@ public class WhydaUtilUserRolesJacksonHelperTest {
         UserApplicationRoleEntry role = new UserApplicationRoleEntry(createdUserId, TEMPORARY_APPLICATION_ID, orgName, roleName, roleValue);
         List<UserApplicationRoleEntry> roles = new ArrayList<>();
         roles.add(role);
-        List<UserApplicationRoleEntry> result = WhydahUtil.addRolesToUser(userAdminServiceUri, myApplicationTokenID, adminUserTokenId, roles);
+        List<UserApplicationRoleEntry> result = WhydahAdminUtil.addRolesToUser(userAdminServiceUri, myApplicationTokenID, adminUserTokenId, roles);
         assertNotNull(result);
         assertEquals(1, result.size());
         String roleId = result.get(0).getId();

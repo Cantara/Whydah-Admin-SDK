@@ -26,8 +26,8 @@ import java.util.List;
 import java.util.UUID;
 
 
-public class WhydahUtil {
-    private static final Logger log = LoggerFactory.getLogger(WhydahUtil.class);
+public class WhydahAdminUtil extends WhydahUtil {
+    private static final Logger log = LoggerFactory.getLogger(WhydahAdminUtil.class);
 
 
     /**
