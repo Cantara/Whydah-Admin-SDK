@@ -42,7 +42,7 @@ public class CommandGetApplicationTest {
             String userTokenId = UserXpathHelper.getUserTokenId(userToken);
             assertTrue(userTokenId != null && userTokenId.length() > 5);
 
-            String applicationJson = new CommandGetApplication(config.userAdminServiceUri, myApplicationTokenID, userTokenId, "*").execute();
+            String applicationJson = new CommandGetApplication(config.userAdminServiceUri, myApplicationTokenID, userTokenId, applicationId).execute();
             log.debug("applicationJson=" + applicationJson);
             assertTrue(applicationJson.length() > 100);
             JSONAssert.assertEquals("{\"id\":\"" + AdminSystemTestBaseConfig.TEMPORARY_APPLICATION_ID + "\",\"name\":\"" + AdminSystemTestBaseConfig.TEMPORARY_APPLICATION_NAME + "\"}", applicationJson, false);

@@ -37,8 +37,7 @@ public class CommandAddApplicationTest {
     public void testAddApplication() throws Exception {
 
         if (config.isSystemTestEnabled()) {
-        	
-        	
+
 
             System.out.printf("Adding application:\n" + ApplicationMapper.toPrettyJson(ApplicationMapper.fromJson(getDummyApplicationJson())));
             String myAppTokenXml = new CommandLogonApplication(config.tokenServiceUri, config.appCredential).execute();
@@ -50,27 +49,29 @@ public class CommandAddApplicationTest {
             assertTrue(userTokenId != null && userTokenId.length() > 5);
 
             boolean hasAccess = new CommandVerifyUASAccessByApplicationTokenId(config.userAdminServiceUri.toString(), myApplicationTokenID, userTokenId).execute();
-            
-            if(hasAccess){
-            	int existingApplications = countApplications(myApplicationTokenID, userTokenId);
 
-            	Application newApplication = ApplicationMapper.fromJson(ApplicationHelper.getDummyApplicationJson());
-            	String applicationJson = ApplicationMapper.toJson(newApplication);
+            if (hasAccess) {
+                int existingApplications = countApplications(myApplicationTokenID, userTokenId);
 
-            	String testAddApplication = new CommandAddApplication(config.userAdminServiceUri, myApplicationTokenID, userTokenId, applicationJson){
+                Application newApplication = ApplicationMapper.fromJson(ApplicationHelper.getDummyApplicationJson());
+                String applicationJson = ApplicationMapper.toJson(newApplication);
 
-            		protected String dealWithFailedResponse(String responseBody, int statusCode) {
-            			return responseBody;
-            		};
+                String testAddApplication = new CommandAddApplication(config.userAdminServiceUri, myApplicationTokenID, userTokenId, applicationJson) {
 
-            	}.execute();
+                    protected String dealWithFailedResponse(String responseBody, int statusCode) {
+                        return responseBody;
+                    }
 
-            	System.out.print(applicationJson);
-            	System.out.println("Applications found:" + countApplications(myApplicationTokenID, userTokenId));
-            	int count = countApplications(myApplicationTokenID, userTokenId) - 1;
-            	assertTrue(existingApplications == count);
+                    ;
+
+                }.execute();
+                Thread.sleep(40000);  // We have to sleep a little to ensure that the UAS cache times out
+                System.out.print(applicationJson);
+                System.out.println("Applications found:" + countApplications(myApplicationTokenID, userTokenId));
+                int count = countApplications(myApplicationTokenID, userTokenId) - 1;
+                assertTrue(existingApplications == count);
             } else {
-            	System.out.print("HAVE NO UASACCESS permission to test");
+                System.out.print("HAVE NO UASACCESS permission to test");
             }
 
         }
