@@ -73,7 +73,7 @@
 
     <properties>
         <service.name>Whydah-Admin-SDK</service.name>
-        <whydah.sdk.version>2.3.0-alpha-15</whydah.sdk.version>
+        <whydah.sdk.version>2.3.0-alpha-16</whydah.sdk.version>
         <additionalparam>-Xdoclint:none</additionalparam>
     </properties>
 
@@ -131,6 +131,13 @@
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.skyscreamer</groupId>
+            <artifactId>jsonassert</artifactId>
+            <version>1.5.0</version>
+            <scope>test</scope>
+        </dependency>
+
         <!-- users of library should be able to choose log implementation -->
         <dependency>
             <groupId>ch.qos.logback</groupId>

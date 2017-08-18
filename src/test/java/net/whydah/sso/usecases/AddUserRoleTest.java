@@ -8,7 +8,7 @@ import net.whydah.sso.commands.adminapi.application.CommandListApplications;
 import net.whydah.sso.commands.userauth.CommandGetUsertokenByUsertokenId;
 import net.whydah.sso.session.baseclasses.BaseAdminWhydahServiceClient;
 import net.whydah.sso.user.helpers.UserXpathHelper;
-import net.whydah.sso.util.SystemTestBaseConfig;
+import net.whydah.sso.util.AdminSystemTestBaseConfig;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -16,22 +16,22 @@ import org.junit.Test;
 import java.util.List;
 import java.util.UUID;
 
-import static net.whydah.sso.util.SystemTestBaseConfig.SYSTEST_PROPERTY_ANONYMOUSTOKEN;
-import static net.whydah.sso.util.SystemTestBaseConfig.SYSTEST_PROPERTY_fulltokenapplications;
+import static net.whydah.sso.util.AdminSystemTestBaseConfig.SYSTEST_PROPERTY_ANONYMOUSTOKEN;
+import static net.whydah.sso.util.AdminSystemTestBaseConfig.SYSTEST_PROPERTY_fulltokenapplications;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class AddUserRoleTest {
-	static SystemTestBaseConfig config;
-	static BaseAdminWhydahServiceClient client;
+    static AdminSystemTestBaseConfig config;
+    static BaseAdminWhydahServiceClient client;
 
     static final String ROLE_NAME = "Mydata-" + UUID.randomUUID().toString();
 
 	@BeforeClass
 	public static void setup() throws Exception {
-		config = new SystemTestBaseConfig();
-		
-		if (config.isSystemTestEnabled()) {
+        config = new AdminSystemTestBaseConfig();
+
+        if (config.isSystemTestEnabled()) {
 
 			client = new BaseAdminWhydahServiceClient(config.tokenServiceUri.toString(), config.userAdminServiceUri.toString(), config.TEMPORARY_APPLICATION_ID, config.TEMPORARY_APPLICATION_NAME, config.TEMPORARY_APPLICATION_SECRET);
 			client.getWAS().updateApplinks();

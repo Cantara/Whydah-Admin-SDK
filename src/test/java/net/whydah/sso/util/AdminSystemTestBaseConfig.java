@@ -21,7 +21,7 @@ import java.util.UUID;
 import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-public class SystemTestBaseConfig {
+public class AdminSystemTestBaseConfig {
 
     public static final boolean SYSTEST_PROPERTY_ANONYMOUSTOKEN = true;
     public static final boolean SYSTEST_PROPERTY_fulltokenapplications = true;
@@ -39,9 +39,9 @@ public class SystemTestBaseConfig {
 
     //
     //
-    public String TEMPORARY_APPLICATION_ID = "101";//"11";
-    public String TEMPORARY_APPLICATION_NAME = "Whydah-SystemTests";//"Funny APp";//"11";
-    public String TEMPORARY_APPLICATION_SECRET = "55fhRM6nbKZ2wfC6RMmMuzXpk";//"LLNmHsQDCerVWx5d6aCjug9fyPE";
+    public static String TEMPORARY_APPLICATION_ID = "101";//"11";
+    public static String TEMPORARY_APPLICATION_NAME = "Whydah-SystemTests";//"Funny APp";//"11";
+    public static String TEMPORARY_APPLICATION_SECRET = "55fhRM6nbKZ2wfC6RMmMuzXpk";//"LLNmHsQDCerVWx5d6aCjug9fyPE";
     public String userName = "systest";
     public String password = "systest42";
     
@@ -59,7 +59,7 @@ public class SystemTestBaseConfig {
     public String myAppTokenXml;
     public String myApplicationTokenID;
 
-    public SystemTestBaseConfig() {
+    public AdminSystemTestBaseConfig() {
         appCredential = new ApplicationCredential(TEMPORARY_APPLICATION_ID, TEMPORARY_APPLICATION_NAME, TEMPORARY_APPLICATION_SECRET);
         userCredential = new UserCredential(userName, password);
         Map<String, String> addToEnv = new HashMap<>();

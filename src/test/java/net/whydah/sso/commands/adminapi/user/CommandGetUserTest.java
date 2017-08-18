@@ -3,17 +3,17 @@ package net.whydah.sso.commands.adminapi.user;
 import net.whydah.sso.commands.appauth.CommandVerifyUASAccessByApplicationTokenId;
 import net.whydah.sso.user.mappers.UserTokenMapper;
 import net.whydah.sso.user.types.UserToken;
-import net.whydah.sso.util.SystemTestBaseConfig;
+import net.whydah.sso.util.AdminSystemTestBaseConfig;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class CommandGetUserTest {
 
-    private static SystemTestBaseConfig config;
+    private static AdminSystemTestBaseConfig config;
 
     @BeforeClass
     public static void setup() throws Exception {
-        config = new SystemTestBaseConfig();
+        config = new AdminSystemTestBaseConfig();
     }
 
 
