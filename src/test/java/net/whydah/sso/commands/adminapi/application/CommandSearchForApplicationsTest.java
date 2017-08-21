@@ -45,7 +45,7 @@ public class CommandSearchForApplicationsTest {
                 String applicationsJson = new CommandListApplications(config.userAdminServiceUri, myApplicationTokenID).execute();
                 log.debug("applicationsJson=" + applicationsJson);
 
-                String applicationsJsonl = new CommandSearchForApplications(config.userAdminServiceUri, myApplicationTokenID, userTokenId, "*").execute();
+                String applicationsJsonl = new CommandSearchForApplications(config.userAdminServiceUri, myApplicationTokenID, userTokenId, config.appCredential.getApplicationID()).execute();
                 log.debug("applicationsJson=" + applicationsJsonl);
                 assertTrue(applicationsJsonl != null);
             } else {
