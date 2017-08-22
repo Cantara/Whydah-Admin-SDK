@@ -73,7 +73,7 @@
 
     <properties>
         <service.name>Whydah-Admin-SDK</service.name>
-        <whydah.sdk.version>2.3.0-alpha-21</whydah.sdk.version>
+        <whydah.sdk.version>2.3.0-alpha-22</whydah.sdk.version>
         <additionalparam>-Xdoclint:none</additionalparam>
     </properties>
 
