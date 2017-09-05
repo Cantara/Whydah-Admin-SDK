@@ -1,6 +1,7 @@
-package net.whydah.sso.util;
+package net.whydah.sso.usecases;
 
 import net.whydah.sso.session.WhydahAdminUserSession;
+import net.whydah.sso.util.AdminSystemTestBaseConfig;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.slf4j.Logger;
