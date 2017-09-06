@@ -11,7 +11,7 @@ public class CommandAddUser extends BaseHttpPostHystrixCommand<String> {
     private String userIdentityJson;
 
     public CommandAddUser(URI userAdminServiceUri, String myAppTokenId, String adminUserTokenId, String userIdentityJson) {
-        super(userAdminServiceUri, "", myAppTokenId, "UASUserAdminGroup", 3000);
+        super(userAdminServiceUri, "", myAppTokenId, "UASUserAdminGroup");
 
         this.adminUserTokenId=adminUserTokenId;
         this.userIdentityJson =userIdentityJson;

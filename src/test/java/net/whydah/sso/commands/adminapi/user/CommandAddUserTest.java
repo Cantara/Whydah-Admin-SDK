@@ -4,6 +4,7 @@ import net.whydah.sso.user.mappers.UserIdentityMapper;
 import net.whydah.sso.user.types.UserIdentity;
 import net.whydah.sso.user.types.UserToken;
 import net.whydah.sso.util.AdminSystemTestBaseConfig;
+import net.whydah.sso.util.LoggerUtil;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -32,13 +33,16 @@ public class CommandAddUserTest {
 
             UserIdentity uir = getTestNewUserIdentity();
             String userIdentityJson = UserIdentityMapper.toJsonWithoutUID(uir);
-            // URI userAdminServiceUri, String myAppTokenId, String adminUserTokenId, String roleJson
             String userAddRoleResult = new CommandAddUser(config.userAdminServiceUri, config.myApplicationToken.getApplicationTokenId(), adminUser.getTokenid(), userIdentityJson).execute();
-            System.out.println("testAddUser:" + userAddRoleResult);
+            System.out.println("testAddUser:" + LoggerUtil.first50(userAddRoleResult));
 
             String usersListJson = new CommandListUsers(config.userAdminServiceUri, config.myApplicationToken.getApplicationTokenId(), adminUser.getTokenid(), "*").execute();
-            System.out.println("usersListJson=" + usersListJson);
-            assertTrue(usersListJson.indexOf(uir.getUsername()) > 0);
+            System.out.println("usersListJson=" + LoggerUtil.first50(usersListJson));
+
+            // simple test to detect paging results
+            if (usersListJson.length() < 80000) {
+                assertTrue(usersListJson.contains(uir.getUsername()));
+            }
 
         }
 
