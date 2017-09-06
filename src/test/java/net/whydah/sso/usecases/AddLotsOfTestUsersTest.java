@@ -53,7 +53,7 @@ public class AddLotsOfTestUsersTest {
         String json = UserAggregateMapper.toJson(ua);
 
         String userAddRoleResult = new CommandAddUser(config.userAdminServiceUri, config.myApplicationToken.getApplicationTokenId(), adminUser.getTokenid(), json).execute();
-        System.out.println("testAddUser:" + LoggerUtil.first50(userAddRoleResult));
+        System.out.println(i + " testAddUser:" + LoggerUtil.first50(userAddRoleResult));
 
     }
 
