@@ -11,6 +11,7 @@ import org.junit.Test;
 import java.util.Random;
 import java.util.UUID;
 
+import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 public class CommandAddUserTest {
@@ -36,6 +37,8 @@ public class CommandAddUserTest {
             String userAddRoleResult = new CommandAddUser(config.userAdminServiceUri, config.myApplicationToken.getApplicationTokenId(), adminUser.getTokenid(), userIdentityJson).execute();
             System.out.println("testAddUser:" + LoggerUtil.first50(userAddRoleResult));
 
+            assertNotNull(userAddRoleResult);
+            assertTrue(userAddRoleResult.length() > 100);
             String usersListJson = new CommandListUsers(config.userAdminServiceUri, config.myApplicationToken.getApplicationTokenId(), adminUser.getTokenid(), "*").execute();
             System.out.println("usersListJson=" + LoggerUtil.first50(usersListJson));
 

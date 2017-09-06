@@ -6,13 +6,15 @@ import net.whydah.sso.user.types.UserAggregate;
 import net.whydah.sso.user.types.UserApplicationRoleEntry;
 import net.whydah.sso.user.types.UserToken;
 import net.whydah.sso.util.AdminSystemTestBaseConfig;
-import net.whydah.sso.util.LoggerUtil;
 import org.apache.commons.lang.math.RandomUtils;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Random;
+
+import static junit.framework.TestCase.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class AddLotsOfTestUsersTest {
 
@@ -35,7 +37,7 @@ public class AddLotsOfTestUsersTest {
             UserToken adminUser = config.logOnSystemTestApplicationAndSystemTestUser();
 
             // Add 50 users
-            addTestUsers(adminUser, 30000, 30050);
+            addTestUsers(adminUser, 60000, 60150);
         }
     }
 
@@ -45,10 +47,11 @@ public class AddLotsOfTestUsersTest {
         for (int i = startFrom; i < countTo; i++) {
             addATestUser(adminUser, i);
         }
+        Thread.sleep((countTo - startFrom) * 10);
     }
 
 
-    private void addATestUser(UserToken adminUser, int i) {
+    private void addATestUser(UserToken adminUser, int i) throws InterruptedException {
         UserAggregate ua = new UserAggregate(
                 c + "j" + "s_uid-" + i,
                 c + "s_username_" + i,
@@ -59,8 +62,12 @@ public class AddLotsOfTestUsersTest {
         ua.setRoleList(new ArrayList<UserApplicationRoleEntry>());
         String json = UserAggregateMapper.toJson(ua);
 
+        //new CommandAddUser(config.userAdminServiceUri, config.myApplicationToken.getApplicationTokenId(), adminUser.getTokenid(), json).queue();
+        //Thread.sleep(200);
         String userAddRoleResult = new CommandAddUser(config.userAdminServiceUri, config.myApplicationToken.getApplicationTokenId(), adminUser.getTokenid(), json).execute();
-        System.out.println(i + " testAddUser:" + LoggerUtil.first50(userAddRoleResult));
+        //System.out.println(i + " testAddUser:" + LoggerUtil.first50(userAddRoleResult));
+        assertNotNull(userAddRoleResult);
+        assertTrue(userAddRoleResult.length() > 100);
 
     }
 
