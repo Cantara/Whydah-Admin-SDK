@@ -17,10 +17,14 @@ import java.util.Random;
 public class AddLotsOfTestUsersTest {
 
     static AdminSystemTestBaseConfig config;
+    static char c;
 
     @BeforeClass
     public static void setup() throws Exception {
         config = new AdminSystemTestBaseConfig();
+        Random r = new Random();
+        c = (char) (r.nextInt(26) + 'a');
+
     }
 
 
@@ -31,7 +35,7 @@ public class AddLotsOfTestUsersTest {
             UserToken adminUser = config.logOnSystemTestApplicationAndSystemTestUser();
 
             // Add 50 users
-            addTestUsers(adminUser, 10000, 10050);
+            addTestUsers(adminUser, 30000, 30050);
         }
     }
 
@@ -45,10 +49,13 @@ public class AddLotsOfTestUsersTest {
 
 
     private void addATestUser(UserToken adminUser, int i) {
-        Random r = new Random();
-        char c = (char) (r.nextInt(26) + 'a');
-        UserAggregate ua = new UserAggregate(c + "j" +
-                "s_uid-" + i, c + "s_username_" + i, "firstName_" + i, "lastName " + i, "personRef " + i, "tester" + i + "@whydah.com", String.valueOf(RandomUtils.nextInt(1000000000)));
+        UserAggregate ua = new UserAggregate(
+                c + "j" + "s_uid-" + i,
+                c + "s_username_" + i,
+                "firstName_" + i,
+                "lastName_" + i,
+                "personRef_" + i,
+                "tester_" + i + "@whydah.com", String.valueOf(RandomUtils.nextInt(1000000000)));
         ua.setRoleList(new ArrayList<UserApplicationRoleEntry>());
         String json = UserAggregateMapper.toJson(ua);
 
