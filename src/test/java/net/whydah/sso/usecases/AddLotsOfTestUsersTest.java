@@ -6,6 +6,7 @@ import net.whydah.sso.user.types.UserAggregate;
 import net.whydah.sso.user.types.UserApplicationRoleEntry;
 import net.whydah.sso.user.types.UserToken;
 import net.whydah.sso.util.AdminSystemTestBaseConfig;
+import net.whydah.sso.util.LoggerUtil;
 import org.apache.commons.lang.math.RandomUtils;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -65,7 +66,7 @@ public class AddLotsOfTestUsersTest {
         //new CommandAddUser(config.userAdminServiceUri, config.myApplicationToken.getApplicationTokenId(), adminUser.getTokenid(), json).queue();
         //Thread.sleep(200);
         String userAddRoleResult = new CommandAddUser(config.userAdminServiceUri, config.myApplicationToken.getApplicationTokenId(), adminUser.getTokenid(), json).execute();
-        //System.out.println(i + " testAddUser:" + LoggerUtil.first50(userAddRoleResult));
+        System.out.println(i + " testAddUser:" + LoggerUtil.first50(userAddRoleResult));
         assertNotNull(userAddRoleResult);
         assertTrue(userAddRoleResult.length() > 100);
 
