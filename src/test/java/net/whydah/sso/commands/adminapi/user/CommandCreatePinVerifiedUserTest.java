@@ -47,10 +47,11 @@ public class CommandCreatePinVerifiedUserTest {
             System.out.println("usersListJson=" + LoggerUtil.first50(usersListJson));
 
             // simple test to detect paging results
-            if (usersListJson.length() < 80000) {
+            if (usersListJson.length() < 50000) {
                 assertTrue(usersListJson.contains(uir.getUsername()));
             }
 
+            Thread.sleep(300);
             String ut = new CommandGetUsertokenByUserticket(config.tokenServiceUri, config.myApplicationToken.getApplicationTokenId(), ApplicationTokenMapper.toXML(config.myApplicationToken), ticket).execute();
 
             log.debug("Returned UserToken: {}", ut);
