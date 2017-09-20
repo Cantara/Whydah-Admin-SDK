@@ -1,12 +1,10 @@
 package net.whydah.sso.commands.adminapi.user.role;
 
-import com.github.kevinsawicki.http.HttpRequest;
-
-import net.whydah.sso.commands.baseclasses.BaseHttpDeleteHystrixCommand;
-
 import java.net.URI;
 
-public class CommandDeleteUserRole extends BaseHttpDeleteHystrixCommand<Boolean> {
+import net.whydah.sso.commands.baseclasses.BaseHttpDeleteHystrixCommandForBooleanType;
+
+public class CommandDeleteUserRole extends BaseHttpDeleteHystrixCommandForBooleanType {
 
     private String adminUserTokenId;
     private String roleId;

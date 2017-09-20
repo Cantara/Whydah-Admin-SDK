@@ -1,17 +1,18 @@
 package net.whydah.sso.util;
 
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.whydah.sso.commands.adminapi.user.CommandAddUser;
 import net.whydah.sso.commands.adminapi.user.role.CommandAddUserRole;
 import net.whydah.sso.user.mappers.UserIdentityMapper;
 import net.whydah.sso.user.mappers.UserRoleMapper;
 import net.whydah.sso.user.types.UserApplicationRoleEntry;
 import net.whydah.sso.user.types.UserIdentity;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class WhydahAdminUtil extends WhydahUtil {

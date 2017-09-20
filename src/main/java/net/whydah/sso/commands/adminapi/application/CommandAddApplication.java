@@ -1,9 +1,10 @@
 package net.whydah.sso.commands.adminapi.application;
 
-import com.github.kevinsawicki.http.HttpRequest;
+import java.net.URI;
+
 import net.whydah.sso.commands.baseclasses.BaseHttpPostHystrixCommand;
 
-import java.net.URI;
+import com.github.kevinsawicki.http.HttpRequest;
 
 
 public class CommandAddApplication extends BaseHttpPostHystrixCommand<String> {

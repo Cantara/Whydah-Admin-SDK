@@ -1,5 +1,10 @@
 package net.whydah.sso.commands.adminapi.user;
 
+import static org.junit.Assert.assertTrue;
+
+import java.util.Random;
+import java.util.UUID;
+
 import net.whydah.sso.application.mappers.ApplicationTokenMapper;
 import net.whydah.sso.commands.userauth.CommandGetUsertokenByUserticket;
 import net.whydah.sso.commands.userauth.CommandSendSmsPin;
@@ -8,15 +13,11 @@ import net.whydah.sso.user.types.UserIdentity;
 import net.whydah.sso.user.types.UserToken;
 import net.whydah.sso.util.AdminSystemTestBaseConfig;
 import net.whydah.sso.util.LoggerUtil;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Random;
-import java.util.UUID;
-
-import static org.junit.Assert.assertTrue;
 
 public class CommandCreatePinVerifiedUserTest {
 

@@ -1,13 +1,13 @@
 package net.whydah.sso.usecases;
 
+import static org.junit.Assert.assertTrue;
+import static org.slf4j.LoggerFactory.getLogger;
 import net.whydah.sso.session.WhydahAdminUserSession;
 import net.whydah.sso.util.AdminSystemTestBaseConfig;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.slf4j.Logger;
-
-import static org.junit.Assert.assertTrue;
-import static org.slf4j.LoggerFactory.getLogger;
 
 public class WhydahAdminUserSessionTest {
 

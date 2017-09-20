@@ -1,12 +1,8 @@
 package net.whydah.sso.commands.adminapi.application;
 
-import com.github.kevinsawicki.http.HttpRequest;
+import java.net.URI;
 
 import net.whydah.sso.commands.baseclasses.BaseHttpDeleteHystrixCommand;
-import net.whydah.sso.commands.baseclasses.BaseHttpGetHystrixCommand;
-
-import java.net.HttpURLConnection;
-import java.net.URI;
 
 
 public class CommandDeleteApplication extends BaseHttpDeleteHystrixCommand<String> {

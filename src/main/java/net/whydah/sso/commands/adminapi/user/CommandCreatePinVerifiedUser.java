@@ -1,11 +1,11 @@
 package net.whydah.sso.commands.adminapi.user;
 
-import net.whydah.sso.commands.baseclasses.BaseHttpPostHystrixCommand;
-import net.whydah.sso.user.types.UserCredential;
-
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
+
+import net.whydah.sso.commands.baseclasses.BaseHttpPostHystrixCommand;
+import net.whydah.sso.user.types.UserCredential;
 
 public class CommandCreatePinVerifiedUser extends BaseHttpPostHystrixCommand<String>{
 

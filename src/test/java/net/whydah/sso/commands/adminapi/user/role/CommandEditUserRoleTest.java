@@ -1,18 +1,19 @@
 package net.whydah.sso.commands.adminapi.user.role;
 
-import net.whydah.sso.user.mappers.UserRoleMapper;
-import net.whydah.sso.user.types.UserApplicationRoleEntry;
-import net.whydah.sso.user.types.UserToken;
-import net.whydah.sso.util.AdminSystemTestBaseConfig;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 import java.util.UUID;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import net.whydah.sso.user.mappers.UserRoleMapper;
+import net.whydah.sso.user.types.UserApplicationRoleEntry;
+import net.whydah.sso.user.types.UserToken;
+import net.whydah.sso.util.AdminSystemTestBaseConfig;
+
+import org.junit.BeforeClass;
+import org.junit.Ignore;
+import org.junit.Test;
 
 public class CommandEditUserRoleTest {
     public static AdminSystemTestBaseConfig config;

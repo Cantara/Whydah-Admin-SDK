@@ -1,5 +1,11 @@
 package net.whydah.sso.usecases;
 
+import static junit.framework.TestCase.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
+import java.util.ArrayList;
+import java.util.Random;
+
 import net.whydah.sso.commands.adminapi.user.CommandAddUser;
 import net.whydah.sso.user.mappers.UserAggregateMapper;
 import net.whydah.sso.user.types.UserAggregate;
@@ -7,15 +13,10 @@ import net.whydah.sso.user.types.UserApplicationRoleEntry;
 import net.whydah.sso.user.types.UserToken;
 import net.whydah.sso.util.AdminSystemTestBaseConfig;
 import net.whydah.sso.util.LoggerUtil;
+
 import org.apache.commons.lang.math.RandomUtils;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.Random;
-
-import static junit.framework.TestCase.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 public class AddLotsOfTestUsersTest {
 

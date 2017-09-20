@@ -1,12 +1,11 @@
 package net.whydah.sso.commands.adminapi.application;
 
 
-import com.github.kevinsawicki.http.HttpRequest;
+import java.net.URI;
 
-import net.whydah.sso.commands.baseclasses.BaseHttpPostHystrixCommand;
 import net.whydah.sso.commands.baseclasses.BaseHttpPutHystrixCommand;
 
-import java.net.URI;
+import com.github.kevinsawicki.http.HttpRequest;
 
 // TODO:  wait for https://github.com/Cantara/Whydah-UserAdminService/issues/35
 

@@ -1,10 +1,10 @@
 package net.whydah.sso.commands.adminapi.user;
 
-import net.whydah.sso.commands.baseclasses.BaseHttpPostHystrixCommand;
-
 import java.net.URI;
 
-public class CommandResetUserPassword extends BaseHttpPostHystrixCommand<Boolean> {
+import net.whydah.sso.commands.baseclasses.BaseHttpPostHystrixCommandForBooleanType;
+
+public class CommandResetUserPassword extends BaseHttpPostHystrixCommandForBooleanType {
 
     private String userName;
     private String emailTemplateName = "";

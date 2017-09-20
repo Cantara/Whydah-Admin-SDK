@@ -1,19 +1,20 @@
 package net.whydah.sso.commands.adminapi.application;
 
+import static org.junit.Assert.assertTrue;
+
+import java.util.UUID;
+
 import net.whydah.sso.application.helpers.ApplicationXpathHelper;
 import net.whydah.sso.commands.appauth.CommandLogonApplication;
 import net.whydah.sso.commands.userauth.CommandLogonUserByUserCredential;
 import net.whydah.sso.user.helpers.UserXpathHelper;
 import net.whydah.sso.util.AdminSystemTestBaseConfig;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.UUID;
-
-import static org.junit.Assert.assertTrue;
 
 public class CommandGetApplicationTest {
 
@@ -29,7 +30,7 @@ public class CommandGetApplicationTest {
 
 
     @Test
-    public void testGetApplicationCommand() throws Exception {
+    public void testListApplicationsCommand() throws Exception {
         if (config.isSystemTestEnabled()) {
 
             String myAppTokenXml = new CommandLogonApplication(config.tokenServiceUri, config.appCredential).execute();

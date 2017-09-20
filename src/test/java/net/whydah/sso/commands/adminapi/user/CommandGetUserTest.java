@@ -4,6 +4,7 @@ import net.whydah.sso.commands.appauth.CommandVerifyUASAccessByApplicationTokenI
 import net.whydah.sso.user.mappers.UserTokenMapper;
 import net.whydah.sso.user.types.UserToken;
 import net.whydah.sso.util.AdminSystemTestBaseConfig;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 

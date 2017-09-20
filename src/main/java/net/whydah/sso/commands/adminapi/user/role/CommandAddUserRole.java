@@ -1,9 +1,10 @@
 package net.whydah.sso.commands.adminapi.user.role;
 
-import com.github.kevinsawicki.http.HttpRequest;
+import java.net.URI;
+
 import net.whydah.sso.commands.baseclasses.BaseHttpPostHystrixCommand;
 
-import java.net.URI;
+import com.github.kevinsawicki.http.HttpRequest;
 
 
 public class CommandAddUserRole extends BaseHttpPostHystrixCommand<String> {
