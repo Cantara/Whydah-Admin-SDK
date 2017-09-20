@@ -3,6 +3,7 @@ package net.whydah.sso.usecases;
 import net.whydah.sso.application.helpers.ApplicationHelper;
 import net.whydah.sso.application.mappers.ApplicationMapper;
 import net.whydah.sso.application.types.Application;
+import net.whydah.sso.application.types.ApplicationCredential;
 import net.whydah.sso.commands.adminapi.application.CommandAddApplication;
 import net.whydah.sso.commands.adminapi.application.CommandListApplications;
 import net.whydah.sso.commands.userauth.CommandGetUsertokenByUsertokenId;
@@ -32,9 +33,10 @@ public class AddUserRoleTest {
         config = new AdminSystemTestBaseConfig();
 
         if (config.isSystemTestEnabled()) {
+            ApplicationCredential applicationCredential = new ApplicationCredential(config.TEMPORARY_APPLICATION_ID, config.TEMPORARY_APPLICATION_NAME, config.TEMPORARY_APPLICATION_SECRET);
 
-			client = new BaseAdminWhydahServiceClient(config.tokenServiceUri.toString(), config.userAdminServiceUri.toString(), config.TEMPORARY_APPLICATION_ID, config.TEMPORARY_APPLICATION_NAME, config.TEMPORARY_APPLICATION_SECRET);
-			client.getWAS().updateApplinks();
+            client = new BaseAdminWhydahServiceClient(config.tokenServiceUri.toString(), config.userAdminServiceUri.toString(), applicationCredential);
+            client.getWAS().updateApplinks();
 		}
 	}
 

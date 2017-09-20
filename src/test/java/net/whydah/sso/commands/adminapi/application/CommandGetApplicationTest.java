@@ -29,7 +29,7 @@ public class CommandGetApplicationTest {
 
 
     @Test
-    public void testListApplicationsCommand() throws Exception {
+    public void testGetApplicationCommand() throws Exception {
         if (config.isSystemTestEnabled()) {
 
             String myAppTokenXml = new CommandLogonApplication(config.tokenServiceUri, config.appCredential).execute();

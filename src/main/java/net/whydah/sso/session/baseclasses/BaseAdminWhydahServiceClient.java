@@ -2,6 +2,7 @@ package net.whydah.sso.session.baseclasses;
 
 
 import net.whydah.sso.application.types.Application;
+import net.whydah.sso.application.types.ApplicationCredential;
 import net.whydah.sso.commands.adminapi.user.CommandCreatePinVerifiedUser;
 import net.whydah.sso.commands.adminapi.user.CommandResetUserPassword;
 import net.whydah.sso.commands.adminapi.user.role.CommandAddUserRole;
@@ -42,12 +43,10 @@ public class BaseAdminWhydahServiceClient {
 
     public BaseAdminWhydahServiceClient(String securitytokenserviceurl,
                                         String useradminserviceurl,
-                                        String activeApplicationId,
-                                        String applicationname,
-                                        String applicationsecret) throws URISyntaxException {
+                                        ApplicationCredential applicationCredential) throws URISyntaxException {
 
         if (was == null) {
-            was = WhydahApplicationSession.getInstance(securitytokenserviceurl, useradminserviceurl, activeApplicationId, applicationname, applicationsecret);
+            was = WhydahApplicationSession.getInstance(securitytokenserviceurl, useradminserviceurl, applicationCredential);
         }
 
         this.uri_securitytoken_service = URI.create(securitytokenserviceurl);
@@ -83,13 +82,14 @@ public class BaseAdminWhydahServiceClient {
             String applicationid = configuration.evaluateToString("applicationid");
             String applicationname = configuration.evaluateToString("applicationname");
             String applicationsecret = configuration.evaluateToString("applicationsecret");
+            ApplicationCredential applicationCredential = new ApplicationCredential(applicationid, applicationname, applicationsecret);
             String uasUrl = null;
             if (uri_useradmin_service != null) {
                 uasUrl = uri_useradmin_service.toString();
 
             }
             if (was == null) {
-                was = WhydahApplicationSession.getInstance(uri_securitytoken_service.toString(), uasUrl, applicationid, applicationname, applicationsecret);
+                was = WhydahApplicationSession.getInstance(uri_securitytoken_service.toString(), uasUrl, applicationCredential);
             }
 
         } catch (ConstrettoExpressionException constrettoExpressionException) {
@@ -128,13 +128,15 @@ public class BaseAdminWhydahServiceClient {
             String applicationid = properties.getProperty("applicationid");
             String applicationname = properties.getProperty("applicationname");
             String applicationsecret = properties.getProperty("applicationsecret");
+            ApplicationCredential applicationCredential = new ApplicationCredential(applicationid, applicationname, applicationsecret);
+
             String uasUrl = null;
             if (uri_useradmin_service != null) {
                 uasUrl = uri_useradmin_service.toString();
 
             }
             if (was == null) {
-                was = WhydahApplicationSession.getInstance(uri_securitytoken_service.toString(), uasUrl, applicationid, applicationname, applicationsecret);
+                was = WhydahApplicationSession.getInstance(uri_securitytoken_service.toString(), uasUrl, applicationCredential);
             }
         } catch (Exception ex) {
             throw ex;
