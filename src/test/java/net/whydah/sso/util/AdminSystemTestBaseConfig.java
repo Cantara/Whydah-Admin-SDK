@@ -1,15 +1,5 @@
 package net.whydah.sso.util;
 
-import static junit.framework.TestCase.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
-import java.lang.reflect.Field;
-import java.net.URI;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-
 import net.whydah.sso.application.helpers.ApplicationXpathHelper;
 import net.whydah.sso.application.mappers.ApplicationTokenMapper;
 import net.whydah.sso.application.types.ApplicationCredential;
@@ -20,6 +10,16 @@ import net.whydah.sso.user.helpers.UserXpathHelper;
 import net.whydah.sso.user.mappers.UserTokenMapper;
 import net.whydah.sso.user.types.UserCredential;
 import net.whydah.sso.user.types.UserToken;
+
+import java.lang.reflect.Field;
+import java.net.URI;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
+import static junit.framework.TestCase.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class AdminSystemTestBaseConfig {
 
@@ -33,8 +33,6 @@ public class AdminSystemTestBaseConfig {
     public boolean CRMCustomerExtensionSystemTest = true && systemTest;
     public int TIME_WAIT_BETWEEN_SYSTEMTEST = 15;  // 15 ms
     //
-    public static String SYSTEMTEST_USER_CELLPHONE = "59441023";
-    ;
     public static String SYSTEMTEST_USER_EMAIL = "totto@totto.org";
 
     //
@@ -81,12 +79,6 @@ public class AdminSystemTestBaseConfig {
     }
     
     public void setLocalTest(){
-//    	tokenServiceUri = URI.create("http://localhost:9998/tokenservice/");
-//        userAdminServiceUri = URI.create("http://localhost:9992/useradminservice/");
-//        crmServiceUri = URI.create("http://localhost:12121/crmservice/");
-//        statisticsServiceUri = URI.create("http://localhost:4901/reporter/");
-//        password = "useradmin"; //
-//        //password = "useradmin567";
         tokenServiceUri = URI.create("http://localhost:9998/tokenservice/");
         userAdminServiceUri = URI.create("http://localhost:9992/useradminservice/");
         crmServiceUri = URI.create("http://localhost:12121/crmservice/");
