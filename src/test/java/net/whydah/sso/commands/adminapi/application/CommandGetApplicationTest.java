@@ -1,20 +1,20 @@
 package net.whydah.sso.commands.adminapi.application;
 
-import static org.junit.Assert.assertTrue;
-
-import java.util.UUID;
-
 import net.whydah.sso.application.helpers.ApplicationXpathHelper;
 import net.whydah.sso.commands.appauth.CommandLogonApplication;
 import net.whydah.sso.commands.userauth.CommandLogonUserByUserCredential;
 import net.whydah.sso.user.helpers.UserXpathHelper;
 import net.whydah.sso.util.AdminSystemTestBaseConfig;
-
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.UUID;
+
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class CommandGetApplicationTest {
 
@@ -30,7 +30,7 @@ public class CommandGetApplicationTest {
 
 
     @Test
-    public void testListApplicationsCommand() throws Exception {
+    public void testCommandGetApplication() throws Exception {
         if (config.isSystemTestEnabled()) {
 
             String myAppTokenXml = new CommandLogonApplication(config.tokenServiceUri, config.appCredential).execute();
@@ -44,6 +44,7 @@ public class CommandGetApplicationTest {
             assertTrue(userTokenId != null && userTokenId.length() > 5);
 
             String applicationJson = new CommandGetApplication(config.userAdminServiceUri, myApplicationTokenID, userTokenId, applicationId).execute();
+            assertNotNull(applicationJson);
             log.debug("applicationJson=" + applicationJson);
             assertTrue(applicationJson.length() > 100);
             JSONAssert.assertEquals("{\"id\":\"" + AdminSystemTestBaseConfig.TEMPORARY_APPLICATION_ID + "\",\"name\":\"" + AdminSystemTestBaseConfig.TEMPORARY_APPLICATION_NAME + "\"}", applicationJson, false);

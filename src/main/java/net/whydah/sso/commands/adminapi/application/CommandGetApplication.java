@@ -1,48 +1,31 @@
 package net.whydah.sso.commands.adminapi.application;
 
-import java.net.HttpURLConnection;
-import java.net.URI;
-
 import net.whydah.sso.commands.baseclasses.BaseHttpGetHystrixCommand;
 
-import com.github.kevinsawicki.http.HttpRequest;
+import java.net.URI;
 
 
 public class CommandGetApplication extends BaseHttpGetHystrixCommand<String> {
 
     int retryCnt = 0;
     String applicationId;
-    String tokenId;
+    String adminUserTokenId;
 
-    public CommandGetApplication(URI userAdminServiceUri, String myAppTokenId, String tokenId, String applicationId) {
+    public CommandGetApplication(URI userAdminServiceUri, String myAppTokenId, String adminUserTokenId, String applicationId) {
         super(userAdminServiceUri, "", myAppTokenId, "UASUserAdminGroup", 3000);
-        if (userAdminServiceUri == null || myAppTokenId == null || applicationId==null || tokenId ==null) {
+        if (userAdminServiceUri == null || myAppTokenId == null || applicationId == null || adminUserTokenId == null) {
             log.error(TAG + " initialized with null-values - will fail - userAdminServiceUri={}, myAppTokenId={}", userAdminServiceUri, myAppTokenId);
         }
         
         this.applicationId = applicationId;
-        this.tokenId = tokenId;
+        this.adminUserTokenId = adminUserTokenId;
     }
 
-
-    @Override
-    protected String dealWithFailedResponse(String responseBody, int statusCode) {
-        if (statusCode != HttpURLConnection.HTTP_CONFLICT && retryCnt < 1) {
-            retryCnt++;
-            return doGetCommand();
-        } else {
-            return null;
-        }
-    }
 
     @Override
     protected String getTargetPath() {
-        return myAppTokenId + "/" + tokenId + "/application/" + applicationId;
+        return myAppTokenId + "/" + adminUserTokenId + "/application/" + applicationId;
     }
 
-     @Override
-	protected HttpRequest dealWithRequestBeforeSend(HttpRequest request) {
-		return super.dealWithRequestBeforeSend(request);
-	}
 
 }

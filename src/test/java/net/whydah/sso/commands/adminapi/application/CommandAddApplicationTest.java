@@ -1,11 +1,6 @@
 package net.whydah.sso.commands.adminapi.application;
 
 
-import static org.junit.Assert.assertTrue;
-
-import java.util.List;
-import java.util.UUID;
-
 import net.whydah.sso.application.helpers.ApplicationHelper;
 import net.whydah.sso.application.helpers.ApplicationXpathHelper;
 import net.whydah.sso.application.mappers.ApplicationMapper;
@@ -15,13 +10,20 @@ import net.whydah.sso.commands.appauth.CommandVerifyUASAccessByApplicationTokenI
 import net.whydah.sso.commands.userauth.CommandLogonUserByUserCredential;
 import net.whydah.sso.user.helpers.UserXpathHelper;
 import net.whydah.sso.util.AdminSystemTestBaseConfig;
-
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.List;
+import java.util.UUID;
+
+import static org.junit.Assert.assertTrue;
 
 public class CommandAddApplicationTest {
 
     static AdminSystemTestBaseConfig config;
+    private static final Logger log = LoggerFactory.getLogger(CommandAddApplicationTest.class);
 
 
     @BeforeClass
@@ -40,7 +42,7 @@ public class CommandAddApplicationTest {
         if (config.isSystemTestEnabled()) {
 
 
-            System.out.printf("Adding application:\n" + ApplicationMapper.toPrettyJson(ApplicationMapper.fromJson(getDummyApplicationJson())));
+            log.debug("Adding application:\n" + ApplicationMapper.toPrettyJson(ApplicationMapper.fromJson(getDummyApplicationJson())));
             String myAppTokenXml = new CommandLogonApplication(config.tokenServiceUri, config.appCredential).execute();
             String myApplicationTokenID = ApplicationXpathHelper.getAppTokenIdFromAppTokenXml(myAppTokenXml);
             assertTrue(myApplicationTokenID != null && myApplicationTokenID.length() > 5);
@@ -67,12 +69,12 @@ public class CommandAddApplicationTest {
 
                 }.execute();
                 Thread.sleep(40000);  // We have to sleep a little to ensure that the UAS cache times out
-                System.out.print(applicationJson);
-                System.out.println("Applications found:" + countApplications(myApplicationTokenID, userTokenId));
+                log.debug(applicationJson);
+                log.debug("Applications found:" + countApplications(myApplicationTokenID, userTokenId));
                 int count = countApplications(myApplicationTokenID, userTokenId) - 1;
                 assertTrue(existingApplications == count);
             } else {
-                System.out.print("HAVE NO UASACCESS permission to test");
+                log.debug("HAVE NO UASACCESS permission to test");
             }
 
         }
@@ -81,7 +83,7 @@ public class CommandAddApplicationTest {
 
     private int countApplications(String myApplicationTokenID, String userTokenId) {
         String applicationsJson = new CommandListApplications(config.userAdminServiceUri, myApplicationTokenID).execute();
-        System.out.println("applicationsJson=" + applicationsJson);
+        log.debug("applicationsJson=" + applicationsJson);
         assertTrue(applicationsJson.length() > 100);
         List<Application> applications = ApplicationMapper.fromJsonList(applicationsJson);
         assertTrue(applications.size() > 2);
