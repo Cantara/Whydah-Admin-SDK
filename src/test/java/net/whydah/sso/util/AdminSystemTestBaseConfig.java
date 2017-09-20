@@ -26,7 +26,7 @@ public class AdminSystemTestBaseConfig {
     public static final boolean SYSTEST_PROPERTY_ANONYMOUSTOKEN = true;
     public static final boolean SYSTEST_PROPERTY_fulltokenapplications = true;
     // Run the Whydah SystemTests?
-    public boolean systemTest = false;
+    public boolean systemTest = true;
 
     // Run SystemTests for Whydah Extensions?
     public boolean statisticsExtensionSystemTest = true && systemTest;
@@ -64,7 +64,7 @@ public class AdminSystemTestBaseConfig {
         addToEnv.put("IAM_MODE", "TEST");
         setEnv(addToEnv);
         SSLTool.disableCertificateValidation();
-        //
+
         setRemoteTest();
 
     }
