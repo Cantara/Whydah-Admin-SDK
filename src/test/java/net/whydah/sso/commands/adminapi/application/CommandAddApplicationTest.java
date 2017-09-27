@@ -2,13 +2,10 @@ package net.whydah.sso.commands.adminapi.application;
 
 
 import net.whydah.sso.application.helpers.ApplicationHelper;
-import net.whydah.sso.application.helpers.ApplicationXpathHelper;
 import net.whydah.sso.application.mappers.ApplicationMapper;
 import net.whydah.sso.application.types.Application;
-import net.whydah.sso.commands.appauth.CommandLogonApplication;
 import net.whydah.sso.commands.appauth.CommandVerifyUASAccessByApplicationTokenId;
-import net.whydah.sso.commands.userauth.CommandLogonUserByUserCredential;
-import net.whydah.sso.user.helpers.UserXpathHelper;
+import net.whydah.sso.user.types.UserToken;
 import net.whydah.sso.util.AdminSystemTestBaseConfig;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -16,7 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
-import java.util.UUID;
 
 import static org.junit.Assert.assertTrue;
 
@@ -43,36 +39,24 @@ public class CommandAddApplicationTest {
 
 
             log.debug("Adding application:\n" + ApplicationMapper.toPrettyJson(ApplicationMapper.fromJson(getDummyApplicationJson())));
-            String myAppTokenXml = new CommandLogonApplication(config.tokenServiceUri, config.appCredential).execute();
-            String myApplicationTokenID = ApplicationXpathHelper.getAppTokenIdFromAppTokenXml(myAppTokenXml);
-            assertTrue(myApplicationTokenID != null && myApplicationTokenID.length() > 5);
-            String userticket = UUID.randomUUID().toString();
-            String userToken = new CommandLogonUserByUserCredential(config.tokenServiceUri, myApplicationTokenID, myAppTokenXml, config.userCredential, userticket).execute();
-            String userTokenId = UserXpathHelper.getUserTokenId(userToken);
-            assertTrue(userTokenId != null && userTokenId.length() > 5);
+            UserToken adminUser = config.logOnSystemTestApplicationAndSystemTestUser();
+            assertTrue(adminUser != null && adminUser.getTokenid().length() > 5);
 
-            boolean hasAccess = new CommandVerifyUASAccessByApplicationTokenId(config.userAdminServiceUri.toString(), myApplicationTokenID, userTokenId).execute();
+            boolean hasAccess = new CommandVerifyUASAccessByApplicationTokenId(config.userAdminServiceUri.toString(), config.myApplicationTokenID, adminUser.getTokenid()).execute();
 
             if (hasAccess) {
-                int existingApplications = countApplications(myApplicationTokenID, userTokenId);
+                int existingApplications = countApplications(config.myApplicationTokenID, adminUser.getTokenid());
+                log.debug("Applications before:" + existingApplications);
 
                 Application newApplication = ApplicationMapper.fromJson(ApplicationHelper.getDummyApplicationJson());
                 String applicationJson = ApplicationMapper.toJson(newApplication);
 
-                String testAddApplication = new CommandAddApplication(config.userAdminServiceUri, myApplicationTokenID, userTokenId, applicationJson) {
-
-                    protected String dealWithFailedResponse(String responseBody, int statusCode) {
-                        return responseBody;
-                    }
-
-                    ;
-
-                }.execute();
-                Thread.sleep(40000);  // We have to sleep a little to ensure that the UAS cache times out
-                log.debug(applicationJson);
-                log.debug("Applications found:" + countApplications(myApplicationTokenID, userTokenId));
-                int count = countApplications(myApplicationTokenID, userTokenId) - 1;
-                assertTrue(existingApplications == count);
+                String testAddApplication = new CommandAddApplication(config.userAdminServiceUri, config.myApplicationTokenID, adminUser.getTokenid(), applicationJson).execute();
+                Thread.sleep(20000);  // We have to sleep a little to ensure that the UAS cache times out
+                log.debug(testAddApplication);
+                log.debug("Applications found:" + countApplications(config.myApplicationTokenID, adminUser.getTokenid()));
+                int count = countApplications(config.myApplicationTokenID, adminUser.getTokenid());
+                assertTrue(existingApplications == count - 1);
             } else {
                 log.debug("HAVE NO UASACCESS permission to test");
             }
