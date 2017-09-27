@@ -1,31 +1,36 @@
 package net.whydah.sso.usecases;
 
-import static junit.framework.TestCase.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
-import java.util.ArrayList;
-import java.util.Random;
-
 import net.whydah.sso.commands.adminapi.user.CommandAddUser;
+import net.whydah.sso.session.WhydahApplicationSession;
+import net.whydah.sso.session.WhydahUserSession;
 import net.whydah.sso.user.mappers.UserAggregateMapper;
 import net.whydah.sso.user.types.UserAggregate;
 import net.whydah.sso.user.types.UserApplicationRoleEntry;
 import net.whydah.sso.user.types.UserToken;
 import net.whydah.sso.util.AdminSystemTestBaseConfig;
 import net.whydah.sso.util.LoggerUtil;
-
 import org.apache.commons.lang.math.RandomUtils;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.Random;
+
+import static junit.framework.TestCase.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class AddLotsOfTestUsersTest {
 
     static AdminSystemTestBaseConfig config;
     static char c;
+    static WhydahApplicationSession applicationSession;
+    static WhydahUserSession whydahUserSession;
 
     @BeforeClass
     public static void setup() throws Exception {
         config = new AdminSystemTestBaseConfig();
+        applicationSession = WhydahApplicationSession.getInstance(config.tokenServiceUri.toString(), config.appCredential);
+        whydahUserSession = new WhydahUserSession(applicationSession, config.userCredential);
         Random r = new Random();
         c = (char) (r.nextInt(26) + 'a');
 
@@ -33,7 +38,7 @@ public class AddLotsOfTestUsersTest {
 
 
     @Test
-    public void testAddUser() throws Exception {
+    public void testLotsOfUsers() throws Exception {
         if (config.isSystemTestEnabled()) {
 
             UserToken adminUser = config.logOnSystemTestApplicationAndSystemTestUser();
@@ -66,7 +71,7 @@ public class AddLotsOfTestUsersTest {
 
         //new CommandAddUser(config.userAdminServiceUri, config.myApplicationToken.getApplicationTokenId(), adminUser.getTokenid(), json).queue();
         //Thread.sleep(200);
-        String userAddRoleResult = new CommandAddUser(config.userAdminServiceUri, config.myApplicationToken.getApplicationTokenId(), adminUser.getTokenid(), json).execute();
+        String userAddRoleResult = new CommandAddUser(config.userAdminServiceUri, applicationSession.getActiveApplicationTokenId(), whydahUserSession.getActiveUserTokenId(), json).execute();
         System.out.println(i + " testAddUser:" + LoggerUtil.first50(userAddRoleResult));
         assertNotNull(userAddRoleResult);
         assertTrue(userAddRoleResult.length() > 100);
