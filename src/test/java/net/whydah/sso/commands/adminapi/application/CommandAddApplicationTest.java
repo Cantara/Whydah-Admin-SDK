@@ -44,18 +44,18 @@ public class CommandAddApplicationTest {
 
 
             if (whydahUserSession.hasActiveSession()) {
-                int existingApplications = countApplications(config.myApplicationTokenID, whydahUserSession.getActiveUserTokenId());
+                int existingApplications = countApplications(applicationSession.getActiveApplicationTokenId());
                 log.debug("Applications before:" + existingApplications);
 
                 Application newApplication = ApplicationMapper.fromJson(ApplicationHelper.getDummyApplicationJson());
                 String applicationJson = ApplicationMapper.toJson(newApplication);
 
-                String testAddApplication = new CommandAddApplication(config.userAdminServiceUri, config.myApplicationTokenID, whydahUserSession.getActiveUserTokenId(), applicationJson).execute();
-                Thread.sleep(20000);  // We have to sleep a little to ensure that the UAS cache times out
+                String testAddApplication = new CommandAddApplication(config.userAdminServiceUri, applicationSession.getActiveApplicationTokenId(), whydahUserSession.getActiveUserTokenId(), applicationJson).execute();
+                Thread.sleep(25000);  // We have to sleep a little to ensure that the UAS cache times out
                 log.debug(testAddApplication);
-                log.debug("Applications found:" + countApplications(config.myApplicationTokenID, whydahUserSession.getActiveUserTokenId()));
-                int count = countApplications(config.myApplicationTokenID, whydahUserSession.getActiveUserTokenId());
-                assertTrue(existingApplications == count - 1);
+                int after = countApplications(applicationSession.getActiveApplicationTokenId());
+                log.debug("Applications found:" + after);
+                assertTrue(existingApplications == after - 1);
             } else {
                 log.debug("HAVE NO UASACCESS permission to test");
             }
@@ -64,8 +64,8 @@ public class CommandAddApplicationTest {
 
     }
 
-    private int countApplications(String myApplicationTokenID, String userTokenId) {
-        String applicationsJson = new CommandListApplications(config.userAdminServiceUri, userTokenId).execute();
+    private int countApplications(String myApplicationTokenID) {
+        String applicationsJson = new CommandListApplications(config.userAdminServiceUri, myApplicationTokenID).execute();
         log.debug("applicationsJson=" + applicationsJson);
         assertTrue(applicationsJson.length() > 100);
         List<Application> applications = ApplicationMapper.fromJsonList(applicationsJson);
