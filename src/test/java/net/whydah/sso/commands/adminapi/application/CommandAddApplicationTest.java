@@ -51,7 +51,7 @@ public class CommandAddApplicationTest {
                 String applicationJson = ApplicationMapper.toJson(newApplication);
 
                 String testAddApplication = new CommandAddApplication(config.userAdminServiceUri, applicationSession.getActiveApplicationTokenId(), whydahUserSession.getActiveUserTokenId(), applicationJson).execute();
-                Thread.sleep(25000);  // We have to sleep a little to ensure that the UAS cache times out
+                Thread.sleep(35000);  // We have to sleep a little to ensure that the UAS cache times out
                 log.debug(testAddApplication);
                 int after = countApplications(applicationSession.getActiveApplicationTokenId());
                 log.debug("Applications found:" + after);
