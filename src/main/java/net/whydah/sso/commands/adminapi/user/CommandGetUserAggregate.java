@@ -12,7 +12,7 @@ public class CommandGetUserAggregate extends BaseHttpGetHystrixCommand<String> {
 
 
     public CommandGetUserAggregate(URI userAdminServiceUri, String myAppTokenId, String adminUserTokenId, String userID) {
-    	super(userAdminServiceUri, "", myAppTokenId, "UASUserAdminGroup", 1500);
+    	super(userAdminServiceUri, "", myAppTokenId, "UASUserAdminGroup", 3000);
         
         this.adminUserTokenId = adminUserTokenId;
         this.userID = userID;
