@@ -18,7 +18,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 public class AdminSystemTestBaseConfig {
@@ -26,7 +25,7 @@ public class AdminSystemTestBaseConfig {
     public static final boolean SYSTEST_PROPERTY_ANONYMOUSTOKEN = true;
     public static final boolean SYSTEST_PROPERTY_fulltokenapplications = true;
     // Run the Whydah SystemTests?
-    public boolean systemTest = false;
+    public boolean systemTest = true;
 
     // Run SystemTests for Whydah Extensions?
     public boolean statisticsExtensionSystemTest = true && systemTest;
