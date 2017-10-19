@@ -15,7 +15,7 @@ public class CommandAddUserRole extends BaseHttpPostHystrixCommand<String> {
 
 
     public CommandAddUserRole(URI userAdminServiceUri, String myAppTokenId, String adminUserTokenId, String uId,String roleJson) {
-        super(userAdminServiceUri, "", myAppTokenId, "UASUserAdminGroup");
+        super(userAdminServiceUri, "", myAppTokenId, "UASUserAdminGroup", 3000);
         
         this.adminUserTokenId = adminUserTokenId;
         this.userRoleJson = roleJson;
