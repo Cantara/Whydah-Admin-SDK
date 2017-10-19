@@ -379,21 +379,19 @@ public class BaseAdminWhydahServiceClient {
                 //step c
                 if (selectApplicationEntry == null) {
                     //create new application, this command is already tested
-                    UserApplicationRoleEntry userRole = new UserApplicationRoleEntry(userToken.getTokenid(), appFound.getId(), appFound.getName(), organization, roleName, roleValue);
+                    UserApplicationRoleEntry userRole = new UserApplicationRoleEntry(userToken.getUserTokenId(), appFound.getId(), appFound.getName(), organization, roleName, roleValue);
                     String userAddRoleResult = new CommandAddUserRole(uri_useradmin_service, getMyAppTokenID(), userToken.getTokenid(), userToken.getUid(), userRole.toJson()).execute();
                     log.debug("new: userAddRoleResult:{}", userAddRoleResult);
                 } else {
 
                     selectApplicationEntry.setRoleValue(roleValue);
-                    String editedUserRoleResult = new CommandUpdateUserRole(uri_useradmin_service, getMyAppTokenID(), userToken.getTokenid(), userToken.getUid(), selectApplicationEntry.getId(), selectApplicationEntry.toJson()).execute();
+                    String editedUserRoleResult = new CommandUpdateUserRole(uri_useradmin_service, getMyAppTokenID(), userToken.getUserTokenId(), userToken.getUid(), selectApplicationEntry.getId(), selectApplicationEntry.toJson()).execute();
                     log.debug("update: userUpdateRoleResult:{}", editedUserRoleResult);
                 }
 
                 Thread.sleep(1000);
 
-                //step d
-                //call the "non-existing" updateUserToken method in STS
-                String updatedUserTokenXML = (new CommandRefreshUserToken(uri_securitytoken_service, getMyAppTokenID(), getMyAppTokenXml(), userToken.getTokenid()).execute());
+                String updatedUserTokenXML = (new CommandRefreshUserToken(uri_securitytoken_service, getMyAppTokenID(), getMyAppTokenXml(), userToken.getUserTokenId()).execute());
                 log.debug("Updated UserToken: {}", updatedUserTokenXML);
                 if (updatedUserTokenXML != null && updatedUserTokenXML.length() > 10) {
                     result = true;

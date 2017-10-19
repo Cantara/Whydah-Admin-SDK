@@ -12,12 +12,14 @@ import net.whydah.sso.util.LoggerUtil;
 import org.apache.commons.lang.math.RandomUtils;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.slf4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.slf4j.LoggerFactory.getLogger;
 
 public class AddLotsOfTestUsersTest {
 
@@ -25,6 +27,8 @@ public class AddLotsOfTestUsersTest {
     static char c;
     static WhydahApplicationSession applicationSession;
     static WhydahUserSession whydahUserSession;
+    private static final Logger log = getLogger(AddLotsOfTestUsersTest.class);
+
 
     @BeforeClass
     public static void setup() throws Exception {
@@ -72,7 +76,7 @@ public class AddLotsOfTestUsersTest {
         //new CommandAddUser(config.userAdminServiceUri, config.myApplicationToken.getApplicationTokenId(), adminUser.getTokenid(), json).queue();
         //Thread.sleep(200);
         String userAddRoleResult = new CommandAddUser(config.userAdminServiceUri, applicationSession.getActiveApplicationTokenId(), whydahUserSession.getActiveUserTokenId(), json).execute();
-        System.out.println(i + " testAddUser:" + LoggerUtil.first50(userAddRoleResult));
+        log.info(i + " testAddUser:" + LoggerUtil.first50(userAddRoleResult));
         assertNotNull(userAddRoleResult);
         assertTrue(userAddRoleResult.length() > 100);
 
