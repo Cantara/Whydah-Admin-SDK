@@ -43,7 +43,7 @@ public class AddUserRoleTest {
 	@Test
 	public void testUpdateRoleAndRefreshUserTokenWithExistingApplication(){
 		if (config.isSystemTestEnabled()) {
-			String tokenxml= config.logOnSystemTestApplicationAndSystemTestUser_getTokenXML(); 
+			String tokenxml= config.logOnSystemTestApplicationAndSystemTestUser_getUserTokenXML(); 
             assertTrue(client.updateOrCreateUserApplicationRoleEntry("", "ACSResource", "Whydah", ROLE_NAME, "welcome", tokenxml));
         }
 	}
@@ -51,7 +51,7 @@ public class AddUserRoleTest {
 	@Test
 	public void testUpdateRoleAndRefreshUserTokenWithNonExistingApplciation(){
 		if (config.isSystemTestEnabled()) {
-            assertFalse(client.updateOrCreateUserApplicationRoleEntry("", "NON-EXISTING", "Whydah", ROLE_NAME, "welcome", config.logOnSystemTestApplicationAndSystemTestUser_getTokenXML()));
+            assertFalse(client.updateOrCreateUserApplicationRoleEntry("", "NON-EXISTING", "Whydah", ROLE_NAME, "welcome", config.logOnSystemTestApplicationAndSystemTestUser_getUserTokenXML()));
         }
 	}
 	
@@ -61,7 +61,7 @@ public class AddUserRoleTest {
         if (config.isSystemTestEnabled()) {
 			//create a new application now
 		  
-			String userTokenXml1 = config.logOnSystemTestApplicationAndSystemTestUser_getTokenXML();
+			String userTokenXml1 = config.logOnSystemTestApplicationAndSystemTestUser_getUserTokenXML();
             String userTokenId = UserXpathHelper.getUserTokenId(userTokenXml1);
             int existingApplications = countApplications(config.myApplicationTokenID, userTokenId);
             Application newApplication = ApplicationMapper.fromJson(ApplicationHelper.getDummyApplicationJson());
@@ -101,7 +101,7 @@ public class AddUserRoleTest {
             assertTrue(userTokenXml2.contains(ROLE_NAME));
 
 			//this works as expected as it contains the added role
-			String userTokenXml3 = config.logOnSystemTestApplicationAndSystemTestUser_getTokenXML();
+			String userTokenXml3 = config.logOnSystemTestApplicationAndSystemTestUser_getUserTokenXML();
 			
 			
             //assertTrue(userTokenXml2.contains(roleName));
