@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
+import static net.whydah.sso.util.LoggerUtil.first50;
 import static org.junit.Assert.assertTrue;
 
 public class CommandAddApplicationTest {
@@ -66,7 +67,7 @@ public class CommandAddApplicationTest {
 
     private int countApplications(String myApplicationTokenID) {
         String applicationsJson = new CommandListApplications(config.userAdminServiceUri, myApplicationTokenID).execute();
-        log.debug("applicationsJson=" + applicationsJson);
+        log.debug("applicationsJson=" + first50(applicationsJson));
         assertTrue(applicationsJson.length() > 100);
         List<Application> applications = ApplicationMapper.fromJsonList(applicationsJson);
         assertTrue(applications.size() > 2);
