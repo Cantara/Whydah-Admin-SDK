@@ -22,11 +22,10 @@ public class CommandSearchForApplications extends BaseHttpGetHystrixCommand<Stri
     }
 
 
-//     @Path("{userTokenId}/find/applications/{applicationName}")
 
     @Override
     protected String getTargetPath() {
-        return myAppTokenId + "/applications/find/" + applicationQuery;
+        return myAppTokenId + "/find/applications/" + applicationQuery;
 //        return myAppTokenId +  "/" + adminUserTokenId + "/applications/find/" + applicationQuery;
     }
 
