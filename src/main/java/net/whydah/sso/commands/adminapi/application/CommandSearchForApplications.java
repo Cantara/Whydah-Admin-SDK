@@ -1,10 +1,9 @@
 package net.whydah.sso.commands.adminapi.application;
 
-import java.net.URI;
-
+import com.github.kevinsawicki.http.HttpRequest;
 import net.whydah.sso.commands.baseclasses.BaseHttpGetHystrixCommand;
 
-import com.github.kevinsawicki.http.HttpRequest;
+import java.net.URI;
 
 
 public class CommandSearchForApplications extends BaseHttpGetHystrixCommand<String> {
@@ -17,7 +16,7 @@ public class CommandSearchForApplications extends BaseHttpGetHystrixCommand<Stri
         super(userAdminServiceUri, "", myAppTokenId, "UASUserAdminGroup", 6000);
         this.applicationQuery = applicationQuery;
         this.adminUserTokenId = adminUserTokenId;
-        if (userAdminServiceUri == null || myAppTokenId == null || applicationQuery == null || adminUserTokenId == null) {
+        if (userAdminServiceUri == null || myAppTokenId == null || adminUserTokenId == null || applicationQuery == null || adminUserTokenId == null) {
             log.error(TAG + " initialized with null-values - will fail");
         }
     }
@@ -27,7 +26,8 @@ public class CommandSearchForApplications extends BaseHttpGetHystrixCommand<Stri
 
     @Override
     protected String getTargetPath() {
-        return myAppTokenId + (adminUserTokenId == null || adminUserTokenId.equals("") ? "" : "/" + adminUserTokenId) + "/find/applications/" + applicationQuery;
+        return myAppTokenId + "/applications/find/" + applicationQuery;
+//        return myAppTokenId +  "/" + adminUserTokenId + "/applications/find/" + applicationQuery;
     }
 
     @Override
