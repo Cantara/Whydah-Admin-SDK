@@ -7,7 +7,6 @@ import net.whydah.sso.commands.userauth.CommandLogonUserByUserCredential;
 import net.whydah.sso.user.helpers.UserXpathHelper;
 import net.whydah.sso.util.AdminSystemTestBaseConfig;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +29,7 @@ public class CommandSearchForApplicationsTest {
     }
 
 
-    @Ignore
+    //    @Ignore
     @Test
     public void testSearchApplicationsCommand() throws Exception {
         if (config.isSystemTestEnabled()) {
