@@ -1,11 +1,5 @@
 package net.whydah.sso.commands.adminapi.user.role;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
-import java.util.List;
-import java.util.UUID;
-
 import net.whydah.sso.application.mappers.ApplicationTokenMapper;
 import net.whydah.sso.commands.userauth.CommandLogonUserByUserCredential;
 import net.whydah.sso.user.helpers.UserXpathHelper;
@@ -13,11 +7,16 @@ import net.whydah.sso.user.mappers.UserRoleMapper;
 import net.whydah.sso.user.types.UserApplicationRoleEntry;
 import net.whydah.sso.user.types.UserToken;
 import net.whydah.sso.util.AdminSystemTestBaseConfig;
-
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
+import java.util.UUID;
+
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class CommandDeleteUserRoleTest {
     private static final Logger log = LoggerFactory.getLogger(CommandDeleteUserRoleTest.class);
@@ -51,7 +50,7 @@ public class CommandDeleteUserRoleTest {
  
 
             //count role after adding
-            String userRolesJson = new CommandGetUserRoles(config.userAdminServiceUri, config.myApplicationToken.getApplicationTokenId(), adminUser.getTokenid(), adminUser.getUid()).execute();
+            String userRolesJson = new CommandGetUserRoles(config.userAdminServiceUri, config.myApplicationToken.getApplicationTokenId(), adminUser.getUserTokenId(), adminUser.getUid()).execute();
             log.debug("Roles returned:" + userRolesJson);
             List<UserApplicationRoleEntry> roles = UserRoleMapper.fromJsonAsList(userRolesJson);
             int numberOfRolesAfterAdding = roles.size();
@@ -61,7 +60,7 @@ public class CommandDeleteUserRoleTest {
             assertTrue(userDeleteRoleResult);
             
             //number of roles after removing 
-            String userRolesJson2 = new CommandGetUserRoles(config.userAdminServiceUri, config.myApplicationToken.getApplicationTokenId(), adminUser.getTokenid(), adminUser.getUid()).execute();
+            String userRolesJson2 = new CommandGetUserRoles(config.userAdminServiceUri, config.myApplicationToken.getApplicationTokenId(), adminUser.getUserTokenId(), adminUser.getUid()).execute();
             log.debug("Roles returned2:" + userRolesJson2);
             List<UserApplicationRoleEntry> roles2 = UserRoleMapper.fromJsonAsList(userRolesJson2);
             int numberOfRolesAfterRemoving = roles2.size();

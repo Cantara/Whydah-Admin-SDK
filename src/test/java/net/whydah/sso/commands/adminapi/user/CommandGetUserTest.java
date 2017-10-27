@@ -4,7 +4,6 @@ import net.whydah.sso.commands.appauth.CommandVerifyUASAccessByApplicationTokenI
 import net.whydah.sso.user.mappers.UserTokenMapper;
 import net.whydah.sso.user.types.UserToken;
 import net.whydah.sso.util.AdminSystemTestBaseConfig;
-
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -28,7 +27,7 @@ public class CommandGetUserTest {
 
             boolean hasAccess = new CommandVerifyUASAccessByApplicationTokenId(config.userAdminServiceUri.toString(), config.myApplicationTokenID).execute();
             if(hasAccess){
-            	 String userAggregateJson = new CommandGetUser(config.userAdminServiceUri, config.myApplicationToken.getApplicationTokenId(), adminUser.getTokenid(), "acsmanager").execute();
+                String userAggregateJson = new CommandGetUser(config.userAdminServiceUri, config.myApplicationToken.getApplicationTokenId(), adminUser.getUserTokenId(), "acsmanager").execute();
                  System.out.println("userAggregateJson=" + userAggregateJson);
                  UserToken foundUserToken = UserTokenMapper.fromUserAggregateJson(userAggregateJson);
                  System.out.println(foundUserToken.toString());

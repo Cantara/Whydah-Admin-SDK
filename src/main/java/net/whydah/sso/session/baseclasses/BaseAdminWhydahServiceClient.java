@@ -363,7 +363,7 @@ public class BaseAdminWhydahServiceClient {
                 log.debug("find app: app is not found, appId {} or appName {}", applicationId, applicationName);
                 result = false;
             } else {
-                String rolesJson = new CommandGetUserRoles(uri_useradmin_service, getMyAppTokenID(), userToken.getTokenid(), userToken.getUid()).execute();
+                String rolesJson = new CommandGetUserRoles(uri_useradmin_service, getMyAppTokenID(), userToken.getUserTokenId(), userToken.getUid()).execute();
                 //step b -> find userRole
                 List<UserApplicationRoleEntry> appRoleEntryList = UserRoleMapper.fromJsonAsList(rolesJson);
                 UserApplicationRoleEntry selectApplicationEntry = null;
@@ -380,7 +380,7 @@ public class BaseAdminWhydahServiceClient {
                 if (selectApplicationEntry == null) {
                     //create new application, this command is already tested
                     UserApplicationRoleEntry userRole = new UserApplicationRoleEntry(userToken.getUserTokenId(), appFound.getId(), appFound.getName(), organization, roleName, roleValue);
-                    String userAddRoleResult = new CommandAddUserRole(uri_useradmin_service, getMyAppTokenID(), userToken.getTokenid(), userToken.getUid(), userRole.toJson()).execute();
+                    String userAddRoleResult = new CommandAddUserRole(uri_useradmin_service, getMyAppTokenID(), userToken.getUserTokenId(), userToken.getUid(), userRole.toJson()).execute();
                     log.debug("new: userAddRoleResult:{}", userAddRoleResult);
                 } else {
 

@@ -1,19 +1,18 @@
 package net.whydah.sso.commands.adminapi.user.role;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
-import java.util.List;
-import java.util.UUID;
-
 import net.whydah.sso.user.mappers.UserRoleMapper;
 import net.whydah.sso.user.types.UserApplicationRoleEntry;
 import net.whydah.sso.user.types.UserToken;
 import net.whydah.sso.util.AdminSystemTestBaseConfig;
-
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
+
+import java.util.List;
+import java.util.UUID;
+
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class CommandEditUserRoleTest {
     public static AdminSystemTestBaseConfig config;
@@ -36,11 +35,11 @@ public class CommandEditUserRoleTest {
             UserApplicationRoleEntry role = getTestNewUserRole(adminUser.getUid(), config.TEMPORARY_APPLICATION_ID);
             String userRoleJson = role.toJson();
             // URI userAdminServiceUri, String myAppTokenId, String adminUserTokenId, String roleJson
-            String userAddRoleResult = new CommandAddUserRole(config.userAdminServiceUri, config.myApplicationToken.getApplicationTokenId(), adminUser.getTokenid(), adminUser.getUid(), userRoleJson).execute();
+            String userAddRoleResult = new CommandAddUserRole(config.userAdminServiceUri, config.myApplicationToken.getApplicationTokenId(), adminUser.getUserTokenId(), adminUser.getUid(), userRoleJson).execute();
             System.out.println("userAddRoleResult:" + userAddRoleResult);
             assertNotNull(userAddRoleResult);
 
-            String userRolesJson = new CommandGetUserRoles(config.userAdminServiceUri, config.myApplicationToken.getApplicationTokenId(), adminUser.getTokenid(), adminUser.getUid()).execute();
+            String userRolesJson = new CommandGetUserRoles(config.userAdminServiceUri, config.myApplicationToken.getApplicationTokenId(), adminUser.getUserTokenId(), adminUser.getUid()).execute();
             System.out.println("Roles returned:" + userRolesJson);
             assertTrue(userRolesJson.contains(role.getRoleName()));
             assertTrue(userRolesJson.contains(role.getRoleValue()));
@@ -59,10 +58,10 @@ public class CommandEditUserRoleTest {
             }
             role.setRoleValue("newRolevalue-" + UUID.randomUUID());
             assertTrue(role.getId() != null);
-            String editedUserRoleResult = new CommandUpdateUserRole(config.userAdminServiceUri, config.myApplicationToken.getApplicationTokenId(), adminUser.getTokenid(), adminUser.getUid(), role.getId(), userRoleJson).execute();
+            String editedUserRoleResult = new CommandUpdateUserRole(config.userAdminServiceUri, config.myApplicationToken.getApplicationTokenId(), adminUser.getUserTokenId(), adminUser.getUid(), role.getId(), userRoleJson).execute();
             System.out.println("returned: " + editedUserRoleResult);
 
-            String newRolesJson = new CommandGetUserRoles(config.userAdminServiceUri, config.myApplicationToken.getApplicationTokenId(), adminUser.getTokenid(), adminUser.getUid()).execute();
+            String newRolesJson = new CommandGetUserRoles(config.userAdminServiceUri, config.myApplicationToken.getApplicationTokenId(), adminUser.getUserTokenId(), adminUser.getUid()).execute();
             System.out.println("Roles returned:" + userRolesJson);
             assertTrue(newRolesJson.contains(role.getRoleName()));
             assertTrue(newRolesJson.contains(role.getRoleValue()));

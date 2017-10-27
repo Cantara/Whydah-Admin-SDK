@@ -1,19 +1,18 @@
 package net.whydah.sso.commands.adminapi.user;
 
-import static junit.framework.TestCase.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
-import java.util.Random;
-import java.util.UUID;
-
 import net.whydah.sso.user.mappers.UserIdentityMapper;
 import net.whydah.sso.user.types.UserIdentity;
 import net.whydah.sso.user.types.UserToken;
 import net.whydah.sso.util.AdminSystemTestBaseConfig;
 import net.whydah.sso.util.LoggerUtil;
-
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import java.util.Random;
+import java.util.UUID;
+
+import static junit.framework.TestCase.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class CommandAddUserTest {
 
@@ -35,12 +34,12 @@ public class CommandAddUserTest {
 
             UserIdentity uir = getTestNewUserIdentity();
             String userIdentityJson = UserIdentityMapper.toJsonWithoutUID(uir);
-            String userAddRoleResult = new CommandAddUser(config.userAdminServiceUri, config.myApplicationToken.getApplicationTokenId(), adminUser.getTokenid(), userIdentityJson).execute();
+            String userAddRoleResult = new CommandAddUser(config.userAdminServiceUri, config.myApplicationToken.getApplicationTokenId(), adminUser.getUserTokenId(), userIdentityJson).execute();
             System.out.println("testAddUser:" + LoggerUtil.first50(userAddRoleResult));
 
             assertNotNull(userAddRoleResult);
             assertTrue(userAddRoleResult.length() > 100);
-            String usersListJson = new CommandListUsers(config.userAdminServiceUri, config.myApplicationToken.getApplicationTokenId(), adminUser.getTokenid(), "*").execute();
+            String usersListJson = new CommandListUsers(config.userAdminServiceUri, config.myApplicationToken.getApplicationTokenId(), adminUser.getUserTokenId(), "*").execute();
             System.out.println("usersListJson=" + LoggerUtil.first50(usersListJson));
 
             // simple test to detect paging results

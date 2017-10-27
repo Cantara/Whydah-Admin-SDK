@@ -1,9 +1,5 @@
 package net.whydah.sso.commands.adminapi.user;
 
-import static org.junit.Assert.assertTrue;
-
-import java.util.UUID;
-
 import net.whydah.sso.commands.userauth.CommandGetUsertokenByUserticket;
 import net.whydah.sso.user.mappers.UserIdentityMapper;
 import net.whydah.sso.user.mappers.UserTokenMapper;
@@ -11,10 +7,13 @@ import net.whydah.sso.user.types.UserCredential;
 import net.whydah.sso.user.types.UserIdentity;
 import net.whydah.sso.user.types.UserToken;
 import net.whydah.sso.util.AdminSystemTestBaseConfig;
-
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
+
+import java.util.UUID;
+
+import static org.junit.Assert.assertTrue;
 
 public class CommandUpdateUserTest {
     static AdminSystemTestBaseConfig config;
@@ -36,9 +35,9 @@ public class CommandUpdateUserTest {
 	        	String userTicket2 = UUID.randomUUID().toString();
 	            UserToken adminUser = UserTokenMapper.fromUserTokenXml(config.logOnBySystemTestUserCredential(userTicket1));
 	            UserToken normalUser = UserTokenMapper.fromUserTokenXml(config.logOnByUserCredential(userTicket2, new UserCredential(config.userName2, config.password2)));
-	            
-	            String userIdentityJson = new CommandGetUser(config.userAdminServiceUri, config.myApplicationToken.getApplicationTokenId(), adminUser.getTokenid(), normalUser.getUid()).execute();
-	            System.out.println("getuser:" + userIdentityJson);
+
+				String userIdentityJson = new CommandGetUser(config.userAdminServiceUri, config.myApplicationToken.getApplicationTokenId(), adminUser.getUserTokenId(), normalUser.getUid()).execute();
+				System.out.println("getuser:" + userIdentityJson);
 	   
 	           
 	            UserIdentity updateMe = UserIdentityMapper.fromUserIdentityJson(userIdentityJson);
@@ -57,8 +56,8 @@ public class CommandUpdateUserTest {
 	            updateMe.setPersonRef((updateMe.getPersonRef().contains("_")? updateMe.getPersonRef().substring(0, updateMe.getPersonRef().indexOf('_')) : updateMe.getPersonRef()) + "_" + userTicket2);
 	            
 	            //do update
-	            String userUpdateResult = new CommandUpdateUser(config.userAdminServiceUri, config.myApplicationToken.getApplicationTokenId(), adminUser.getTokenid(), updateMe.getUsername(), UserIdentityMapper.toJson(updateMe)).execute();
-	            System.out.println("update=" + userUpdateResult);
+				String userUpdateResult = new CommandUpdateUser(config.userAdminServiceUri, config.myApplicationToken.getApplicationTokenId(), adminUser.getUserTokenId(), updateMe.getUsername(), UserIdentityMapper.toJson(updateMe)).execute();
+				System.out.println("update=" + userUpdateResult);
 	            UserIdentity updated = UserIdentityMapper.fromUserIdentityJson(userUpdateResult);
 	            //check for modifications
 	            assertTrue(updated.getFirstName().equals(updateMe.getFirstName()));
@@ -91,9 +90,9 @@ public class CommandUpdateUserTest {
 	            updateMe.setPersonRef(oldPerRef);
 	            
 	            //do update
-	            new CommandUpdateUser(config.userAdminServiceUri, config.myApplicationToken.getApplicationTokenId(), adminUser.getTokenid(), updateMe.getUsername(), UserIdentityMapper.toJson(updateMe)).execute();
-	            
-	        }
+				new CommandUpdateUser(config.userAdminServiceUri, config.myApplicationToken.getApplicationTokenId(), adminUser.getUserTokenId(), updateMe.getUsername(), UserIdentityMapper.toJson(updateMe)).execute();
+
+			}
 
 	    }
 
