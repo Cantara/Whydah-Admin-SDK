@@ -353,7 +353,7 @@ public class BaseAdminWhydahServiceClient {
             log.debug("application_list's size: {} apps", apps.size());
             Application appFound = null;
             for (Application app : apps) {
-                if (app.getId().equalsIgnoreCase(applicationId) || app.getName().equalsIgnoreCase(applicationName)) {
+                if (app.getId() != null && app.getId().equalsIgnoreCase(applicationId) || app.getName().equalsIgnoreCase(applicationName)) {
                     appFound = app;
                     break;
                 }
@@ -368,7 +368,7 @@ public class BaseAdminWhydahServiceClient {
                 List<UserApplicationRoleEntry> appRoleEntryList = UserRoleMapper.fromJsonAsList(rolesJson);
                 UserApplicationRoleEntry selectApplicationEntry = null;
                 for (UserApplicationRoleEntry appRoleEntry : appRoleEntryList) {
-                    if (appFound.getId().equals(appRoleEntry.getApplicationId())) {
+                    if (!(appFound.getId() == null) && appFound.getId().equals(appRoleEntry.getApplicationId())) {
                         if (appRoleEntry.getRoleName().equalsIgnoreCase(roleName)) {
                             selectApplicationEntry = appRoleEntry;
                             break;
