@@ -7,6 +7,7 @@ import net.whydah.sso.application.types.ApplicationCredential;
 import net.whydah.sso.commands.adminapi.application.CommandAddApplication;
 import net.whydah.sso.commands.adminapi.application.CommandListApplications;
 import net.whydah.sso.commands.userauth.CommandGetUsertokenByUsertokenId;
+import net.whydah.sso.session.WhydahUserSession;
 import net.whydah.sso.session.baseclasses.BaseAdminWhydahServiceClient;
 import net.whydah.sso.user.helpers.UserXpathHelper;
 import net.whydah.sso.util.AdminSystemTestBaseConfig;
@@ -41,21 +42,22 @@ public class AddUserRoleTest {
 
             client = new BaseAdminWhydahServiceClient(config.tokenServiceUri.toString(), config.userAdminServiceUri.toString(), applicationCredential);
             client.getWAS().updateApplinks();
-		}
-	}
+        }
+    }
 
 	@Test
-	public void testUpdateRoleAndRefreshUserTokenWithExistingApplication(){
-		if (config.isSystemTestEnabled()) {
-			String tokenxml= config.logOnSystemTestApplicationAndSystemTestUser_getUserTokenXML(); 
-            assertTrue(client.updateOrCreateUserApplicationRoleEntry("", "ACSResource", "Whydah", ROLE_NAME, "welcome", tokenxml));
+    public void testUpdateRoleAndRefreshUserTokenWithNonExistingApplication() {
+        if (config.isSystemTestEnabled()) {
+            WhydahUserSession whydahUserSession = new WhydahUserSession(client.getWAS(), config.userCredential);
+            assertFalse(client.updateOrCreateUserApplicationRoleEntry("4444", "NON-EXISTING", "Whydah", ROLE_NAME, "welcome", whydahUserSession.getActiveUserToken()));
         }
 	}
 	
 	@Test
-	public void testUpdateRoleAndRefreshUserTokenWithNonExistingApplciation(){
-		if (config.isSystemTestEnabled()) {
-            assertFalse(client.updateOrCreateUserApplicationRoleEntry("", "NON-EXISTING", "Whydah", ROLE_NAME, "welcome", config.logOnSystemTestApplicationAndSystemTestUser_getUserTokenXML()));
+    public void testUpdateRoleAndRefreshUserTokenWithExistingApplciation() {
+        if (config.isSystemTestEnabled()) {
+            WhydahUserSession whydahUserSession = new WhydahUserSession(client.getWAS(), config.userCredential);
+            assertTrue(client.updateOrCreateUserApplicationRoleEntry("101", "ACSResource", "Whydah", ROLE_NAME, "welcome", whydahUserSession.getActiveUserToken()));
         }
 	}
 	
