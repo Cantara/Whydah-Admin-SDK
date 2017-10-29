@@ -48,7 +48,7 @@ public class AddLotsOfTestUsersTest {
             UserToken adminUser = config.logOnSystemTestApplicationAndSystemTestUser();
 
             // Add 50 users
-            addTestUsers(adminUser, 60000, 60150);
+            addTestUsers(adminUser, 70000, 70050);
         }
     }
 
