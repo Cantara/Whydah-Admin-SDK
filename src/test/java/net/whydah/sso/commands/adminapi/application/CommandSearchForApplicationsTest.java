@@ -1,6 +1,8 @@
 package net.whydah.sso.commands.adminapi.application;
 
 import net.whydah.sso.commands.appauth.CommandVerifyUASAccessByApplicationTokenId;
+import net.whydah.sso.commands.application.CommandListApplications;
+import net.whydah.sso.commands.application.CommandSearchForApplications;
 import net.whydah.sso.session.WhydahApplicationSession;
 import net.whydah.sso.session.WhydahUserSession;
 import net.whydah.sso.user.types.UserCredential;
@@ -54,7 +56,7 @@ public class CommandSearchForApplicationsTest {
                 String applicationsJson = new CommandListApplications(config.userAdminServiceUri, applicationSession.getActiveApplicationTokenId()).execute();
                 log.debug("applicationsJson=" + first50(applicationsJson));
 
-                String applicationsJsonl = new CommandSearchForApplications(config.userAdminServiceUri, applicationSession.getActiveApplicationTokenId(), userSession.getActiveUserTokenId(), config.appCredential.getApplicationID()).execute();
+                String applicationsJsonl = new CommandSearchForApplications(config.userAdminServiceUri, applicationSession.getActiveApplicationTokenId(), config.appCredential.getApplicationID()).execute();
                 log.debug("applicationsJson=" + first50(applicationsJsonl));
                 assertTrue(applicationsJsonl != null);
             } else {

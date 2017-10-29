@@ -4,6 +4,7 @@ package net.whydah.sso.commands.adminapi.application;
 import net.whydah.sso.application.helpers.ApplicationHelper;
 import net.whydah.sso.application.mappers.ApplicationMapper;
 import net.whydah.sso.application.types.Application;
+import net.whydah.sso.commands.application.CommandListApplications;
 import net.whydah.sso.session.WhydahApplicationSession;
 import net.whydah.sso.session.WhydahUserSession;
 import net.whydah.sso.util.AdminSystemTestBaseConfig;

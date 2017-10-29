@@ -5,7 +5,7 @@ import net.whydah.sso.application.mappers.ApplicationMapper;
 import net.whydah.sso.application.types.Application;
 import net.whydah.sso.application.types.ApplicationCredential;
 import net.whydah.sso.commands.adminapi.application.CommandAddApplication;
-import net.whydah.sso.commands.adminapi.application.CommandListApplications;
+import net.whydah.sso.commands.application.CommandListApplications;
 import net.whydah.sso.commands.userauth.CommandGetUsertokenByUsertokenId;
 import net.whydah.sso.session.WhydahUserSession;
 import net.whydah.sso.session.baseclasses.BaseAdminWhydahServiceClient;

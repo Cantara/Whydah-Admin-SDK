@@ -6,13 +6,13 @@ import net.whydah.sso.commands.baseclasses.BaseHttpGetHystrixCommand;
 import java.net.URI;
 
 
-public class CommandSearchForApplications extends BaseHttpGetHystrixCommand<String> {
+public class CommandAdminSearchForApplications extends BaseHttpGetHystrixCommand<String> {
 
 
     private String applicationQuery;
     private String adminUserTokenId = null;
 
-    public CommandSearchForApplications(URI userAdminServiceUri, String myAppTokenId, String adminUserTokenId, String applicationQuery) {
+    public CommandAdminSearchForApplications(URI userAdminServiceUri, String myAppTokenId, String adminUserTokenId, String applicationQuery) {
         super(userAdminServiceUri, "", myAppTokenId, "UASUserAdminGroup", 12000);
         this.applicationQuery = applicationQuery;
         this.adminUserTokenId = adminUserTokenId;
