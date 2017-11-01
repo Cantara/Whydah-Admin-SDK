@@ -54,6 +54,7 @@ public class AddUserRoleTest {
 	}
 	
 	@Test
+    @Ignore // For now
     public void testUpdateRoleAndRefreshUserTokenWithExistingApplciation() {
         if (config.isSystemTestEnabled()) {
             WhydahUserSession whydahUserSession = new WhydahUserSession(client.getWAS(), config.userCredential);
