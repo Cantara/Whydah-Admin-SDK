@@ -17,7 +17,6 @@
         <developerConnection>scm:git:ssh://git@github.com/cantara/Whydah-Admin-SDK.git</developerConnection>
         <connection>scm:git:https://github.com/cantara/Whydah-Admin-SDK.git</connection>
         <url>https://github.com/cantara/Whydah-Java-SDK</url>
-        <tag>HEAD</tag>
     </scm>
 
 
