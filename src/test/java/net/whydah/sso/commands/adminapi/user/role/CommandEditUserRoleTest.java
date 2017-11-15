@@ -80,8 +80,8 @@ public class CommandEditUserRoleTest {
 
     }
 
-    private UserApplicationRoleEntry getTestNewUserRole(String userTokenId, String applicationId) {
-        UserApplicationRoleEntry role = new UserApplicationRoleEntry(userTokenId, applicationId, "TestOrg-" + UUID.randomUUID(), "TestRoleName-" + UUID.randomUUID(), "TestRoleValue");
+    private UserApplicationRoleEntry getTestNewUserRole(String userId, String applicationId) {
+        UserApplicationRoleEntry role = new UserApplicationRoleEntry(userId, applicationId, "TestOrg-" + UUID.randomUUID(), "", "TestRoleName-" + UUID.randomUUID(), "TestRoleValue");
 
         return role;
 

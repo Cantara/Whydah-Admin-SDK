@@ -57,11 +57,11 @@ public class WhydahAdminUtil extends WhydahUtil {
         List<String> createdRolesXml = new ArrayList<>();
         List<UserApplicationRoleEntry> createdRoles = new ArrayList<>();
 
-        String userName = "";
+       
         for (UserApplicationRoleEntry role : roles) {
             String roleXml = role.toXML();
             log.trace("Try to add role {}", roleXml);
-            userName = role.getUserName();
+           
             String userAddRoleResult = new CommandAddUserRole(URI.create(uasUri), applicationTokenId, adminUserTokenId, role.getUserId(), UserRoleMapper.toJson(role)).execute();
 
             if (userAddRoleResult != null && userAddRoleResult.length() > 5) {

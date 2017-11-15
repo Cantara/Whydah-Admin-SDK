@@ -86,34 +86,7 @@ public class UserTokenXpathHelperTest {
             "    </applications>\n" +
             "</whydahuser>";
 
-    String userAggregateJson = "{\n" +
-            "  \"uid\": \"uid\",\n" +
-            "  \"username\": \"usernameABC\",\n" +
-            "  \"firstName\": \"firstName\",\n" +
-            "  \"lastName\": \"lastName\",\n" +
-            "  \"personRef\": \"personRef\",\n" +
-            "  \"email\": \"email\",\n" +
-            "  \"cellPhone\": \"12345678\",\n" +
-            "  \"password\": \"password\",\n" +
-            "  \"roles\": [\n" +
-            "    {\n" +
-            "      \"applicationId\": \"applicationId\",\n" +
-            "      \"applicationName\": \"applicationName\",\n" +
-            "      \"organizationId\": \"organizationId\",\n" +
-            "      \"organizationName\": \"organizationName\",\n" +
-            "      \"applicationRoleName\": \"roleName\",\n" +
-            "      \"applicationRoleValue\": \"email\"\n" +
-            "    },\n" +
-            "    {\n" +
-            "      \"applicationId\": \"applicationId123\",\n" +
-            "      \"applicationName\": \"applicationName123\",\n" +
-            "      \"organizationId\": \"organizationId123\",\n" +
-            "      \"organizationName\": \"organizationName123\",\n" +
-            "      \"applicationRoleName\": \"roleName123\",\n" +
-            "      \"applicationRoleValue\": \"roleValue123\"\n" +
-            "    }\n" +
-            "  ]\n" +
-            "}";
+    
 
     String rolesXml = "<applications>\n" +
             "        <application>\n" +
@@ -171,14 +144,7 @@ public class UserTokenXpathHelperTest {
         assertFalse(UserXpathHelper.hasRoleFromUserToken(userToken, "2349785543", "pprreessiiddeenntt"));
     }
 
-    @Test
-    public void testGetUserRoleFromUserAggregateJSON() throws Exception {
-        UserApplicationRoleEntry roles[] = UserRoleXpathHelper.getUserRoleFromUserAggregateJson(userAggregateJson);
-        assertTrue("applicationId".equals(roles[0].getApplicationId()));
-        assertTrue("applicationId123".equals(roles[1].getApplicationId()));
-
-    }
-
+   
     @Test
     public void testRolesFromXml() throws Exception {
         log.debug("Try to parse xml {}", userAggregateXML);

@@ -71,8 +71,8 @@ public class CommandDeleteUserRoleTest {
 
     }
 
-    private String getTestNewUserRole(String userTokenId, String applicationId) {
-        UserApplicationRoleEntry role = new UserApplicationRoleEntry(userTokenId, applicationId, "TestOrg" + UUID.randomUUID(), "TestRolename" + UUID.randomUUID(), "testRoleValue");
+    private String getTestNewUserRole(String userId, String applicationId) {
+        UserApplicationRoleEntry role = new UserApplicationRoleEntry(userId, applicationId, "TestOrg" + UUID.randomUUID(), "", "TestRolename" + UUID.randomUUID(), "testRoleValue");
 
         return role.toJson();
 
