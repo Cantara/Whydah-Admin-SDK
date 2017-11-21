@@ -28,6 +28,7 @@ public class AddLotsOfTestUsersTest {
     static WhydahApplicationSession applicationSession;
     static WhydahUserSession whydahUserSession;
     private static final Logger log = getLogger(AddLotsOfTestUsersTest.class);
+    private static final int startFrom = 70000;
 
 
     @BeforeClass
@@ -48,7 +49,7 @@ public class AddLotsOfTestUsersTest {
             UserToken adminUser = config.logOnSystemTestApplicationAndSystemTestUser();
 
             // Add 50 users
-            addTestUsers(adminUser, 70000, 70050);
+            addTestUsers(adminUser, startFrom, 70050);
         }
     }
 
@@ -66,8 +67,8 @@ public class AddLotsOfTestUsersTest {
         UserAggregate ua = new UserAggregate(
                 c + "j" + "s_uid-" + i,
                 c + "s_username_" + i,
-                "firstName_" + i,
-                "lastName_" + i,
+                "FirstName " + (char) (i % startFrom + 65),
+                "lastName " + (char) (i % startFrom + 65),
                 "personRef_" + i,
                 "tester_" + i + "@whydah.com", String.valueOf(RandomUtils.nextInt(1000000000)));
         ua.setRoleList(new ArrayList<UserApplicationRoleEntry>());
