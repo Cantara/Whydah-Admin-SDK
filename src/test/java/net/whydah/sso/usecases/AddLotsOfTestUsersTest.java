@@ -67,8 +67,8 @@ public class AddLotsOfTestUsersTest {
         UserAggregate ua = new UserAggregate(
                 c + "j" + "s_uid-" + i,
                 c + "s_username_" + i,
-                "FirstName " + (char) (i % 32 + 65),
-                "lastName " + (char) (i % 32 + 65),
+                "FirstName",
+                "lastName",
                 "personRef_" + i,
                 "tester_" + i + "@whydah.com", String.valueOf(RandomUtils.nextInt(1000000000)));
         ua.setRoleList(new ArrayList<UserApplicationRoleEntry>());
