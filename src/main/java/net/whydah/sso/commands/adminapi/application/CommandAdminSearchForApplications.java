@@ -2,6 +2,8 @@ package net.whydah.sso.commands.adminapi.application;
 
 import com.github.kevinsawicki.http.HttpRequest;
 import net.whydah.sso.commands.baseclasses.BaseHttpGetHystrixCommand;
+import net.whydah.sso.ddd.model.application.ApplicationTokenID;
+import net.whydah.sso.ddd.model.user.UserTokenId;
 
 import java.net.URI;
 
@@ -16,7 +18,7 @@ public class CommandAdminSearchForApplications extends BaseHttpGetHystrixCommand
         super(userAdminServiceUri, "", myAppTokenId, "UASUserAdminGroup", 12000);
         this.applicationQuery = applicationQuery;
         this.adminUserTokenId = adminUserTokenId;
-        if (userAdminServiceUri == null || myAppTokenId == null || adminUserTokenId == null || applicationQuery == null || adminUserTokenId == null) {
+        if (userAdminServiceUri == null || !ApplicationTokenID.isValid(myAppTokenId) || !UserTokenId.isValid(adminUserTokenId) || applicationQuery == null || adminUserTokenId == null) {
             log.error(TAG + " initialized with null-values - will fail");
         }
     }

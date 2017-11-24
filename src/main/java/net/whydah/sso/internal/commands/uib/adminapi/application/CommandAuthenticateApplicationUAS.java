@@ -1,10 +1,11 @@
 package net.whydah.sso.internal.commands.uib.adminapi.application;
 
+import net.whydah.sso.commands.baseclasses.BaseHttpPostHystrixCommand;
+import net.whydah.sso.ddd.model.application.ApplicationTokenID;
+
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
-
-import net.whydah.sso.commands.baseclasses.BaseHttpPostHystrixCommand;
 
 /**
  * Used by UAS to autenticate application against UIB.
@@ -24,7 +25,7 @@ public class CommandAuthenticateApplicationUAS extends BaseHttpPostHystrixComman
 
 
         this.appCredentialXml = appCredentialXml;
-        if (uibUri == null || stsApplicationtokenId == null || appCredentialXml == null) {
+        if (uibUri == null || !ApplicationTokenID.isValid(stsApplicationtokenId) || appCredentialXml == null) {
             log.error("{} initialized with null-values - will fail", CommandAuthenticateApplicationUAS.class.getSimpleName());
         }
     }

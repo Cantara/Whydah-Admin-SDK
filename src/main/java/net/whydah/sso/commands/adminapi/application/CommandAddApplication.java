@@ -1,10 +1,11 @@
 package net.whydah.sso.commands.adminapi.application;
 
-import java.net.URI;
-
-import net.whydah.sso.commands.baseclasses.BaseHttpPostHystrixCommand;
-
 import com.github.kevinsawicki.http.HttpRequest;
+import net.whydah.sso.commands.baseclasses.BaseHttpPostHystrixCommand;
+import net.whydah.sso.ddd.model.application.ApplicationTokenID;
+import net.whydah.sso.ddd.model.user.UserTokenId;
+
+import java.net.URI;
 
 
 public class CommandAddApplication extends BaseHttpPostHystrixCommand<String> {
@@ -19,7 +20,7 @@ public class CommandAddApplication extends BaseHttpPostHystrixCommand<String> {
       
         this.adminUserTokenId = adminUserTokenId;
         this.applicationJson = applicationJson;
-        if (userAdminServiceUri == null || myAppTokenId == null || adminUserTokenId == null || applicationJson == null) {
+        if (userAdminServiceUri == null || !ApplicationTokenID.isValid(myAppTokenId) || !UserTokenId.isValid(adminUserTokenId) || applicationJson == null) {
             log.error(TAG + " initialized with null-values - will fail");
         }
 

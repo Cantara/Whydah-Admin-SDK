@@ -1,11 +1,12 @@
 package net.whydah.sso.commands.adminapi.application;
 
 
-import java.net.URI;
-
-import net.whydah.sso.commands.baseclasses.BaseHttpPutHystrixCommand;
-
 import com.github.kevinsawicki.http.HttpRequest;
+import net.whydah.sso.commands.baseclasses.BaseHttpPutHystrixCommand;
+import net.whydah.sso.ddd.model.application.ApplicationTokenID;
+import net.whydah.sso.ddd.model.user.UserTokenId;
+
+import java.net.URI;
 
 // TODO:  wait for https://github.com/Cantara/Whydah-UserAdminService/issues/35
 
@@ -24,8 +25,8 @@ public class CommandUpdateApplication extends BaseHttpPutHystrixCommand<String> 
         this.adminUserTokenId = adminUserTokenId;
         this.applicationJson = applicationJson;
         this.applicationId = applicationId;
-        
-        if (userAdminServiceUri == null || myAppTokenId == null || adminUserTokenId == null || applicationJson == null) {
+
+        if (userAdminServiceUri == null || !ApplicationTokenID.isValid(myAppTokenId) || !UserTokenId.isValid(adminUserTokenId) || applicationJson == null) {
             log.error(TAG + " initialized with null-values - will fail");
         }
 

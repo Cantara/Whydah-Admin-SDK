@@ -1,10 +1,11 @@
 package net.whydah.sso.commands.adminapi.user;
 
-import java.net.URI;
-
-import net.whydah.sso.commands.baseclasses.BaseHttpPutHystrixCommand;
-
 import com.github.kevinsawicki.http.HttpRequest;
+import net.whydah.sso.commands.baseclasses.BaseHttpPutHystrixCommand;
+import net.whydah.sso.ddd.model.application.ApplicationTokenID;
+import net.whydah.sso.ddd.model.user.UserTokenId;
+
+import java.net.URI;
 
 public class CommandUpdateUser extends BaseHttpPutHystrixCommand<String> {
   
@@ -19,7 +20,7 @@ public class CommandUpdateUser extends BaseHttpPutHystrixCommand<String> {
     	this.uid = uid;
         this.adminUserTokenId = adminUserTokenId;
         this.userJson = userJson;
-        if (userAdminServiceUri == null || myAppTokenId == null || adminUserTokenId == null || userJson == null) {
+        if (userAdminServiceUri == null || !ApplicationTokenID.isValid(myAppTokenId) || !UserTokenId.isValid(adminUserTokenId) || userJson == null) {
             log.error("CommandUpdateUser initialized with null-values - will fail");
         }
 

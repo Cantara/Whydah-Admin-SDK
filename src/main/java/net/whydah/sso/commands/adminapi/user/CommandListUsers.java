@@ -1,8 +1,10 @@
 package net.whydah.sso.commands.adminapi.user;
 
-import java.net.URI;
-
 import net.whydah.sso.commands.baseclasses.BaseHttpGetHystrixCommand;
+import net.whydah.sso.ddd.model.application.ApplicationTokenID;
+import net.whydah.sso.ddd.model.user.UserTokenId;
+
+import java.net.URI;
 
 
 public class CommandListUsers extends BaseHttpGetHystrixCommand<String> {
@@ -20,7 +22,7 @@ public class CommandListUsers extends BaseHttpGetHystrixCommand<String> {
             userQuery = "*";
         }
         this.userQuery = userQuery;
-        if (userAdminServiceUri == null || myAppTokenId == null || myAppTokenId.length() < 4 || adminUserTokenId == null || adminUserTokenId.length() < 4 || userQuery == null) {
+        if (userAdminServiceUri == null || !ApplicationTokenID.isValid(myAppTokenId) || !UserTokenId.isValid(adminUserTokenId) || userQuery == null) {
             log.error("CommandListUsers initialized with null-values - will fail - userAdminServiceUri:{}, myAppTokenId:{}, adminUserTokenId:{}, userQuery:{}", userAdminServiceUri, myAppTokenId, adminUserTokenId, userQuery);
 
         }

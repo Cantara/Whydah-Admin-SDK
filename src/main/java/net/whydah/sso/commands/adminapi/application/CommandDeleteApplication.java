@@ -1,8 +1,10 @@
 package net.whydah.sso.commands.adminapi.application;
 
-import java.net.URI;
-
 import net.whydah.sso.commands.baseclasses.BaseHttpDeleteHystrixCommand;
+import net.whydah.sso.ddd.model.application.ApplicationTokenID;
+import net.whydah.sso.ddd.model.user.UserTokenId;
+
+import java.net.URI;
 
 
 public class CommandDeleteApplication extends BaseHttpDeleteHystrixCommand<String> {
@@ -11,14 +13,14 @@ public class CommandDeleteApplication extends BaseHttpDeleteHystrixCommand<Strin
     String applicationId;
     String tokenId;
 
-    public CommandDeleteApplication(URI userAdminServiceUri, String myAppTokenId, String tokenId, String applicationId) {
+    public CommandDeleteApplication(URI userAdminServiceUri, String myAppTokenId, String adminUserTokenId, String applicationId) {
         super(userAdminServiceUri, "", myAppTokenId, "UASUserAdminGroup", 3000);
-        if (userAdminServiceUri == null || myAppTokenId == null || applicationId==null || tokenId ==null) {
+        if (userAdminServiceUri == null || !ApplicationTokenID.isValid(myAppTokenId) || !UserTokenId.isValid(adminUserTokenId) || tokenId == null) {
             log.error(TAG + " initialized with null-values - will fail - userAdminServiceUri={}, myAppTokenId={}", userAdminServiceUri, myAppTokenId);
         }
         
         this.applicationId = applicationId;
-        this.tokenId = tokenId;
+        this.tokenId = adminUserTokenId;
     }
 
 

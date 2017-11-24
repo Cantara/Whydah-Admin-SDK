@@ -1,8 +1,10 @@
 package net.whydah.sso.commands.adminapi.user;
 
-import java.net.URI;
-
 import net.whydah.sso.commands.baseclasses.BaseHttpGetHystrixCommandForBooleanType;
+import net.whydah.sso.ddd.model.application.ApplicationTokenID;
+import net.whydah.sso.ddd.model.user.UserTokenId;
+
+import java.net.URI;
 
 public class CommandUserExists extends BaseHttpGetHystrixCommandForBooleanType {
   
@@ -15,7 +17,7 @@ public class CommandUserExists extends BaseHttpGetHystrixCommandForBooleanType {
        
         this.adminUserTokenId = adminUserTokenId;
         this.userQuery = userQuery;
-        if (userAdminServiceUri == null || myAppTokenId == null || myAppTokenId.length() < 10 || adminUserTokenId == null || adminUserTokenId.length() < 10 || userQuery == null) {
+        if (userAdminServiceUri == null || !ApplicationTokenID.isValid(myAppTokenId) || !UserTokenId.isValid(adminUserTokenId) || adminUserTokenId.length() < 10 || userQuery == null) {
             log.error("CommandUserExists initialized with null-values - will fail - userAdminServiceUri:{}, myAppTokenId:{}, adminUserTokenId:{}, userQuery:{}", userAdminServiceUri, myAppTokenId, adminUserTokenId, userQuery);
 
         }

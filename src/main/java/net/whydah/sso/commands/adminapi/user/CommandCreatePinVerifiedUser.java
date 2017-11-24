@@ -1,11 +1,13 @@
 package net.whydah.sso.commands.adminapi.user;
 
+import net.whydah.sso.commands.baseclasses.BaseHttpPostHystrixCommand;
+import net.whydah.sso.ddd.model.application.ApplicationTokenID;
+import net.whydah.sso.ddd.model.user.UserTokenId;
+import net.whydah.sso.user.types.UserCredential;
+
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
-
-import net.whydah.sso.commands.baseclasses.BaseHttpPostHystrixCommand;
-import net.whydah.sso.user.types.UserCredential;
 
 public class CommandCreatePinVerifiedUser extends BaseHttpPostHystrixCommand<String>{
 
@@ -27,7 +29,7 @@ public class CommandCreatePinVerifiedUser extends BaseHttpPostHystrixCommand<Str
 		this.pin = pin;
 		this.cellPhone = phoneNo;
         this.json = userIdentityJson;
-        if (serviceUri == null || myAppTokenId == null || myAppTokenXml == null || adminUserTokenId == null || userTicket == null || pin == null || cellPhone == null || userIdentityJson == null) {
+        if (serviceUri == null || !ApplicationTokenID.isValid(myAppTokenId) || !UserTokenId.isValid(adminUserTokenId) || myAppTokenXml == null || userTicket == null || pin == null || cellPhone == null || userIdentityJson == null) {
             log.error(TAG + " initialized with null-values - will fail - userAdminServiceUri:{}, myAppTokenId:{}, adminUserTokenId:{}, userIdentityJson:{}", serviceUri, myAppTokenId, adminUserTokenId, userIdentityJson);
         }
 

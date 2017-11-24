@@ -1,11 +1,12 @@
 package net.whydah.sso.commands.adminapi.application;
 
+import com.github.kevinsawicki.http.HttpRequest;
+import net.whydah.sso.commands.baseclasses.BaseHttpGetHystrixCommand;
+import net.whydah.sso.ddd.model.application.ApplicationTokenID;
+import net.whydah.sso.ddd.model.user.UserTokenId;
+
 import java.net.HttpURLConnection;
 import java.net.URI;
-
-import net.whydah.sso.commands.baseclasses.BaseHttpGetHystrixCommand;
-
-import com.github.kevinsawicki.http.HttpRequest;
 
 
 public class CommandGetApplicationById extends BaseHttpGetHystrixCommand<String> {
@@ -17,7 +18,7 @@ public class CommandGetApplicationById extends BaseHttpGetHystrixCommand<String>
 
     public CommandGetApplicationById(URI userAdminServiceUri, String myAppTokenId, String adminUserTokenId, String applicationId) {
         super(userAdminServiceUri, "", myAppTokenId, "UASUserAdminGroup", 3000);
-        if (userAdminServiceUri == null || myAppTokenId == null || adminUserTokenId == null || applicationId == null) {
+        if (userAdminServiceUri == null || !ApplicationTokenID.isValid(myAppTokenId) || !UserTokenId.isValid(adminUserTokenId) || applicationId == null) {
             log.error(TAG + " initialized with null-values - will fail - userAdminServiceUri={}, myAppTokenId={}, adminUserTokenId={}, applicationId={}", userAdminServiceUri, myAppTokenId, adminUserTokenId, applicationId);
         }
         this.adminUserTokenId = adminUserTokenId;

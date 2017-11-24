@@ -1,10 +1,11 @@
 package net.whydah.sso.internal.commands.uib.userauth;
 
-import java.net.URI;
-
-import net.whydah.sso.commands.baseclasses.BaseHttpPostHystrixCommand;
-
 import com.github.kevinsawicki.http.HttpRequest;
+import net.whydah.sso.commands.baseclasses.BaseHttpPostHystrixCommand;
+import net.whydah.sso.ddd.model.application.ApplicationTokenID;
+import net.whydah.sso.ddd.model.user.UID;
+
+import java.net.URI;
 
 public class CommandChangeUserPasswordUsingToken extends BaseHttpPostHystrixCommand<String> {
     static final String CHANGE_USERCRED_TOKEN_KEY = "changePasswordToken";
@@ -22,7 +23,7 @@ public class CommandChangeUserPasswordUsingToken extends BaseHttpPostHystrixComm
         this.uid = uid;
         this.changePasswordToken = changePasswordToken;
         this.json = json;
-        if (uibUri == null || applicationtokenId == null || uid == null || changePasswordToken == null || json == null) {
+        if (uibUri == null || !ApplicationTokenID.isValid(applicationtokenId) || !UID.isValid(uid) || changePasswordToken == null || json == null) {
             log.error("{} initialized with null-values - will fail", CommandChangeUserPasswordUsingToken.class.getSimpleName());
         }
     }

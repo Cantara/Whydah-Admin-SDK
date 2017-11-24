@@ -1,8 +1,9 @@
 package net.whydah.sso.commands.adminapi.user;
 
-import java.net.URI;
-
 import net.whydah.sso.commands.baseclasses.BaseHttpGetHystrixCommandForBooleanType;
+import net.whydah.sso.ddd.model.application.ApplicationTokenID;
+
+import java.net.URI;
 
 public class CommandUserPasswordLoginEnabled extends BaseHttpGetHystrixCommandForBooleanType {
 
@@ -14,7 +15,7 @@ public class CommandUserPasswordLoginEnabled extends BaseHttpGetHystrixCommandFo
 //        super(userAdminServiceUri, "", myAppTokenId, "UASUserAdminGroup", 6000);
 
         this.userName = userName;
-        if (userAdminServiceUri == null || myAppTokenId == null || userName == null) {
+        if (userAdminServiceUri == null || !ApplicationTokenID.isValid(myAppTokenId) || userName == null) {
             log.error("CommandUserPasswordLoginEnabled initialized with null-values - will fail - userAdminServiceUri:{}, myAppTokenId:{}, userName:{}", userAdminServiceUri, myAppTokenId, userName);
 
         }

@@ -1,8 +1,9 @@
 package net.whydah.sso.commands.adminapi.user;
 
-import java.net.URI;
-
 import net.whydah.sso.commands.baseclasses.BaseHttpGetHystrixCommand;
+import net.whydah.sso.ddd.model.application.ApplicationTokenID;
+
+import java.net.URI;
 
 
 public class CommandGetLastSeenForUserByUserEmail extends BaseHttpGetHystrixCommand<String> {
@@ -14,7 +15,7 @@ public class CommandGetLastSeenForUserByUserEmail extends BaseHttpGetHystrixComm
     	super(tokenServiceUri, "", myAppTokenId, "STSUserQueries", 6000);
         
         this.userEmail = userEmail;
-        if (tokenServiceUri == null || myAppTokenId == null || userEmail == null) {
+        if (tokenServiceUri == null || !ApplicationTokenID.isValid(myAppTokenId) || userEmail == null) {
             log.error(TAG + " initialized with null-values - will fail tokenServiceUri:{} myAppTokenId:{}, userEmail:{}", tokenServiceUri, myAppTokenId, userEmail);
         }
 

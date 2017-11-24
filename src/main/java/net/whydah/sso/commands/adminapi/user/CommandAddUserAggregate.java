@@ -1,10 +1,11 @@
 package net.whydah.sso.commands.adminapi.user;
 
-import java.net.URI;
-
-import net.whydah.sso.commands.baseclasses.BaseHttpPostHystrixCommand;
-
 import com.github.kevinsawicki.http.HttpRequest;
+import net.whydah.sso.commands.baseclasses.BaseHttpPostHystrixCommand;
+import net.whydah.sso.ddd.model.application.ApplicationTokenID;
+import net.whydah.sso.ddd.model.user.UserTokenId;
+
+import java.net.URI;
 
 public class CommandAddUserAggregate extends BaseHttpPostHystrixCommand<String> {
 
@@ -16,7 +17,7 @@ public class CommandAddUserAggregate extends BaseHttpPostHystrixCommand<String> 
       
         this.adminUserTokenId = adminUserTokenId;
         this.userAggregateJson = userAggregateJson;
-        if (userAdminServiceUri == null || myAppTokenId == null || adminUserTokenId == null || userAggregateJson == null) {
+        if (userAdminServiceUri == null || !ApplicationTokenID.isValid(myAppTokenId) || !UserTokenId.isValid(adminUserTokenId) || userAggregateJson == null) {
             log.error(TAG + " initialized with null-values - will fail - userAdminServiceUri:{}, myAppTokenId:{}, adminUserTokenId:{}, userAggregateJson:{}", userAdminServiceUri, myAppTokenId, adminUserTokenId, userAggregateJson);
         }
     }
