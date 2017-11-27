@@ -17,7 +17,7 @@ public class CommandUpdateUserRole extends BaseHttpPutHystrixCommand<String> {
 
 
     public CommandUpdateUserRole(URI userAdminServiceUri, String myAppTokenId, String adminUserTokenId, String uId, String roleId, String roleJson) {
-        super(userAdminServiceUri, "", myAppTokenId, "UASUserAdminGroup");
+        super(userAdminServiceUri, "", myAppTokenId, "UASUserAdminGroup", 3000000);
 
         this.adminUserTokenId = adminUserTokenId;
         this.userRoleJson = roleJson;

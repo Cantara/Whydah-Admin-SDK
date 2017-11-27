@@ -12,7 +12,7 @@ public class CommandGetUserRoles extends BaseHttpGetHystrixCommand<String> {
 
 
     public CommandGetUserRoles(URI userAdminServiceUri, String myAppTokenId, String adminUserTokenId, String userID) {
-        super(userAdminServiceUri, "", myAppTokenId, "UASUserAdminGroup", 3000);
+        super(userAdminServiceUri, "", myAppTokenId, "UASUserAdminGroup", 3000000);
 
 
         this.adminUserTokenId = adminUserTokenId;

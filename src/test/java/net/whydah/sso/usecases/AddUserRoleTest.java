@@ -49,7 +49,7 @@ public class AddUserRoleTest {
     public void testUpdateRoleAndRefreshUserTokenWithNonExistingApplication() {
         if (config.isSystemTestEnabled()) {
             WhydahUserSession whydahUserSession = new WhydahUserSession(client.getWAS(), config.userCredential);
-            assertFalse(client.updateOrCreateUserApplicationRoleEntry("4444", "NON-EXISTING", "Whydah", ROLE_NAME, "welcome", whydahUserSession.getActiveUserToken()));
+            assertFalse(client.updateOrCreateUserApplicationRoleEntry("4444", "NON-EXISTING", "Whydah", ROLE_NAME, "welcome", whydahUserSession.getActiveUserToken(), whydahUserSession.getActiveUserToken()));
         }
 	}
 	
@@ -58,7 +58,7 @@ public class AddUserRoleTest {
     public void testUpdateRoleAndRefreshUserTokenWithExistingApplciation() {
         if (config.isSystemTestEnabled()) {
             WhydahUserSession whydahUserSession = new WhydahUserSession(client.getWAS(), config.userCredential);
-            assertTrue(client.updateOrCreateUserApplicationRoleEntry("101", "ACSResource", "Whydah", ROLE_NAME, "welcome", whydahUserSession.getActiveUserToken()));
+            assertTrue(client.updateOrCreateUserApplicationRoleEntry("101", "ACSResource", "Whydah", ROLE_NAME, "welcome", whydahUserSession.getActiveUserToken(), whydahUserSession.getActiveUserToken()));
         }
 	}
 	
@@ -90,7 +90,7 @@ public class AddUserRoleTest {
             
            //NOTE: don't use newApplication.getId(). This is wrong b/c application is assigned a new unique ID from UIB
             //assertFalse(client.updateOrCreateUserApplicationRoleEntry(newApplication.getId(), newApplication.getName(), "Whydah", roleName, "welcome", userTokenXml1));
-            assertFalse(client.updateOrCreateUserApplicationRoleEntry("", newApplication.getName(), "Whydah", ROLE_NAME, "welcome", userTokenXml1));
+            assertFalse(client.updateOrCreateUserApplicationRoleEntry("", newApplication.getName(), "Whydah", ROLE_NAME, "welcome", userTokenXml1, userTokenXml1));
             //should update the application list
 			client.getWAS().updateApplinks(true);
 			
@@ -99,7 +99,7 @@ public class AddUserRoleTest {
 			
 			//NOTE: don't use newApplication.getId(). This is wrong b/c application is assigned a new unique ID from UIB
             //assertTrue(client.updateOrCreateUserApplicationRoleEntry(newApplication.getId(), newApplication.getName(), "Whydah", roleName, "welcome", userTokenXml1));
-			assertTrue(client.updateOrCreateUserApplicationRoleEntry("", newApplication.getName(), "Whydah", ROLE_NAME, "welcome", userTokenXml1));
+			assertTrue(client.updateOrCreateUserApplicationRoleEntry("", newApplication.getName(), "Whydah", ROLE_NAME, "welcome", userTokenXml1, userTokenXml1));
 
             Thread.sleep(1000);  //
 

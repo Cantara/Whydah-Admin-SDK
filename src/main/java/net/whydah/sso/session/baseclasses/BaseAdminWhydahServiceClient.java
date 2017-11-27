@@ -332,9 +332,9 @@ public class BaseAdminWhydahServiceClient {
     }
 
     //UPDATE OR CREATE ROLE ENTRY
-    public boolean updateOrCreateUserApplicationRoleEntry(String applicationId, String applicationName, String organization, String roleName, String roleValue, String userTokenXml) {
+    public boolean updateOrCreateUserApplicationRoleEntry(String applicationId, String applicationName, String organization, String roleName, String roleValue, String userTokenXml, String adminUserTokenXml) {
 
-        boolean result = false;
+       
         try {
             //    	a) find the correct application/website the customer shall return to (redirectURI/from view)
             //		b) lookup and find the userRole the user have for this application with roleName="INNData" (UAS)
@@ -344,6 +344,8 @@ public class BaseAdminWhydahServiceClient {
             //implement
             //step a -> find correct app
             UserToken userToken = UserTokenMapper.fromUserTokenXml(userTokenXml);
+            UserToken adminUserToken = UserTokenMapper.fromUserTokenXml(adminUserTokenXml);
+            
             List<Application> apps = getApplicationList();
             if (apps == null || apps.size() == 0) {
                 log.warn("No APPS initialized - trying to refrest application list");
@@ -353,7 +355,7 @@ public class BaseAdminWhydahServiceClient {
             log.debug("application_list's size: {} apps", apps.size());
             Application appFound = null;
             for (Application app : apps) {
-                if (app.getId() != null && app.getId().equalsIgnoreCase(applicationId) || app.getName().equalsIgnoreCase(applicationName)) {
+                if (app.getId() != null && app.getId().equalsIgnoreCase(applicationId)) {
                     appFound = app;
                     break;
                 }
@@ -361,14 +363,18 @@ public class BaseAdminWhydahServiceClient {
 
             if (appFound == null) {
                 log.debug("find app: app is not found, appId {} or appName {}", applicationId, applicationName);
-                result = false;
+               return false;
             } else {
-                String rolesJson = new CommandGetUserRoles(uri_useradmin_service, getMyAppTokenID(), userToken.getUserTokenId(), userToken.getUid()).execute();
+                String rolesJson = new CommandGetUserRoles(uri_useradmin_service, getMyAppTokenID(), adminUserToken.getUserTokenId(), userToken.getUid()).execute();
+                if(rolesJson==null){
+        			log.error("Cannot retrieve the user role data");
+        			return false;
+        		}
                 //step b -> find userRole
                 List<UserApplicationRoleEntry> appRoleEntryList = UserRoleMapper.fromJsonAsList(rolesJson);
                 UserApplicationRoleEntry selectApplicationEntry = null;
                 for (UserApplicationRoleEntry appRoleEntry : appRoleEntryList) {
-                    if (!(appFound.getId() == null) && appFound.getId().equals(appRoleEntry.getApplicationId())) {
+                    if (appFound.getId().equals(appRoleEntry.getApplicationId())) {
                         if (appRoleEntry.getRoleName().equalsIgnoreCase(roleName)) {
                             selectApplicationEntry = appRoleEntry;
                             break;
@@ -376,35 +382,43 @@ public class BaseAdminWhydahServiceClient {
                     }
                 }
 
+                String result = null;
                 //step c
                 if (selectApplicationEntry == null) {
                     //create new application, this command is already tested
-                    UserApplicationRoleEntry userRole = new UserApplicationRoleEntry(userToken.getUserTokenId(), appFound.getId(), appFound.getName(), organization, roleName, roleValue);
-                    String userAddRoleResult = new CommandAddUserRole(uri_useradmin_service, getMyAppTokenID(), userToken.getUserTokenId(), userToken.getUid(), userRole.toJson()).execute();
-                    log.debug("new: userAddRoleResult:{}", userAddRoleResult);
+                    UserApplicationRoleEntry userRole = new UserApplicationRoleEntry(userToken.getUid(), appFound.getId(), appFound.getName(), organization, roleName, roleValue);
+                    result = new CommandAddUserRole(uri_useradmin_service, getMyAppTokenID(), adminUserToken.getUserTokenId(), userToken.getUid(), userRole.toJson()).execute();
+                    log.debug("new: userAddRoleResult:{}", result);
                 } else {
-
                     selectApplicationEntry.setRoleValue(roleValue);
-                    String editedUserRoleResult = new CommandUpdateUserRole(uri_useradmin_service, getMyAppTokenID(), userToken.getUserTokenId(), userToken.getUid(), selectApplicationEntry.getId(), selectApplicationEntry.toJson()).execute();
-                    log.debug("update: userUpdateRoleResult:{}", editedUserRoleResult);
+                    result = new CommandUpdateUserRole(uri_useradmin_service, getMyAppTokenID(), adminUserToken.getUserTokenId(), userToken.getUid(), selectApplicationEntry.getId(), selectApplicationEntry.toJson()).execute();
+                    log.debug("update: userUpdateRoleResult:{}", result);
                 }
+                
+                if(result!=null){
+        			return true;
+        		} else {
+        			return false;
+        		}
+        		
 
-                Thread.sleep(1000);
-
-                String updatedUserTokenXML = (new CommandRefreshUserToken(uri_securitytoken_service, getMyAppTokenID(), getMyAppTokenXml(), userToken.getUserTokenId()).execute());
-                log.debug("Updated UserToken: {}", updatedUserTokenXML);
-                if (updatedUserTokenXML != null && updatedUserTokenXML.length() > 10) {
-                    result = true;
-                }
+//refresh is already called from UAS 
+//No need to call from here, CommandUpdateUserRole/CommandAddUserRole will trigger the refresh_usertoken from UAS after updating
+//                Thread.sleep(1000);
+//                String updatedUserTokenXML = (new CommandRefreshUserToken(uri_securitytoken_service, getMyAppTokenID(), getMyAppTokenXml(), userToken.getUserTokenId()).execute());
+//                log.debug("Updated UserToken: {}", updatedUserTokenXML);
+//                if (updatedUserTokenXML != null && updatedUserTokenXML.length() > 10) {
+//                    return true;
+//                }
             }
 
         } catch (Exception ex) {
             ex.printStackTrace();
             log.error("updateOrCreateUserApplicationRoleEntry failed: " + ex.getMessage());
-            result = false;
+            return false;
         }
 
-        return result;
+      
     }
 
 
