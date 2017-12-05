@@ -24,7 +24,7 @@ import static org.junit.Assert.assertTrue;
 public class AdminSystemTestBaseConfig {
 
     // Run the Whydah SystemTests?
-    public boolean systemTest = false;
+    public boolean systemTest = true;
 
     
     public static final boolean SYSTEST_PROPERTY_ANONYMOUSTOKEN = true;
