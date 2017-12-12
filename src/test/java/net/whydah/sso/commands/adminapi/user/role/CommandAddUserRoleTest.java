@@ -61,7 +61,7 @@ public class CommandAddUserRoleTest {
 //			if (updatedUserTokenXML != null && updatedUserTokenXML.length() > 10) {
 //				
 //			}
-            Thread.sleep(5000);//wait to update
+            Thread.sleep(11000);//wait to update - ensure that we wait long enough to make the change propagate through the system
             // Force update with new role
             String userToken2 = new CommandLogonUserByUserCredential(config.tokenServiceUri, myApplicationTokenID, myAppTokenXml, config.userCredential, userticket).execute();
             //log.debug("userToken2:" + userToken2);
