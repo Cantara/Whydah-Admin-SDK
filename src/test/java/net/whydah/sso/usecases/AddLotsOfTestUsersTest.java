@@ -70,7 +70,8 @@ public class AddLotsOfTestUsersTest {
                 "FirstName",
                 "lastName",
                 "personRef_" + i,
-                "tester_" + i + "@whydah.com", String.valueOf(RandomUtils.nextInt(1000000000)));
+                "tester_" + i + "@whydah.com",
+                "" + String.valueOf(10000000 + RandomUtils.nextInt(90000000)));
         ua.setRoleList(new ArrayList<UserApplicationRoleEntry>());
         String json = UserAggregateMapper.toJson(ua);
 
