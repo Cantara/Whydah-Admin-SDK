@@ -25,17 +25,11 @@ public class WhydahAdminUserSession {
     private String userTokenId;
     private String userTokenXML;
 
-    private WhydahAdminUserSession() {
-
-    }
-
-
     public WhydahAdminUserSession(WhydahApplicationSession was, UserCredential userCredential) {
         if (was == null || was.getActiveApplicationTokenId() == null || was.getActiveApplicationTokenId().length() < 4) {
             log.error("Error, unable to initialize new user session, application session invalid:" + was.getActiveApplicationTokenId());
 
         }
-
 
         this.was = was;
         this.userCredential = userCredential;
@@ -115,7 +109,7 @@ public class WhydahAdminUserSession {
                 }
                 // If we keep failing, let us force renew of application session too
                 if (n > 3) {
-                    was.killApplicationSession();
+                    was.resetApplicationSession();
                     n = 0;
                 }
             }
