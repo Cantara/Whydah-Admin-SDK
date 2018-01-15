@@ -16,7 +16,7 @@ public class CommandAddApplication extends BaseHttpPostHystrixCommand<String> {
 
 
     public CommandAddApplication(URI userAdminServiceUri, String myAppTokenId, String adminUserTokenId, String applicationJson) {
-        super(userAdminServiceUri, "", myAppTokenId, "UASUserAdminGroup", 60000);
+        super(userAdminServiceUri, "", myAppTokenId, "UASUserAdminGroup", 6000);
       
         this.adminUserTokenId = adminUserTokenId;
         this.applicationJson = applicationJson;
