@@ -150,7 +150,7 @@ public class BaseAdminWhydahServiceClient {
     }
 
     public static Integer calculateTokenRemainingLifetimeInSeconds(String userTokenXml) {
-        Integer tokenLifespanSec = UserTokenXpathHelper.getLifespan(userTokenXml);
+        Long tokenLifespanSec = UserTokenXpathHelper.getLifespan(userTokenXml);
         Long tokenTimestampMsSinceEpoch = UserTokenXpathHelper.getTimestamp(userTokenXml);
 
         if (tokenLifespanSec == null || tokenTimestampMsSinceEpoch == null) {
