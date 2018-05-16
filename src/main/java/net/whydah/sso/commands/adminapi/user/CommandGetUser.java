@@ -10,10 +10,22 @@ public class CommandGetUser extends BaseHttpGetHystrixCommand<String> {
  
     private String adminUserTokenId;
     private String userId;
-
+    public static int DEFAULT_TIMEOUT = 6000;
 
     public CommandGetUser(URI userAdminServiceUri, String myAppTokenId, String adminUserTokenId, String userID) {
-    	super(userAdminServiceUri, "", myAppTokenId,"UASUserAdminGroup", 3000);
+    	super(userAdminServiceUri, "", myAppTokenId,"UASUserAdminGroup", DEFAULT_TIMEOUT);
+    	
+        
+        this.adminUserTokenId = adminUserTokenId;
+        this.userId = userID;
+        if (userAdminServiceUri == null || !ApplicationTokenID.isValid(myAppTokenId) || !UserTokenId.isValid(adminUserTokenId) || userID == null) {
+            log.error(TAG + " initialized with null-values - will fail");
+        }
+
+    }
+    
+    public CommandGetUser(URI userAdminServiceUri, String myAppTokenId, String adminUserTokenId, String userID, int timeout) {
+    	super(userAdminServiceUri, "", myAppTokenId,"UASUserAdminGroup", timeout);
     	
         
         this.adminUserTokenId = adminUserTokenId;

@@ -14,10 +14,24 @@ public class CommandUpdateUserRole extends BaseHttpPutHystrixCommand<String> {
     private String userRoleJson;
     private String uId;
     private String roleId;
-
+    public static int DEFAULT_TIMEOUT = 6000;
 
     public CommandUpdateUserRole(URI userAdminServiceUri, String myAppTokenId, String adminUserTokenId, String uId, String roleId, String roleJson) {
-        super(userAdminServiceUri, "", myAppTokenId, "UASUserAdminGroup", 3000);
+        super(userAdminServiceUri, "", myAppTokenId, "UASUserAdminGroup", DEFAULT_TIMEOUT);
+
+        this.adminUserTokenId = adminUserTokenId;
+        this.userRoleJson = roleJson;
+        this.uId = uId;
+        this.roleId = roleId;
+        if (userAdminServiceUri == null || myAppTokenId == null || adminUserTokenId == null || uId == null || roleId == null || roleJson == null) {
+            log.error(TAG + " initialized with null-values - will fail");
+        }
+
+
+    }
+    
+    public CommandUpdateUserRole(URI userAdminServiceUri, String myAppTokenId, String adminUserTokenId, String uId, String roleId, String roleJson, int timeout) {
+        super(userAdminServiceUri, "", myAppTokenId, "UASUserAdminGroup", timeout);
 
         this.adminUserTokenId = adminUserTokenId;
         this.userRoleJson = roleJson;

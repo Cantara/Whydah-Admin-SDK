@@ -10,12 +10,21 @@ import java.net.URI;
 
 public class CommandAdminSearchForApplications extends BaseHttpGetHystrixCommand<String> {
 
-
+	public static int DEFAULT_TIMEOUT = 6000;
     private String applicationQuery;
     private String adminUserTokenId = null;
 
     public CommandAdminSearchForApplications(URI userAdminServiceUri, String myAppTokenId, String adminUserTokenId, String applicationQuery) {
-        super(userAdminServiceUri, "", myAppTokenId, "UASUserAdminGroup", 12000);
+        super(userAdminServiceUri, "", myAppTokenId, "UASUserAdminGroup", DEFAULT_TIMEOUT);
+        this.applicationQuery = applicationQuery;
+        this.adminUserTokenId = adminUserTokenId;
+        if (userAdminServiceUri == null || !ApplicationTokenID.isValid(myAppTokenId) || !UserTokenId.isValid(adminUserTokenId) || applicationQuery == null || adminUserTokenId == null) {
+            log.error(TAG + " initialized with null-values - will fail");
+        }
+    }
+    
+    public CommandAdminSearchForApplications(URI userAdminServiceUri, String myAppTokenId, String adminUserTokenId, String applicationQuery, int timeout) {
+        super(userAdminServiceUri, "", myAppTokenId, "UASUserAdminGroup", timeout);
         this.applicationQuery = applicationQuery;
         this.adminUserTokenId = adminUserTokenId;
         if (userAdminServiceUri == null || !ApplicationTokenID.isValid(myAppTokenId) || !UserTokenId.isValid(adminUserTokenId) || applicationQuery == null || adminUserTokenId == null) {

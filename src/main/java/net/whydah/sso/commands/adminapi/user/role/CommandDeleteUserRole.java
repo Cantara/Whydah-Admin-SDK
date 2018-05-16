@@ -9,7 +9,7 @@ public class CommandDeleteUserRole extends BaseHttpDeleteHystrixCommandForBoolea
     private String adminUserTokenId;
     private String roleId;
     private String uId;
-
+    public static int DEFAULT_TIMEOUT = 6000;
 
     /**
      * @DELETE
@@ -17,7 +17,20 @@ public class CommandDeleteUserRole extends BaseHttpDeleteHystrixCommandForBoolea
      * @PathParam("uid") String uid, @PathParam("roleid") String roleid) {
      */
     public CommandDeleteUserRole(URI userAdminServiceUri, String myAppTokenId, String adminUserTokenId, String uId, String roleId) {
-        super(userAdminServiceUri, "", myAppTokenId, "UASUserAdminGroup",3000);
+        super(userAdminServiceUri, "", myAppTokenId, "UASUserAdminGroup", DEFAULT_TIMEOUT);
+
+        this.adminUserTokenId = adminUserTokenId;
+        this.roleId = roleId;
+        this.uId = uId;
+        if (userAdminServiceUri == null || myAppTokenId == null || adminUserTokenId == null || uId == null || roleId == null) {
+            log.error(TAG + " initialized with null-values - will fail");
+        }
+
+
+    }
+    
+    public CommandDeleteUserRole(URI userAdminServiceUri, String myAppTokenId, String adminUserTokenId, String uId, String roleId, int timeout) {
+        super(userAdminServiceUri, "", myAppTokenId, "UASUserAdminGroup", timeout);
 
         this.adminUserTokenId = adminUserTokenId;
         this.roleId = roleId;

@@ -10,7 +10,7 @@ import java.net.URI;
 public class CommandChangeUserPasswordUsingToken extends BaseHttpPostHystrixCommand<String> {
     static final String CHANGE_USERCRED_TOKEN_KEY = "changePasswordToken";
 
-  
+    public static int DEFAULT_TIMEOUT = 6000;
     
     private String uid;
     private String changePasswordToken;
@@ -18,7 +18,18 @@ public class CommandChangeUserPasswordUsingToken extends BaseHttpPostHystrixComm
 
 
     public CommandChangeUserPasswordUsingToken(String uibUri, String applicationtokenId, String uid, String changePasswordToken, String json) {
-    	super(URI.create(uibUri),"", applicationtokenId,"SSOAUserAuthGroup");
+    	super(URI.create(uibUri),"", applicationtokenId,"SSOAUserAuthGroup", DEFAULT_TIMEOUT);
+       
+        this.uid = uid;
+        this.changePasswordToken = changePasswordToken;
+        this.json = json;
+        if (uibUri == null || !ApplicationTokenID.isValid(applicationtokenId) || !UID.isValid(uid) || changePasswordToken == null || json == null) {
+            log.error("{} initialized with null-values - will fail", CommandChangeUserPasswordUsingToken.class.getSimpleName());
+        }
+    }
+    
+    public CommandChangeUserPasswordUsingToken(String uibUri, String applicationtokenId, String uid, String changePasswordToken, String json, int timeout) {
+    	super(URI.create(uibUri),"", applicationtokenId,"SSOAUserAuthGroup", timeout);
        
         this.uid = uid;
         this.changePasswordToken = changePasswordToken;

@@ -14,10 +14,10 @@ public class CommandGetApplicationById extends BaseHttpGetHystrixCommand<String>
     private final String adminUserTokenId;
     private final String applicationId;
     int retryCnt = 0;
-
+    public static int DEFAULT_TIMEOUT = 6000;
 
     public CommandGetApplicationById(URI userAdminServiceUri, String myAppTokenId, String adminUserTokenId, String applicationId) {
-        super(userAdminServiceUri, "", myAppTokenId, "UASUserAdminGroup", 3000);
+        super(userAdminServiceUri, "", myAppTokenId, "UASUserAdminGroup", DEFAULT_TIMEOUT);
         if (userAdminServiceUri == null || !ApplicationTokenID.isValid(myAppTokenId) || !UserTokenId.isValid(adminUserTokenId) || applicationId == null) {
             log.error(TAG + " initialized with null-values - will fail - userAdminServiceUri={}, myAppTokenId={}, adminUserTokenId={}, applicationId={}", userAdminServiceUri, myAppTokenId, adminUserTokenId, applicationId);
         }
@@ -25,6 +25,14 @@ public class CommandGetApplicationById extends BaseHttpGetHystrixCommand<String>
         this.applicationId = applicationId;
     }
 
+    public CommandGetApplicationById(URI userAdminServiceUri, String myAppTokenId, String adminUserTokenId, String applicationId, int timeout) {
+        super(userAdminServiceUri, "", myAppTokenId, "UASUserAdminGroup", timeout);
+        if (userAdminServiceUri == null || !ApplicationTokenID.isValid(myAppTokenId) || !UserTokenId.isValid(adminUserTokenId) || applicationId == null) {
+            log.error(TAG + " initialized with null-values - will fail - userAdminServiceUri={}, myAppTokenId={}, adminUserTokenId={}, applicationId={}", userAdminServiceUri, myAppTokenId, adminUserTokenId, applicationId);
+        }
+        this.adminUserTokenId = adminUserTokenId;
+        this.applicationId = applicationId;
+    }
 
     @Override
     protected String dealWithFailedResponse(String responseBody, int statusCode) {

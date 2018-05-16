@@ -15,13 +15,13 @@ import java.util.Map;
 public class CommandAuthenticateApplicationUAS extends BaseHttpPostHystrixCommand<String> {
     public static final String APP_CREDENTIAL_XML = "appCredentialXml";
     private static final String APPLICATION_AUTH_PATH = "application/auth";
-
+    public static int DEFAULT_TIMEOUT = 6000;
     
     private String appCredentialXml;
 
 
     public CommandAuthenticateApplicationUAS(String uibUri, String stsApplicationtokenId, String appCredentialXml) {
-        super(URI.create(uibUri), "", stsApplicationtokenId, "UIBApplicationAdminGroup");
+        super(URI.create(uibUri), "", stsApplicationtokenId, "UIBApplicationAdminGroup", DEFAULT_TIMEOUT);
 
 
         this.appCredentialXml = appCredentialXml;
@@ -31,6 +31,15 @@ public class CommandAuthenticateApplicationUAS extends BaseHttpPostHystrixComman
     }
 
 
+    public CommandAuthenticateApplicationUAS(String uibUri, String stsApplicationtokenId, String appCredentialXml, int timeout) {
+        super(URI.create(uibUri), "", stsApplicationtokenId, "UIBApplicationAdminGroup", timeout);
+
+
+        this.appCredentialXml = appCredentialXml;
+        if (uibUri == null || !ApplicationTokenID.isValid(stsApplicationtokenId) || appCredentialXml == null) {
+            log.error("{} initialized with null-values - will fail", CommandAuthenticateApplicationUAS.class.getSimpleName());
+        }
+    }
 
 
     @Override

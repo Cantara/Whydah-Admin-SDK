@@ -10,10 +10,22 @@ public class CommandExportUsers extends BaseHttpGetHystrixCommand<String> {
 	 
     private String adminUserTokenId;
     private String page;
-
+    public static int DEFAULT_TIMEOUT = 6000;
 
     public CommandExportUsers(URI userAdminServiceUri, String myAppTokenId, String adminUserTokenId, String page) {
-    	super(userAdminServiceUri, "", myAppTokenId,"UASUserAdminGroup", 3000);
+    	super(userAdminServiceUri, "", myAppTokenId,"UASUserAdminGroup", DEFAULT_TIMEOUT);
+    	
+        
+        this.adminUserTokenId = adminUserTokenId;
+        this.page = page;
+        if (userAdminServiceUri == null || !ApplicationTokenID.isValid(myAppTokenId) || !UserTokenId.isValid(adminUserTokenId)) {
+            log.error(TAG + " initialized with null-values - will fail");
+        }
+
+    }
+    
+    public CommandExportUsers(URI userAdminServiceUri, String myAppTokenId, String adminUserTokenId, String page, int timeout) {
+    	super(userAdminServiceUri, "", myAppTokenId,"UASUserAdminGroup", timeout);
     	
         
         this.adminUserTokenId = adminUserTokenId;

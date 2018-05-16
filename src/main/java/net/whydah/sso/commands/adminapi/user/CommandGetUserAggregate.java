@@ -11,10 +11,21 @@ public class CommandGetUserAggregate extends BaseHttpGetHystrixCommand<String> {
     
     private String adminUserTokenId;
     private String userID;
-
+    public static int DEFAULT_TIMEOUT = 6000;
 
     public CommandGetUserAggregate(URI userAdminServiceUri, String myAppTokenId, String adminUserTokenId, String userID) {
-    	super(userAdminServiceUri, "", myAppTokenId, "UASUserAdminGroup", 3000);
+    	super(userAdminServiceUri, "", myAppTokenId, "UASUserAdminGroup", DEFAULT_TIMEOUT);
+        
+        this.adminUserTokenId = adminUserTokenId;
+        this.userID = userID;
+        if (userAdminServiceUri == null || !ApplicationTokenID.isValid(myAppTokenId) || !UserTokenId.isValid(adminUserTokenId) || userID == null) {
+            log.error(TAG + " initialized with null-values - will fail");
+        }
+
+    }
+    
+    public CommandGetUserAggregate(URI userAdminServiceUri, String myAppTokenId, String adminUserTokenId, String userID, int timeout) {
+    	super(userAdminServiceUri, "", myAppTokenId, "UASUserAdminGroup", timeout);
         
         this.adminUserTokenId = adminUserTokenId;
         this.userID = userID;

@@ -18,10 +18,25 @@ public class CommandCreatePinVerifiedUser extends BaseHttpPostHystrixCommand<Str
     String pin;
     String cellPhone;
     String json;
-
+    public static int DEFAULT_TIMEOUT = 6000;
 
     public CommandCreatePinVerifiedUser(URI serviceUri, String myAppTokenId, String myAppTokenXml, String adminUserToken, String userTicket, String phoneNo, String pin, String userIdentityJson) {
-        super(serviceUri, myAppTokenXml, myAppTokenId, "SSOAUserAuthGroup", 6000);  // 600 ms as this is a slow command
+        super(serviceUri, myAppTokenXml, myAppTokenId, "SSOAUserAuthGroup", DEFAULT_TIMEOUT);  // 600 ms as this is a slow command
+        this.myAppTokenId = myAppTokenId;
+        this.myAppTokenXml = myAppTokenXml;
+        this.adminUserTokenId = adminUserToken;
+        this.userTicket = userTicket;
+		this.pin = pin;
+		this.cellPhone = phoneNo;
+        this.json = userIdentityJson;
+        if (serviceUri == null || !ApplicationTokenID.isValid(myAppTokenId) || !UserTokenId.isValid(adminUserTokenId) || myAppTokenXml == null || userTicket == null || pin == null || cellPhone == null || userIdentityJson == null) {
+            log.error(TAG + " initialized with null-values - will fail - userAdminServiceUri:{}, myAppTokenId:{}, adminUserTokenId:{}, userIdentityJson:{}", serviceUri, myAppTokenId, adminUserTokenId, userIdentityJson);
+        }
+
+    }
+    
+    public CommandCreatePinVerifiedUser(URI serviceUri, String myAppTokenId, String myAppTokenXml, String adminUserToken, String userTicket, String phoneNo, String pin, String userIdentityJson, int timeout) {
+        super(serviceUri, myAppTokenXml, myAppTokenId, "SSOAUserAuthGroup", timeout);  // 600 ms as this is a slow command
         this.myAppTokenId = myAppTokenId;
         this.myAppTokenXml = myAppTokenXml;
         this.adminUserTokenId = adminUserToken;

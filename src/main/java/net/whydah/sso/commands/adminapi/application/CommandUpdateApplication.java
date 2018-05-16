@@ -13,13 +13,27 @@ import java.net.URI;
 public class CommandUpdateApplication extends BaseHttpPutHystrixCommand<String> {
 
   
-    
+	public static int DEFAULT_TIMEOUT = 6000;
     private String adminUserTokenId;
     private String applicationJson;
     private String applicationId;
 
     public CommandUpdateApplication(URI userAdminServiceUri, String myAppTokenId, String adminUserTokenId, String applicationId, String applicationJson) {
-        super(userAdminServiceUri, "", myAppTokenId, "UASUserAdminGroup");
+        super(userAdminServiceUri, "", myAppTokenId, "UASUserAdminGroup", DEFAULT_TIMEOUT);
+        
+    
+        this.adminUserTokenId = adminUserTokenId;
+        this.applicationJson = applicationJson;
+        this.applicationId = applicationId;
+
+        if (userAdminServiceUri == null || !ApplicationTokenID.isValid(myAppTokenId) || !UserTokenId.isValid(adminUserTokenId) || applicationJson == null) {
+            log.error(TAG + " initialized with null-values - will fail");
+        }
+
+    }
+    
+    public CommandUpdateApplication(URI userAdminServiceUri, String myAppTokenId, String adminUserTokenId, String applicationId, String applicationJson, int timeout) {
+        super(userAdminServiceUri, "", myAppTokenId, "UASUserAdminGroup", timeout);
         
     
         this.adminUserTokenId = adminUserTokenId;

@@ -12,10 +12,22 @@ public class CommandUpdateUser extends BaseHttpPutHystrixCommand<String> {
     private String adminUserTokenId;
     private String userJson;
     private String uid;
-
+    public static int DEFAULT_TIMEOUT = 6000;
 
     public CommandUpdateUser(URI userAdminServiceUri, String myAppTokenId, String adminUserTokenId, String uid, String userJson) {
-    	super(userAdminServiceUri, "", myAppTokenId, "UASUserAdminGroup", 3000);
+    	super(userAdminServiceUri, "", myAppTokenId, "UASUserAdminGroup", DEFAULT_TIMEOUT);
+        
+    	this.uid = uid;
+        this.adminUserTokenId = adminUserTokenId;
+        this.userJson = userJson;
+        if (userAdminServiceUri == null || !ApplicationTokenID.isValid(myAppTokenId) || !UserTokenId.isValid(adminUserTokenId) || userJson == null) {
+            log.error("CommandUpdateUser initialized with null-values - will fail");
+        }
+
+    }
+
+    public CommandUpdateUser(URI userAdminServiceUri, String myAppTokenId, String adminUserTokenId, String uid, String userJson, int timeout) {
+    	super(userAdminServiceUri, "", myAppTokenId, "UASUserAdminGroup", timeout);
         
     	this.uid = uid;
         this.adminUserTokenId = adminUserTokenId;

@@ -12,9 +12,21 @@ public class CommandDeleteUser extends BaseHttpDeleteHystrixCommandForBooleanTyp
 
 	private String uid;
 
-
+	public static int DEFAULT_TIMEOUT = 6000;
+	
 	public CommandDeleteUser(URI userAdminServiceUri, String myAppTokenId, String adminUserTokenId, String uid) {
-		super(userAdminServiceUri, "", myAppTokenId, "UASUserAdminGroup", 3000);
+		super(userAdminServiceUri, "", myAppTokenId, "UASUserAdminGroup", DEFAULT_TIMEOUT);
+
+		this.uid = uid;
+		this.adminUserTokenId = adminUserTokenId;
+
+		if (userAdminServiceUri == null || !ApplicationTokenID.isValid(myAppTokenId) || !UserTokenId.isValid(adminUserTokenId)) {
+			log.error("CommandDeleteUser initialized with null-values - will fail");
+		}
+
+	}
+	public CommandDeleteUser(URI userAdminServiceUri, String myAppTokenId, String adminUserTokenId, String uid, int timeout) {
+		super(userAdminServiceUri, "", myAppTokenId, "UASUserAdminGroup", timeout);
 
 		this.uid = uid;
 		this.adminUserTokenId = adminUserTokenId;
