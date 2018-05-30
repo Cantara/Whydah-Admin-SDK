@@ -21,7 +21,7 @@ public class UserTokenXpathHelperTest {
     private static final Logger log = getLogger(UserTokenXpathHelperTest.class);
 
     String userTokenXML = "<usertoken xmlns:ns2=\"http://www.w3.org/1999/xhtml\" id=\"a96a517f-cef3-4be7-92f5-f059b65e4071\">\n" +
-            "    <uid></uid>\n" +
+            "    <uid>1234567</uid>\n" +
             "    <timestamp></timestamp>\n" +
             "    <lifespan>3600000</lifespan>\n" +
             "    <issuer>/token/issuer/tokenverifier</issuer>\n" +
@@ -59,25 +59,25 @@ public class UserTokenXpathHelperTest {
             "        <firstname>User</firstname>\n" +
             "        <lastname>Admin</lastname>\n" +
             "        <personRef>0</personRef>\n" +
-            "        <UID>useradmin</UID>\n" +
+            "        <uid>useradmin</uid>\n" +
             "    </identity>\n" +
             "    <applications>\n" +
             "        <application>\n" +
-            "            <appId>19</appId>\n" +
+            "            <appId>1991</appId>\n" +
             "            <applicationName>UserAdminWebApplication</applicationName>\n" +
             "            <orgName>Support</orgName>\n" +
             "            <roleName>WhydahUserAdmin</roleName>\n" +
             "            <roleValue>1</roleValue>\n" +
             "        </application>\n" +
             "        <application>\n" +
-            "            <appId>19</appId>\n" +
+            "            <appId>1991</appId>\n" +
             "            <applicationName>UserAdminWebApplication</applicationName>\n" +
             "            <orgName>Support</orgName>\n" +
             "            <roleName>Manager</roleName>\n" +
             "            <roleValue>true</roleValue>\n" +
             "        </application>\n" +
             "        <application>\n" +
-            "            <appId>19</appId>\n" +
+            "            <appId>1991</appId>\n" +
             "            <applicationName>UserAdminWebApplication</applicationName>\n" +
             "            <orgName>Company</orgName>\n" +
             "            <roleName>WhydahUserAdmin</roleName>\n" +
@@ -90,14 +90,14 @@ public class UserTokenXpathHelperTest {
 
     String rolesXml = "<applications>\n" +
             "        <application>\n" +
-            "            <appId>19</appId>\n" +
+            "            <appId>1991</appId>\n" +
             "            <applicationName>UserAdminWebApplication</applicationName>\n" +
             "            <orgName>Support</orgName>\n" +
             "            <roleName>WhydahUserAdmin</roleName>\n" +
             "            <roleValue>1</roleValue>\n" +
             "        </application>\n" +
             "        <application>\n" +
-            "            <appId>19</appId>\n" +
+            "            <appId>1991</appId>\n" +
             "            <applicationName>UserAdminWebApplication</applicationName>\n" +
             "            <orgName>Company</orgName>\n" +
             "            <roleName>WhydahUserAdmin</roleName>\n" +
@@ -124,7 +124,7 @@ public class UserTokenXpathHelperTest {
         List<UserApplicationRoleEntry> roles = UserRoleXpathHelper.getUserRoleFromUserAggregateXml(userAggregateXML);
         assertNotNull(roles);
         assertEquals(3, roles.size());
-        assertTrue("19".equals(roles.get(0).getApplicationId()));
+        assertTrue("1991".equals(roles.get(0).getApplicationId()));
         assertEquals("WhydahUserAdmin", roles.get(0).getRoleName());
         assertEquals("Manager", roles.get(1).getRoleName());
         assertEquals("WhydahUserAdmin", roles.get(2).getRoleName());
