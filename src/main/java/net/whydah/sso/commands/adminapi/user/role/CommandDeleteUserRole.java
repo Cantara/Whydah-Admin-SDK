@@ -5,13 +5,12 @@ import java.net.URI;
 import net.whydah.sso.commands.baseclasses.BaseHttpDeleteHystrixCommandForBooleanType;
 
 public class CommandDeleteUserRole extends BaseHttpDeleteHystrixCommandForBooleanType {
-
     private String adminUserTokenId;
     private String roleId;
     private String uId;
     public static int DEFAULT_TIMEOUT = 6000;
 
-    /**
+    /*
      * @DELETE
      * @Path("/{uid}/role/{roleid}") public Response deleteRole(@PathParam("applicationtokenid") String applicationTokenId, @PathParam("userTokenId") String userTokenId,
      * @PathParam("uid") String uid, @PathParam("roleid") String roleid) {
@@ -62,7 +61,5 @@ public class CommandDeleteUserRole extends BaseHttpDeleteHystrixCommandForBoolea
     protected String getTargetPath() {
         return myAppTokenId + "/" + adminUserTokenId + "/user/" + uId + "/role/" + roleId;
     }
-
-
 }
 

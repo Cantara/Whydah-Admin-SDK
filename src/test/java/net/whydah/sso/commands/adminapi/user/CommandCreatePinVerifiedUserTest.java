@@ -21,10 +21,10 @@ import static org.junit.Assert.assertTrue;
 public class CommandCreatePinVerifiedUserTest {
 
     static AdminSystemTestBaseConfig config;
-    private static final Logger log = LoggerFactory.getLogger(CommandGetUsertokenByUserticket.class);
+    private static final Logger log = LoggerFactory.getLogger(CommandCreatePinVerifiedUserTest.class);
 
     @BeforeClass
-    public static void setup() throws Exception {
+    public static void setup() {
         config = new AdminSystemTestBaseConfig();
     }
 
@@ -41,10 +41,10 @@ public class CommandCreatePinVerifiedUserTest {
             String pin = "3434";
             new CommandSendSmsPin(config.tokenServiceUri, config.myApplicationToken.getApplicationTokenId(), ApplicationTokenMapper.toXML(config.myApplicationToken), phoneNo, pin).execute();
             String userAddRoleResult = new CommandCreatePinVerifiedUser(config.tokenServiceUri, config.myApplicationToken.getApplicationTokenId(), ApplicationTokenMapper.toXML(config.myApplicationToken), adminUser.getUserTokenId(), ticket, phoneNo, pin, userIdentityJson).execute();
-            System.out.println("testAddUser:" + userAddRoleResult);
+            log.debug("testAddUser:" + userAddRoleResult);
             String usersListJson = new CommandListUsers(config.userAdminServiceUri, config.myApplicationToken.getApplicationTokenId(), adminUser.getUserTokenId(), "*").execute();
 
-            System.out.println("usersListJson=" + LoggerUtil.first50(usersListJson));
+            log.debug("usersListJson=" + LoggerUtil.first50(usersListJson));
 
             // simple test to detect paging results
             if (usersListJson.length() < 50000) {

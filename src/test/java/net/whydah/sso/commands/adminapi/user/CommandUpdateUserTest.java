@@ -10,26 +10,30 @@ import net.whydah.sso.util.AdminSystemTestBaseConfig;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.UUID;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class CommandUpdateUserTest {
-    static AdminSystemTestBaseConfig config;
+	private static final Logger log = LoggerFactory.getLogger(CommandUpdateUserTest.class);
+
+	static AdminSystemTestBaseConfig config;
 
 	    @BeforeClass
-	    public static void setup() throws Exception {
+	    public static void setup() {
             config = new AdminSystemTestBaseConfig();
         }
 
 	    //wait until UAS is updated
 	    @Test
 	    @Ignore
-	    public void testUpdateUser() throws Exception {
+	    public void testUpdateUser() {
 	        if (config.isSystemTestEnabled()) {
 
-	        	
 	        	config.logOnSystemTestApplication();
 	        	String userTicket1 = UUID.randomUUID().toString();
 	        	String userTicket2 = UUID.randomUUID().toString();
@@ -37,7 +41,7 @@ public class CommandUpdateUserTest {
 	            UserToken normalUser = UserTokenMapper.fromUserTokenXml(config.logOnByUserCredential(userTicket2, new UserCredential(config.userName2, config.password2)));
 
 				String userIdentityJson = new CommandGetUser(config.userAdminServiceUri, config.myApplicationToken.getApplicationTokenId(), adminUser.getUserTokenId(), normalUser.getUid()).execute();
-				System.out.println("getuser:" + userIdentityJson);
+				log.debug("getuser:" + userIdentityJson);
 	   
 	           
 	            UserIdentity updateMe = UserIdentityMapper.fromUserIdentityJson(userIdentityJson);
@@ -57,14 +61,14 @@ public class CommandUpdateUserTest {
 	            
 	            //do update
 				String userUpdateResult = new CommandUpdateUser(config.userAdminServiceUri, config.myApplicationToken.getApplicationTokenId(), adminUser.getUserTokenId(), updateMe.getUsername(), UserIdentityMapper.toJson(updateMe)).execute();
-				System.out.println("update=" + userUpdateResult);
+				log.debug("update=" + userUpdateResult);
 	            UserIdentity updated = UserIdentityMapper.fromUserIdentityJson(userUpdateResult);
 	            //check for modifications
-	            assertTrue(updated.getFirstName().equals(updateMe.getFirstName()));
-	            assertTrue(updated.getCellPhone().equals(updateMe.getCellPhone()));
-	            assertTrue(updated.getEmail().equals(updateMe.getEmail()));
-	            assertTrue(updated.getLastName().equals(updateMe.getLastName()));
-	            assertTrue(updated.getPersonRef().equals(updateMe.getPersonRef()));
+                assertEquals(updated.getFirstName(), updateMe.getFirstName());
+                assertEquals(updated.getCellPhone(), updateMe.getCellPhone());
+                assertEquals(updated.getEmail(), updateMe.getEmail());
+                assertEquals(updated.getLastName(), updateMe.getLastName());
+                assertEquals(updated.getPersonRef(), updateMe.getPersonRef());
 	            
 	            //NO NEED TO CALL REFRESH HERE ANY MORE, IT IS AUTOMATICALLY UPDATE WHEN GETTING A USERTOKEN
 //	            String tokenXml = new CommandRefreshUserToken(config.tokenServiceUri, config.myApplicationToken.getApplicationTokenId(), config.myApplicationTokenID, normalUser.getTokenid()).execute();
@@ -74,13 +78,13 @@ public class CommandUpdateUserTest {
 	            String utXml = new CommandGetUsertokenByUserticket(config.tokenServiceUri, config.myApplicationToken.getApplicationTokenId(), config.myAppTokenXml, userTicket2).execute();
 	            UserToken ut = UserTokenMapper.fromUserTokenXml(utXml);
 	            assertTrue(ut.getFirstName().contains(userTicket2));
-	            assertTrue(ut.getFirstName().equals(updateMe.getFirstName()));
+                assertEquals(ut.getFirstName(), updateMe.getFirstName());
 	            assertTrue(ut.getLastName().contains(userTicket2));
-	            assertTrue(ut.getLastName().equals(updateMe.getLastName()));
-	            assertTrue(ut.getCellPhone().equals("99999999"));
-	            assertTrue(ut.getEmail().equals("test@whydah.com"));
+                assertEquals(ut.getLastName(), updateMe.getLastName());
+                assertEquals("99999999", ut.getCellPhone());
+                assertEquals("test@whydah.com", ut.getEmail());
 	            assertTrue(ut.getPersonRef().contains(userTicket2));
-	            assertTrue(ut.getPersonRef().equals(updateMe.getPersonRef()));
+                assertEquals(ut.getPersonRef(), updateMe.getPersonRef());
 	            //Just get the old attributes back
 
 	            updateMe.setFirstName(oldFirstName);
@@ -91,9 +95,6 @@ public class CommandUpdateUserTest {
 	            
 	            //do update
 				new CommandUpdateUser(config.userAdminServiceUri, config.myApplicationToken.getApplicationTokenId(), adminUser.getUserTokenId(), updateMe.getUsername(), UserIdentityMapper.toJson(updateMe)).execute();
-
 			}
-
 	    }
-
 }

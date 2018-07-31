@@ -1,5 +1,6 @@
 package net.whydah.sso.commands.adminapi.user;
 
+import net.whydah.sso.commands.adminapi.application.CommandAddApplicationTest;
 import net.whydah.sso.user.mappers.UserIdentityMapper;
 import net.whydah.sso.user.types.UserIdentity;
 import net.whydah.sso.user.types.UserToken;
@@ -7,6 +8,8 @@ import net.whydah.sso.util.AdminSystemTestBaseConfig;
 import net.whydah.sso.util.LoggerUtil;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Random;
 import java.util.UUID;
@@ -15,11 +18,12 @@ import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 public class CommandAddUserTest {
+    private static final Logger log = LoggerFactory.getLogger(CommandAddUserTest.class);
 
     static AdminSystemTestBaseConfig config;
 
     @BeforeClass
-    public static void setup() throws Exception {
+    public static void setup() {
         config = new AdminSystemTestBaseConfig();
     }
 
@@ -27,7 +31,7 @@ public class CommandAddUserTest {
 
 
     @Test
-    public void testAddUser() throws Exception {
+    public void testAddUser() {
         if (config.isSystemTestEnabled()) {
 
             UserToken adminUser = config.logOnSystemTestApplicationAndSystemTestUser();
@@ -35,12 +39,12 @@ public class CommandAddUserTest {
             UserIdentity uir = getTestNewUserIdentity();
             String userIdentityJson = UserIdentityMapper.toJsonWithoutUID(uir);
             String userAddRoleResult = new CommandAddUser(config.userAdminServiceUri, config.myApplicationToken.getApplicationTokenId(), adminUser.getUserTokenId(), userIdentityJson).execute();
-            System.out.println("testAddUser:" + LoggerUtil.first50(userAddRoleResult));
+            log.debug("testAddUser:" + LoggerUtil.first50(userAddRoleResult));
 
             assertNotNull(userAddRoleResult);
             assertTrue(userAddRoleResult.length() > 100);
             String usersListJson = new CommandListUsers(config.userAdminServiceUri, config.myApplicationToken.getApplicationTokenId(), adminUser.getUserTokenId(), "*").execute();
-            System.out.println("usersListJson=" + LoggerUtil.first50(usersListJson));
+            log.debug("usersListJson=" + LoggerUtil.first50(usersListJson));
 
             // simple test to detect paging results
             if (usersListJson.length() < 80000) {
