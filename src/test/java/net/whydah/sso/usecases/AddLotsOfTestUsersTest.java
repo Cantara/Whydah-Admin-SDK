@@ -34,6 +34,7 @@ public class AddLotsOfTestUsersTest {
     @BeforeClass
     public static void setup() throws Exception {
         config = new AdminSystemTestBaseConfig();
+        
         applicationSession = WhydahApplicationSession.getInstance(config.tokenServiceUri.toString(), config.appCredential);
         whydahUserSession = new WhydahUserSession(applicationSession, config.userCredential);
         Random r = new Random();
@@ -77,6 +78,7 @@ public class AddLotsOfTestUsersTest {
 
         //new CommandAddUser(config.userAdminServiceUri, config.myApplicationToken.getApplicationTokenId(), adminUser.getTokenid(), json).queue();
         //Thread.sleep(200);
+        System.out.println(json);
         String userAddRoleResult = new CommandAddUser(config.userAdminServiceUri, applicationSession.getActiveApplicationTokenId(), whydahUserSession.getActiveUserTokenId(), json).execute();
         log.info(i + " testAddUser:" + LoggerUtil.first50(userAddRoleResult));
         assertNotNull(userAddRoleResult);

@@ -14,7 +14,7 @@ public class CommandAddUser extends BaseHttpPostHystrixCommand<String> {
     public static int DEFAULT_TIMEOUT = 6000;
     
     public CommandAddUser(URI userAdminServiceUri, String myAppTokenId, String adminUserTokenId, String userIdentityJson) {
-        super(userAdminServiceUri, "", myAppTokenId, "UASUserAdminGroup", 2000);
+        super(userAdminServiceUri, "", myAppTokenId, "UASUserAdminGroup", DEFAULT_TIMEOUT);
 
         this.adminUserTokenId=adminUserTokenId;
         this.userIdentityJson =userIdentityJson;
