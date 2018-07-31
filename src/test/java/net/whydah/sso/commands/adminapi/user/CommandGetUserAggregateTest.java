@@ -15,25 +15,27 @@ import net.whydah.sso.util.AdminSystemTestBaseConfig;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class CommandGetUserAggregateTest {
+    private static final Logger log = LoggerFactory.getLogger(CommandGetUserAggregateTest.class);
 
     static AdminSystemTestBaseConfig config;
 
     @BeforeClass
-    public static void setup() throws Exception {
+    public static void setup() {
         config = new AdminSystemTestBaseConfig();
     }
 
 
     @Test
-    public void testGetUserAggregate() throws Exception {
-
+    public void testGetUserAggregate() {
         if (config.isSystemTestEnabled()) {
             String myAppTokenXml = new CommandLogonApplication(config.tokenServiceUri, config.appCredential).execute();
-            System.out.println(myAppTokenXml);
+            log.debug(myAppTokenXml);
             String myApplicationTokenID = ApplicationXpathHelper.getAppTokenIdFromAppTokenXml(myAppTokenXml);
-            System.out.println(myApplicationTokenID);
+            log.debug(myApplicationTokenID);
             assertTrue(myApplicationTokenID != null && myApplicationTokenID.length() > 5);
             String userticket = UUID.randomUUID().toString();
             String userToken;
@@ -48,8 +50,7 @@ public class CommandGetUserAggregateTest {
             UserToken returnedUserAggregateAsUserToken = UserTokenMapper.fromUserAggregateJson(usersAggregateJson);
             assertTrue(returnedUserAggregateAsUserToken.getUserName().equalsIgnoreCase("useradmin"));
 
-            //System.out.println("userJson=" + usersAggregateJson);
+            //log.debug("userJson=" + usersAggregateJson);
         }
     }
-
 }

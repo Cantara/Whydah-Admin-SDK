@@ -6,39 +6,32 @@ import net.whydah.sso.user.types.UserToken;
 import net.whydah.sso.util.AdminSystemTestBaseConfig;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class CommandGetUserTest {
+    private static final Logger log = LoggerFactory.getLogger(CommandGetUserTest.class);
 
     private static AdminSystemTestBaseConfig config;
 
     @BeforeClass
-    public static void setup() throws Exception {
+    public static void setup() {
         config = new AdminSystemTestBaseConfig();
     }
 
 
     @Test
-    public void testCommandGetUser() throws Exception {
-
-
-
+    public void testCommandGetUser() {
         if (config.isSystemTestEnabled()) {
             UserToken adminUser = config.logOnSystemTestApplicationAndSystemTestUser();
 
             boolean hasAccess = new CommandVerifyUASAccessByApplicationTokenId(config.userAdminServiceUri.toString(), config.myApplicationTokenID).execute();
             if(hasAccess){
                 String userAggregateJson = new CommandGetUser(config.userAdminServiceUri, config.myApplicationToken.getApplicationTokenId(), adminUser.getUserTokenId(), "acsmanager").execute();
-                 System.out.println("userAggregateJson=" + userAggregateJson);
+                 log.debug("userAggregateJson=" + userAggregateJson);
                  UserToken foundUserToken = UserTokenMapper.fromUserAggregateJson(userAggregateJson);
-                 System.out.println(foundUserToken.toString());
+                 log.debug(foundUserToken.toString());
             }
-            
-           
-
-
         }
-
-
     }
-
 }
