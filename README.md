@@ -1,7 +1,7 @@
 Whydah-Admin-SDK
 ===============
 
-![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/Cantara/Whydah-Admin-SDK) ![Build Status](https://jenkins.quadim.ai/buildStatus/icon?job=Whydah-Admin-SDK) - [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)  -
+![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/Cantara/Whydah-Admin-SDK) ![Build Status](https://jenkins.quadim.ai/buildStatus/icon?job=Whydah-Admin-SDK) ![GitHub commit activity](https://img.shields.io/github/commit-activity/y/Cantara/Whydah-Admin-SDK) [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)  -
 [![Known Vulnerabilities](https://snyk.io/test/github/Cantara/Whydah-Admin-SDK/badge.svg)](https://snyk.io/test/github/Cantara/Whydah-Admin-SDK)
 
 
