@@ -6,27 +6,22 @@
     <name>Whydah-Admin-SDK</name>
     <packaging>jar</packaging>
     <url>https://wiki.cantara.no/display/iam/Whydah-Admin-SDK</url>
-
     <parent>
         <groupId>no.cantara.emi</groupId>
         <artifactId>parent</artifactId>
         <version>8</version>
-    </parent>
-  
+    </parent>  
     <properties>
         <service.name>Whydah-Admin-SDK</service.name>
         <whydah.sdk.version>2.6.10</whydah.sdk.version>
         <additionalparam>-Xdoclint:none</additionalparam>
     </properties>
-
     <scm>
         <developerConnection>scm:git:ssh://git@github.com/cantara/Whydah-Admin-SDK.git</developerConnection>
         <connection>scm:git:https://github.com/cantara/Whydah-Admin-SDK.git</connection>
         <url>https://github.com/cantara/Whydah-Java-SDK</url>    
         <tag>HEAD</tag>
-  </scm>
-
-
+   </scm>
     <developers>
         <developer>
             <id>totto</id>
@@ -59,7 +54,6 @@
             <organizationUrl>http://www.capraconsulting.no/</organizationUrl>
         </developer>
     </developers>
-
     <dependencies>
         <dependency>
             <groupId>net.whydah.sso</groupId>
@@ -84,7 +78,6 @@
             <version>1.5.0</version>
             <scope>test</scope>
         </dependency>
-
         <!-- users of library should be able to choose log implementation -->
         <dependency>
             <groupId>ch.qos.logback</groupId>
@@ -93,7 +86,6 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
     <build>
         <plugins>
             <plugin>
