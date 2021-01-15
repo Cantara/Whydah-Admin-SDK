@@ -43,7 +43,8 @@ public class CommandUserExists extends BaseHttpGetHystrixCommandForBooleanType {
 
 	@Override
 	protected String getTargetPath() {
-		return myAppTokenId + "/" + adminUserTokenId + "/users" + "/checkexist/" + userQuery;
+		return myAppTokenId + "/" + adminUserTokenId + "/users" + "/find/" + userQuery;
+		//return myAppTokenId + "/" + adminUserTokenId + "/users" + "/checkexist/" + userQuery;
 	}
 
 
