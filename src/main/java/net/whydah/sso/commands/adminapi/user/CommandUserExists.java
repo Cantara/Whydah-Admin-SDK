@@ -37,7 +37,12 @@ public class CommandUserExists extends BaseHttpGetHystrixCommandForBooleanType {
     
     @Override
     protected Boolean dealWithResponse(String response) {
-    	return response.contentEquals("true");
+    	return response.contentEquals("{\"result\":true}");
+    }
+    
+    @Override
+    protected Boolean dealWithFailedResponse(String responseBody, int statusCode) {
+    	return false;
     }
 
 
