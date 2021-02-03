@@ -35,9 +35,10 @@ public class CommandUserExists extends BaseHttpGetHystrixCommandForBooleanType {
 
     }
     
+    //make compatible with older version of UIB's response
     @Override
     protected Boolean dealWithResponse(String response) {
-    	return response.contentEquals("{\"result\":true}");
+    	return response.contentEquals("{\"result\":true}")  || response.contentEquals("true");
     }
     
     @Override
