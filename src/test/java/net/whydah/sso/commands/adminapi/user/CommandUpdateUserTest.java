@@ -1,6 +1,6 @@
 package net.whydah.sso.commands.adminapi.user;
 
-import net.whydah.sso.commands.userauth.CommandGetUsertokenByUserticket;
+import net.whydah.sso.commands.userauth.CommandGetUserTokenByUserTicket;
 import net.whydah.sso.user.mappers.UserIdentityMapper;
 import net.whydah.sso.user.mappers.UserTokenMapper;
 import net.whydah.sso.user.types.UserCredential;
@@ -65,27 +65,27 @@ public class CommandUpdateUserTest {
 	            UserIdentity updated = UserIdentityMapper.fromUserIdentityJson(userUpdateResult);
 	            //check for modifications
                 assertEquals(updated.getFirstName(), updateMe.getFirstName());
-                assertEquals(updated.getCellPhone(), updateMe.getCellPhone());
-                assertEquals(updated.getEmail(), updateMe.getEmail());
-                assertEquals(updated.getLastName(), updateMe.getLastName());
-                assertEquals(updated.getPersonRef(), updateMe.getPersonRef());
-	            
-	            //NO NEED TO CALL REFRESH HERE ANY MORE, IT IS AUTOMATICALLY UPDATE WHEN GETTING A USERTOKEN
+				assertEquals(updated.getCellPhone(), updateMe.getCellPhone());
+				assertEquals(updated.getEmail(), updateMe.getEmail());
+				assertEquals(updated.getLastName(), updateMe.getLastName());
+				assertEquals(updated.getPersonRef(), updateMe.getPersonRef());
+
+				//NO NEED TO CALL REFRESH HERE ANY MORE, IT IS AUTOMATICALLY UPDATE WHEN GETTING A USERTOKEN
 //	            String tokenXml = new CommandRefreshUserToken(config.tokenServiceUri, config.myApplicationToken.getApplicationTokenId(), config.myApplicationTokenID, normalUser.getTokenid()).execute();
 //	    		assertTrue(tokenXml != null);
-	            
-	            //check if UserToken info changed in STS
-	            String utXml = new CommandGetUsertokenByUserticket(config.tokenServiceUri, config.myApplicationToken.getApplicationTokenId(), config.myAppTokenXml, userTicket2).execute();
-	            UserToken ut = UserTokenMapper.fromUserTokenXml(utXml);
-	            assertTrue(ut.getFirstName().contains(userTicket2));
-                assertEquals(ut.getFirstName(), updateMe.getFirstName());
-	            assertTrue(ut.getLastName().contains(userTicket2));
-                assertEquals(ut.getLastName(), updateMe.getLastName());
-                assertEquals("99999999", ut.getCellPhone());
-                assertEquals("test@whydah.com", ut.getEmail());
-	            assertTrue(ut.getPersonRef().contains(userTicket2));
-                assertEquals(ut.getPersonRef(), updateMe.getPersonRef());
-	            //Just get the old attributes back
+
+				//check if UserToken info changed in STS
+				String utXml = new CommandGetUserTokenByUserTicket(config.tokenServiceUri, config.myApplicationToken.getApplicationTokenId(), config.myAppTokenXml, userTicket2).execute();
+				UserToken ut = UserTokenMapper.fromUserTokenXml(utXml);
+				assertTrue(ut.getFirstName().contains(userTicket2));
+				assertEquals(ut.getFirstName(), updateMe.getFirstName());
+				assertTrue(ut.getLastName().contains(userTicket2));
+				assertEquals(ut.getLastName(), updateMe.getLastName());
+				assertEquals("99999999", ut.getCellPhone());
+				assertEquals("test@whydah.com", ut.getEmail());
+				assertTrue(ut.getPersonRef().contains(userTicket2));
+				assertEquals(ut.getPersonRef(), updateMe.getPersonRef());
+				//Just get the old attributes back
 
 	            updateMe.setFirstName(oldFirstName);
 	            updateMe.setLastName(oldLastName);

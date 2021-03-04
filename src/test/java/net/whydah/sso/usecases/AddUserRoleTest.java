@@ -6,7 +6,7 @@ import net.whydah.sso.application.types.Application;
 import net.whydah.sso.application.types.ApplicationCredential;
 import net.whydah.sso.commands.adminapi.application.CommandAddApplication;
 import net.whydah.sso.commands.application.CommandListApplications;
-import net.whydah.sso.commands.userauth.CommandGetUsertokenByUsertokenId;
+import net.whydah.sso.commands.userauth.CommandGetUserTokenByUserTokenId;
 import net.whydah.sso.session.WhydahUserSession;
 import net.whydah.sso.session.baseclasses.BaseAdminWhydahServiceClient;
 import net.whydah.sso.user.helpers.UserXpathHelper;
@@ -93,24 +93,24 @@ public class AddUserRoleTest {
             assertFalse(client.updateOrCreateUserApplicationRoleEntry("", newApplication.getName(), "Whydah", ROLE_NAME, "welcome", userTokenXml1, userTokenXml1));
             //should update the application list
 			client.getWAS().updateApplinks(true);
-			
-			
-			//now, it is ok to update role
-			
-			//NOTE: don't use newApplication.getId(). This is wrong b/c application is assigned a new unique ID from UIB
+
+
+            //now, it is ok to update role
+
+            //NOTE: don't use newApplication.getId(). This is wrong b/c application is assigned a new unique ID from UIB
             //assertTrue(client.updateOrCreateUserApplicationRoleEntry(newApplication.getId(), newApplication.getName(), "Whydah", roleName, "welcome", userTokenXml1));
-			assertTrue(client.updateOrCreateUserApplicationRoleEntry("", newApplication.getName(), "Whydah", ROLE_NAME, "welcome", userTokenXml1, userTokenXml1));
+            assertTrue(client.updateOrCreateUserApplicationRoleEntry("", newApplication.getName(), "Whydah", ROLE_NAME, "welcome", userTokenXml1, userTokenXml1));
 
             Thread.sleep(1000);  //
 
-			// Check for correct UserToken
-			String userTokenXml2 = new CommandGetUsertokenByUsertokenId(config.tokenServiceUri, config.myApplicationTokenID, config.myAppTokenXml, userTokenId).execute();
+            // Check for correct UserToken
+            String userTokenXml2 = new CommandGetUserTokenByUserTokenId(config.tokenServiceUri, config.myApplicationTokenID, config.myAppTokenXml, userTokenId).execute();
             assertTrue(userTokenXml2.contains(ROLE_NAME));
 
-			//this works as expected as it contains the added role
-			String userTokenXml3 = config.logOnSystemTestApplicationAndSystemTestUser_getUserTokenXML();
-			
-			
+            //this works as expected as it contains the added role
+            String userTokenXml3 = config.logOnSystemTestApplicationAndSystemTestUser_getUserTokenXML();
+
+
             //assertTrue(userTokenXml2.contains(roleName));
             assertTrue(userTokenXml3.contains(ROLE_NAME));
 

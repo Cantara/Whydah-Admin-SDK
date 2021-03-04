@@ -1,7 +1,7 @@
 package net.whydah.sso.commands.adminapi.user;
 
 import net.whydah.sso.application.mappers.ApplicationTokenMapper;
-import net.whydah.sso.commands.userauth.CommandGetUsertokenByUserticket;
+import net.whydah.sso.commands.userauth.CommandGetUserTokenByUserTicket;
 import net.whydah.sso.commands.userauth.CommandSendSmsPin;
 import net.whydah.sso.user.mappers.UserIdentityMapper;
 import net.whydah.sso.user.types.UserIdentity;
@@ -52,7 +52,7 @@ public class CommandCreatePinVerifiedUserTest {
             }
 
             Thread.sleep(300);
-            String ut = new CommandGetUsertokenByUserticket(config.tokenServiceUri, config.myApplicationToken.getApplicationTokenId(), ApplicationTokenMapper.toXML(config.myApplicationToken), ticket).execute();
+            String ut = new CommandGetUserTokenByUserTicket(config.tokenServiceUri, config.myApplicationToken.getApplicationTokenId(), ApplicationTokenMapper.toXML(config.myApplicationToken), ticket).execute();
 
             log.debug("Returned UserToken: {}", ut);
             assertTrue(ut != null && ut.length() > 20);
