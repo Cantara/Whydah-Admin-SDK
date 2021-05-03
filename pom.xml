@@ -13,14 +13,13 @@
     </parent>  
     <properties>
         <service.name>Whydah-Admin-SDK</service.name>
-        <whydah.sdk.version>2.6.70</whydah.sdk.version>
+        <whydah.sdk.version>2.6.80</whydah.sdk.version>
         <additionalparam>-Xdoclint:none</additionalparam>
     </properties>
     <scm>
         <developerConnection>scm:git:ssh://git@github.com/cantara/Whydah-Admin-SDK.git</developerConnection>
         <connection>scm:git:https://github.com/cantara/Whydah-Admin-SDK.git</connection>
         <url>https://github.com/cantara/Whydah-Java-SDK</url>    
-        <tag>Whydah-Admin-SDK-2.6.46</tag>
    </scm>
     <developers>
         <developer>
