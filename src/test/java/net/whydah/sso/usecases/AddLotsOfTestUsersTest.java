@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.UUID;
 
 import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -66,10 +67,10 @@ public class AddLotsOfTestUsersTest {
 
     private void addATestUser(UserToken adminUser, int i) throws InterruptedException {
         UserAggregate ua = new UserAggregate(
-                c + "j" + "s_uid-" + i,
-                c + "s_username_" + i,
-                "FirstName",
-                "lastName",
+                UUID.randomUUID().toString(),
+                "s_username_" + i,
+                "FirstName" + i,
+                "lastName" + i,
                 "personRef_" + i,
                 "tester_" + i + "@whydah.com",
                 "" + String.valueOf(10000000 + RandomUtils.nextInt(90000000)));
