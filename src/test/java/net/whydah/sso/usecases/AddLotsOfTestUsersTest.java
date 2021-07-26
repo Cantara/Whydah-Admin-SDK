@@ -28,6 +28,7 @@ public class AddLotsOfTestUsersTest {
     static char c;
     static WhydahApplicationSession applicationSession;
     static WhydahUserSession whydahUserSession;
+    private static boolean stresstest = false;
     private static final Logger log = getLogger(AddLotsOfTestUsersTest.class);
     private static final int startFrom = 90000;
 
@@ -46,7 +47,7 @@ public class AddLotsOfTestUsersTest {
 
     @Test
     public void testLotsOfUsers() throws Exception {
-        if (config.isSystemTestEnabled()) {
+        if (config.isSystemTestEnabled() && stresstest) {
 
             UserToken adminUser = config.logOnSystemTestApplicationAndSystemTestUser();
 
