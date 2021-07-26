@@ -29,7 +29,7 @@ public class AddLotsOfTestUsersTest {
     static WhydahApplicationSession applicationSession;
     static WhydahUserSession whydahUserSession;
     private static final Logger log = getLogger(AddLotsOfTestUsersTest.class);
-    private static final int startFrom = 70000;
+    private static final int startFrom = 90000;
 
 
     @BeforeClass
@@ -61,7 +61,7 @@ public class AddLotsOfTestUsersTest {
         for (int i = startFrom; i < countTo; i++) {
             addATestUser(adminUser, i);
         }
-        Thread.sleep((countTo - startFrom) * 10);
+        Thread.sleep((countTo - startFrom) * 100);
     }
 
 
