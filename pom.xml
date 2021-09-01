@@ -13,7 +13,7 @@
     </parent>  
     <properties>
         <service.name>Whydah-Admin-SDK</service.name>
-        <whydah.sdk.version>2.7.20</whydah.sdk.version>
+        <whydah.sdk.version>2.7.21</whydah.sdk.version>
         <additionalparam>-Xdoclint:none</additionalparam>
     </properties>
     <scm>
