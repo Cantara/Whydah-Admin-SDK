@@ -18,7 +18,7 @@ A client library which aimed to make Whydah admin integration more easy and more
 
 ## Binaries
 
-Binaries and dependency information for Maven, Ivy, Gradle and others can be found at [http://mvnrepo.cantara.no](http://mvnrepo.cantara.no/index.html#nexus-search;classname~Whydah).
+Binaries and dependency information for Maven, Ivy, Gradle and others can be found at [https://mvnrepo.cantara.no](https://mvnrepo.cantara.no/index.html#nexus-search;classname~Whydah).
 
 Example for Maven:
 
