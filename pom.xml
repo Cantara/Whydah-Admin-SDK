@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.whydah.sso</groupId>
     <artifactId>Whydah-Admin-SDK</artifactId>
-    <version>2.9.28-SNAPSHOT</version>
+    <version>2.9.29-SNAPSHOT</version>
     <name>Whydah-Admin-SDK</name>
     <packaging>jar</packaging>
     <url>https://wiki.cantara.no/display/iam/Whydah-Admin-SDK</url>
@@ -13,7 +13,7 @@
     </parent>  
     <properties>
         <service.name>Whydah-Admin-SDK</service.name>
-        <whydah.sdk.version>2.9.26</whydah.sdk.version>
+        <whydah.sdk.version>2.9.29</whydah.sdk.version>
         <additionalparam>-Xdoclint:none</additionalparam>
     </properties>
     <scm>
@@ -45,13 +45,13 @@
         </developer>
         <developer>
             <id>kimcs</id>
-            <name>Kim Christian Swenson</name>
-            <email>kim.christian.swenson@gmail.com</email>
+            <name>Kim Christian Gaarder</name>
+            <email>kim.christian.gaarder@gmail.com</email>
             <roles>
                 <role>Developer</role>
             </roles>
-            <organization>Capra Consulting AS</organization>
-            <organizationUrl>http://www.capraconsulting.no/</organizationUrl>
+            <organization>Cantara</organization>
+            <organizationUrl>https://wiki.cantara.no/</organizationUrl>
         </developer>
     </developers>
     <dependencies>
