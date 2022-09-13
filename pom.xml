@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.whydah.sso</groupId>
     <artifactId>Whydah-Admin-SDK</artifactId>
-    <version>2.14.4</version>
+    <version>2.14.5-SNAPSHOT</version>
     <name>Whydah-Admin-SDK</name>
     <packaging>jar</packaging>
     <url>https://wiki.cantara.no/display/iam/Whydah-Admin-SDK</url>
@@ -20,7 +20,7 @@
         <developerConnection>scm:git:ssh://git@github.com/cantara/Whydah-Admin-SDK.git</developerConnection>
         <connection>scm:git:https://github.com/cantara/Whydah-Admin-SDK.git</connection>
         <url>https://github.com/cantara/Whydah-Java-SDK</url>    
-     <tag>Whydah-Admin-SDK-2.14.4</tag>
+     <tag>HEAD</tag>
   </scm>
     <developers>
         <developer>
