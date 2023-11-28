@@ -13,7 +13,7 @@
     </parent>  
     <properties>
         <service.name>Whydah-Admin-SDK</service.name>
-        <whydah.sdk.version>2.21.1</whydah.sdk.version>
+        <whydah.sdk.version>2.21.3</whydah.sdk.version>
         <additionalparam>-Xdoclint:none</additionalparam>
     </properties>
     <scm>
@@ -82,7 +82,7 @@
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.4.11</version>
+            <version>1.4.12</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
