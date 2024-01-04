@@ -14,6 +14,10 @@
     <properties>
         <service.name>Whydah-Admin-SDK</service.name>
         <whydah.sdk.version>2.21.14</whydah.sdk.version>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.release>11</maven.compiler.release>
+	    <java.version>11</java.version>
         <additionalparam>-Xdoclint:none</additionalparam>
     </properties>
     <scm>
