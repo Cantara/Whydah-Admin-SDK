@@ -17,7 +17,7 @@ public class CommandUserExists extends BaseHttpGetHystrixCommandForBooleanType {
        
         this.adminUserTokenId = adminUserTokenId;
         this.username = username;
-        if (userAdminServiceUri == null || !ApplicationTokenID.isValid(myAppTokenId) || !UserTokenId.isValid(adminUserTokenId) || adminUserTokenId.length() < 10 || username == null) {
+        if (userAdminServiceUri == null || !ApplicationTokenID.isValid(myAppTokenId) || adminUserTokenId == null || !UserTokenId.isValid(adminUserTokenId) || adminUserTokenId.length() < 10 || username == null) {
             log.error("CommandUserExists initialized with null-values - will fail - userAdminServiceUri:{}, myAppTokenId:{}, adminUserTokenId:{}, userQuery:{}", userAdminServiceUri, myAppTokenId, adminUserTokenId, username);
 
         }
@@ -28,7 +28,7 @@ public class CommandUserExists extends BaseHttpGetHystrixCommandForBooleanType {
        
         this.adminUserTokenId = adminUserTokenId;
         this.username = userQuery;
-        if (userAdminServiceUri == null || !ApplicationTokenID.isValid(myAppTokenId) || !UserTokenId.isValid(adminUserTokenId) || adminUserTokenId.length() < 10 || userQuery == null) {
+        if (userAdminServiceUri == null || !ApplicationTokenID.isValid(myAppTokenId) || adminUserTokenId == null || !UserTokenId.isValid(adminUserTokenId) || adminUserTokenId.length() < 10 || userQuery == null) {
             log.error("CommandUserExists initialized with null-values - will fail - userAdminServiceUri:{}, myAppTokenId:{}, adminUserTokenId:{}, userQuery:{}", userAdminServiceUri, myAppTokenId, adminUserTokenId, userQuery);
 
         }
