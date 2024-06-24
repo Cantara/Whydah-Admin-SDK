@@ -89,7 +89,7 @@
         <dependency>
             <groupId>org.skyscreamer</groupId>
             <artifactId>jsonassert</artifactId>
-            <version>1.5.2</version>
+            <version>1.5.1</version>
             <scope>test</scope>
         </dependency>
         <!-- users of library should be able to choose log implementation -->
