@@ -14,34 +14,36 @@ import static org.slf4j.LoggerFactory.getLogger;
 public class UserJsonHelperTest {
     private static final Logger log = getLogger(UserJsonHelperTest.class);
 
-    String userAggregateJson = "{\n" +
-            "  \"uid\": \"uid\",\n" +
-            "  \"username\": \"usernameABC\",\n" +
-            "  \"firstName\": \"firstName\",\n" +
-            "  \"lastName\": \"lastName\",\n" +
-            "  \"personRef\": \"personRef\",\n" +
-            "  \"email\": \"email\",\n" +
-            "  \"cellPhone\": \"12345678\",\n" +
-            "  \"password\": \"password\",\n" +
-            "  \"roles\": [\n" +
-            "    {\n" +
-            "      \"applicationId\": \"applicationId\",\n" +
-            "      \"applicationName\": \"applicationName\",\n" +
-            "      \"organizationId\": \"organizationId\",\n" +
-            "      \"organizationName\": \"organizationName\",\n" +
-            "      \"applicationRoleName\": \"roleName\",\n" +
-            "      \"applicationRoleValue\": \"email\"\n" +
-            "    },\n" +
-            "    {\n" +
-            "      \"applicationId\": \"applicationId123\",\n" +
-            "      \"applicationName\": \"applicationName123\",\n" +
-            "      \"organizationId\": \"organizationId123\",\n" +
-            "      \"organizationName\": \"organizationName123\",\n" +
-            "      \"applicationRoleName\": \"roleName123\",\n" +
-            "      \"applicationRoleValue\": \"roleValue123\"\n" +
-            "    }\n" +
-            "  ]\n" +
-            "}";
+    String userAggregateJson = """
+            {
+              "uid": "uid",
+              "username": "usernameABC",
+              "firstName": "firstName",
+              "lastName": "lastName",
+              "personRef": "personRef",
+              "email": "email",
+              "cellPhone": "12345678",
+              "password": "password",
+              "roles": [
+                {
+                  "applicationId": "applicationId",
+                  "applicationName": "applicationName",
+                  "organizationId": "organizationId",
+                  "organizationName": "organizationName",
+                  "applicationRoleName": "roleName",
+                  "applicationRoleValue": "email"
+                },
+                {
+                  "applicationId": "applicationId123",
+                  "applicationName": "applicationName123",
+                  "organizationId": "organizationId123",
+                  "organizationName": "organizationName123",
+                  "applicationRoleName": "roleName123",
+                  "applicationRoleValue": "roleValue123"
+                }
+              ]
+            }\
+            """;
 	
     @Test
     public void testParseUserIdentityJson() {

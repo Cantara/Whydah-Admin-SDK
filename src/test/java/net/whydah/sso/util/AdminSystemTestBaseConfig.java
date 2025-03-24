@@ -26,7 +26,7 @@ public class AdminSystemTestBaseConfig {
     // Run the Whydah SystemTests?
     public boolean systemTest = true;
 
-    
+
     public static final boolean SYSTEST_PROPERTY_ANONYMOUSTOKEN = true;
     public static final boolean SYSTEST_PROPERTY_fulltokenapplications = true;
 
@@ -62,13 +62,24 @@ public class AdminSystemTestBaseConfig {
     public AdminSystemTestBaseConfig() {
         appCredential = new ApplicationCredential(TEMPORARY_APPLICATION_ID, TEMPORARY_APPLICATION_NAME, TEMPORARY_APPLICATION_SECRET);
         userCredential = new UserCredential(userName, password);
+
         Map<String, String> addToEnv = new HashMap<>();
         addToEnv.put("IAM_MODE", "TEST");
-        setEnv(addToEnv);
+        addToEnv.put("ApplicationMode", "TEST");
+
+        // Set as both environment variables (via our service) and system properties
+        EnvironmentService.setTestVariables(addToEnv);
+
+        // Also set directly as system properties
+        System.setProperty("IAM_MODE", "TEST");
+        System.setProperty("ApplicationMode", "TEST");
+
+        // Add this line to ensure variables are properly set
+        System.out.println("IAM_MODE is set to: " + EnvironmentService.getVariable("IAM_MODE"));
+        System.out.println("ApplicationMode is set to: " + EnvironmentService.getVariable("ApplicationMode"));
+
         SSLTool.disableCertificateValidation();
-
         setRemoteTest();
-
     }
 
     public void setRemoteTest() {
@@ -259,5 +270,5 @@ public class AdminSystemTestBaseConfig {
         }
     }
 
-    
+
 }
