@@ -122,8 +122,8 @@ public class UserTokenXpathHelperTest {
         List<UserApplicationRoleEntry> roles = UserRoleXpathHelper.getUserRoleFromUserAggregateXml(userAggregateXML);
         assertNotNull(roles);
         assertEquals(3, roles.size());
-        assertTrue("1991".equals(roles.getFirst().getApplicationId()));
-        assertEquals("WhydahUserAdmin", roles.getFirst().getRoleName());
+        assertTrue("1991".equals(roles.get(0).getApplicationId()));
+        assertEquals("WhydahUserAdmin", roles.get(0).getRoleName());
         assertEquals("Manager", roles.get(1).getRoleName());
         assertEquals("WhydahUserAdmin", roles.get(2).getRoleName());
         assertTrue("Company".equals(roles.get(2).getOrgName()));
