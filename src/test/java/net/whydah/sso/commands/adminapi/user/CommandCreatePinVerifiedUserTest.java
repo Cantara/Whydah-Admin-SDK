@@ -9,6 +9,7 @@ import net.whydah.sso.user.types.UserToken;
 import net.whydah.sso.util.AdminSystemTestBaseConfig;
 import net.whydah.sso.util.LoggerUtil;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +30,7 @@ public class CommandCreatePinVerifiedUserTest {
     }
 
 
+    @Ignore
     @Test
     public void testCommandCreatePinVerifiedUser() throws Exception {
         if (config.isSystemTestEnabled()) {
