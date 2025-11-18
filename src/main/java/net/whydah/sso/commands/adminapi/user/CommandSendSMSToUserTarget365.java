@@ -1,13 +1,12 @@
 package net.whydah.sso.commands.adminapi.user;
 
-import java.net.URI;
-
 import com.github.kevinsawicki.http.HttpRequest;
-
 import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;
 import net.whydah.sso.commands.baseclasses.BaseHttpPostHystrixCommand;
 import net.whydah.sso.commands.baseclasses.HttpSender;
+
+import java.net.URI;
 
 /**
  * Command for sending SMS via Target365/Strex gateway
@@ -20,6 +19,8 @@ public class CommandSendSMSToUserTarget365 extends BaseHttpPostHystrixCommand<St
     private String sender;
     private String apiKey;
     private String tag;
+    private String deliveryReportUrl;
+    private String correlationId;
     
     public static int DEFAULT_TIMEOUT = 10000;
     private static final String TARGET_PATH = "/api/out-messages";
@@ -34,6 +35,22 @@ public class CommandSendSMSToUserTarget365 extends BaseHttpPostHystrixCommand<St
      */
     public CommandSendSMSToUserTarget365(String serviceURL, String apiKey, String sender, 
                                          String recipientPhoneNumber, String messageContent, String tag) {
+        this(serviceURL, apiKey, sender, recipientPhoneNumber, messageContent, tag, null, null);
+    }
+
+    /**
+     * @param serviceURL Base URL for Target365 API
+     * @param apiKey API key for authentication
+     * @param sender Originator/sender name or number
+     * @param recipientPhoneNumber Recipient phone number
+     * @param messageContent SMS message content
+     * @param tag Tag for message categorization
+     * @param deliveryReportUrl URL where delivery reports will be posted (optional)
+     * @param correlationId Custom correlation ID to track this message (optional)
+     */
+    public CommandSendSMSToUserTarget365(String serviceURL, String apiKey, String sender,
+                                         String recipientPhoneNumber, String messageContent, 
+                                         String tag, String deliveryReportUrl, String correlationId) {
         super(URI.create(serviceURL), "", "", "CommandSendSMSToUserTarget365", DEFAULT_TIMEOUT);
         
         this.apiKey = apiKey;
@@ -41,6 +58,8 @@ public class CommandSendSMSToUserTarget365 extends BaseHttpPostHystrixCommand<St
         this.recipientPhoneNumber = normalizePhoneNumber(recipientPhoneNumber);
         this.messageContent = messageContent;
         this.tag = tag != null ? tag : "sso";
+        this.deliveryReportUrl = deliveryReportUrl;
+        this.correlationId = correlationId;
         
         if (this.messageContent == null || this.recipientPhoneNumber == null || 
             serviceURL == null || this.apiKey == null) {
@@ -54,7 +73,7 @@ public class CommandSendSMSToUserTarget365 extends BaseHttpPostHystrixCommand<St
      */
     public CommandSendSMSToUserTarget365(String serviceURL, String apiKey, String sender,
                                          String recipientPhoneNumber, String messageContent, 
-                                         String tag, int timeout) {
+                                         String tag, String deliveryReportUrl, String correlationId, int timeout) {
         super(URI.create(serviceURL), "", "", "CommandSendSMSToUserTarget365", timeout);
         
         this.apiKey = apiKey;
@@ -62,6 +81,8 @@ public class CommandSendSMSToUserTarget365 extends BaseHttpPostHystrixCommand<St
         this.recipientPhoneNumber = normalizePhoneNumber(recipientPhoneNumber);
         this.messageContent = messageContent;
         this.tag = tag != null ? tag : "sso";
+        this.deliveryReportUrl = deliveryReportUrl;
+        this.correlationId = correlationId;
         
         if (this.messageContent == null || this.recipientPhoneNumber == null || 
             serviceURL == null || this.apiKey == null) {
@@ -111,6 +132,20 @@ public class CommandSendSMSToUserTarget365 extends BaseHttpPostHystrixCommand<St
             JSONArray tags = new JSONArray();
             tags.add(tag);
             payload.put("tags", tags);
+        }
+        
+        // Add delivery report URL if provided
+        if (deliveryReportUrl != null && !deliveryReportUrl.isEmpty()) {
+            payload.put("deliveryReportUrl", deliveryReportUrl);
+            log.debug(TAG + " - DLR will be sent to: {}", deliveryReportUrl);
+        }
+        
+        // Add correlation ID if provided (useful for tracking)
+        if (correlationId != null && !correlationId.isEmpty()) {
+            JSONObject properties = new JSONObject();
+            properties.put("correlationId", correlationId);
+            payload.put("properties", properties);
+            log.debug(TAG + " - Message correlation ID: {}", correlationId);
         }
         
         // Set headers
@@ -185,7 +220,12 @@ public class CommandSendSMSToUserTarget365 extends BaseHttpPostHystrixCommand<St
 
     @Override
     protected String dealWithResponse(String response) {
-        log.info(TAG + " - SMS sent successfully to {}. Response: {}", recipientPhoneNumber, response);
+        log.info(TAG + " - SMS accepted by Target365 for delivery to {}. Response: {}", recipientPhoneNumber, response);
+        if (deliveryReportUrl != null) {
+            log.info(TAG + " - Delivery report will be sent to: {}", deliveryReportUrl);
+        } else {
+            log.warn(TAG + " - No delivery report URL configured. Cannot track delivery status.");
+        }
         return response;
     }
 
@@ -198,7 +238,7 @@ public class CommandSendSMSToUserTarget365 extends BaseHttpPostHystrixCommand<St
     
     @Override
     protected void onCompleted(String responseBody) {
-        log.info(TAG + " - SMS sent successfully to {} with tag '{}'", recipientPhoneNumber, tag);
+        log.info(TAG + " - SMS accepted by Target365 to {} with tag '{}'", recipientPhoneNumber, tag);
     }
     
     @Override
