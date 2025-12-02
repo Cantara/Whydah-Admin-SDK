@@ -165,8 +165,45 @@ public class BaseAdminWhydahServiceClient {
     public Boolean isApplicationTokenIdValid(String applicationTokenId) {
         return new CommandValidateApplicationTokenId(was.getSTS(), applicationTokenId).execute();
     }
+    
+  
+    public void ensureActiveAppToken() throws Exception {
+    		
+    		if(!was.hasActiveSession()) {
+    			log.debug("No active app token found. Try fetching from STS now");
+    			was.resetApplicationSession();
+    		}
+    		
+    		//just wait for an available appTokenId to further the progress
+    		int seconds_esclapsed = 30000;
+    		while(was.getActiveApplicationTokenId().isEmpty()) {
+    			try {
+    				
+    				
+    				if(seconds_esclapsed - 500 <=0) {
+    					break;
+    				}
+    				
+    				Thread.sleep(500);
+    				
+    				seconds_esclapsed -= 500;
+    				
+    			} catch (InterruptedException e) {	
+    				break;
+    			}
+    		}
+    		
+    		if(was.getActiveApplicationTokenId().isEmpty()) {
+    			log.debug("Failed to get an app token from STS");
+    			throw new RuntimeException("Failed to get an active app token from STS");
+    		}
+    		
+    }
 
-    public String getUserTokenXml(String userTokenId) throws URISyntaxException {
+    public String getUserTokenXml(String userTokenId) throws Exception {
+    		
+    		ensureActiveAppToken();
+    		
         return new CommandGetUserTokenByUserTokenId(new URI(was.getSTS()),
                 was.getActiveApplicationTokenId(),
                 was.getActiveApplicationTokenXML(),
@@ -175,35 +212,27 @@ public class BaseAdminWhydahServiceClient {
     }
 
 
-    public String getMyAppTokenID() {
-        if (was.getActiveApplicationToken() == null) {
-            return null;
-//            was.renewWhydahApplicationSession();
-        }
+    public String getMyAppTokenID() {     
         return was.getActiveApplicationTokenId();
     }
 
-    public String getMyAppTokenXml() {
-
-        if (was.getActiveApplicationToken() == null) {
-            return null;
-//was.renewWhydahApplicationSession();
-        }
+    public String getMyAppTokenXml()  {      
         return was.getActiveApplicationTokenXML();
     }
 
-    public String getUserTokenFromUserTokenId(String userTokenId) {
-        if (was.getActiveApplicationToken() == null) {
-            return null;
-//            was.renewWhydahApplicationSession();
-        }
+    public String getUserTokenFromUserTokenId(String userTokenId) throws Exception {
+       
+    		ensureActiveAppToken();
 
         return new CommandGetUserTokenByUserTokenId(uri_securitytoken_service, getMyAppTokenID(), getMyAppTokenXml(), userTokenId).execute();
     }
 
     //SSO LOGIN SERVICE
 
-    public String getUserTokenByUserTicket(String userticket) {
+    public String getUserTokenByUserTicket(String userticket) throws Exception {
+    	
+    		ensureActiveAppToken();
+    	
         return new CommandGetUserTokenByUserTicket(uri_securitytoken_service, getMyAppTokenID(), getMyAppTokenXml(), userticket).execute();
     }
 
@@ -214,70 +243,74 @@ public class BaseAdminWhydahServiceClient {
      * @param pin        pin entered by the user
      * @param userTicket
      * @return userAggregateXML for the user represented by phoneNo
+     * @throws Exception 
      */
-    public String getUserTokenByPin(String adminUserTokenId, String phoneNo, String pin, String userTicket) {
+    public String getUserTokenByPin(String adminUserTokenId, String phoneNo, String pin, String userTicket) throws Exception {
         log.debug("getUserTokenByPin() called with " + "phoneNo = [" + phoneNo + "], pin = [" + pin + "], userTicket = [" + userTicket + "]");
-        if (was.getActiveApplicationToken() == null) {
-            return null;
-//            was.renewWhydahApplicationSession();
-        }
-        log.debug("getUserTokenByPin() - Application logon OK. applicationTokenId={}. Log on with user adminUserTokenId {}.", getMyAppTokenID(), adminUserTokenId);
+        
+        ensureActiveAppToken();
+        
         String userTokenXML = new CommandLogonUserByPhoneNumberPin(uri_securitytoken_service, was.getActiveApplicationTokenId(), was.getActiveApplicationTokenXML(), adminUserTokenId, phoneNo, pin, userTicket).execute();
         getWAS().updateDefcon(userTokenXML);
         return userTokenXML;
     }
 
-    public String getUserTokenByPin2(String adminUserTokenId, String phoneNo, String pin, String userTicket) {
+    public String getUserTokenByPin2(String adminUserTokenId, String phoneNo, String pin, String userTicket) throws Exception {
         log.debug("getUserTokenByPin() called with " + "phoneNo = [" + phoneNo + "], pin = [" + pin + "], userTicket = [" + userTicket + "]");
-        if (was.getActiveApplicationToken() == null) {
-            return null;
-//            was.renewWhydahApplicationSession();
-        }
+    
+        ensureActiveAppToken();
+        
         log.debug("getUserTokenByPin2() - Application logon OK. applicationTokenId={}. Log on with user phoneno {}.", was.getActiveApplicationTokenId(), phoneNo);
         String userTokenXML = new CommandLogonUserByPhoneNumberPin(uri_securitytoken_service, was.getActiveApplicationTokenId(), was.getActiveApplicationTokenXML(), adminUserTokenId, phoneNo, pin, userTicket).execute();
         getWAS().updateDefcon(userTokenXML);
         return userTokenXML;
     }
 
-    public String getUserToken(UserCredential user, String userticket) {
-        if (was.getActiveApplicationToken() == null) {
-            return null;
-//            was.renewWhydahApplicationSession();
-        }
+    public String getUserToken(UserCredential user, String userticket) throws Exception {
+        
         log.debug("getUserToken - Application logon OK. applicationTokenId={}. Log on with user credentials {}.", was.getActiveApplicationTokenId(), user.toString());
+        
+        ensureActiveAppToken();
+        
         String userTokenXML = new CommandLogonUserByUserCredential(uri_securitytoken_service, getMyAppTokenID(), getMyAppTokenXml(), user, userticket).execute();
         getWAS().updateDefcon(userTokenXML);
         return userTokenXML;
     }
 
-    public boolean createTicketForUserTokenID(String userTicket, String userTokenID) {
+    public boolean createTicketForUserTokenID(String userTicket, String userTokenID) throws Exception {
         log.debug("createTicketForUserTokenID - apptokenid: {}", was.getActiveApplicationTokenId());
         log.debug("createTicketForUserTokenID - userticket: {} userTokenID: {}", userTicket, userTokenID);
-        if (was.getActiveApplicationToken() == null) {
-            return false;
-//            was.renewWhydahApplicationSession();
-        }
+        
+        ensureActiveAppToken();
+        
         return new CommandCreateTicketForUserTokenID(uri_securitytoken_service, was.getActiveApplicationTokenId(), was.getActiveApplicationTokenXML(), userTicket, userTokenID).execute();
     }
 
-    public String getUserTokenByUserTokenID(String usertokenId) {
-        if (was.getActiveApplicationToken() == null) {
-            return null;
-//            was.renewWhydahApplicationSession();
-        }
-        String userTokenXML = new CommandGetUserTokenByUserTokenId(uri_securitytoken_service, was.getActiveApplicationTokenId(), was.getActiveApplicationTokenXML(), usertokenId).execute();
+    public String getUserTokenByUserTokenID(String usertokenId) throws Exception {
+    		ensureActiveAppToken();
+        
+    		String userTokenXML = new CommandGetUserTokenByUserTokenId(uri_securitytoken_service, was.getActiveApplicationTokenId(), was.getActiveApplicationTokenXML(), usertokenId).execute();
         getWAS().updateDefcon(userTokenXML);
         return userTokenXML;
     }
 
     public void releaseUserToken(String userTokenId) {
         log.trace("Releasing userTokenId={}", userTokenId);
+        
+        try {
+			ensureActiveAppToken();
+			if (new CommandReleaseUserToken(uri_securitytoken_service, was.getActiveApplicationTokenId(), was.getActiveApplicationTokenXML(), userTokenId).execute()) {
+				log.trace("Released userTokenId={}", userTokenId);
+			} else {
+				log.warn("releaseUserToken failed for userTokenId={}", userTokenId);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error("unexpected eror", e);
+		}
 
-        if (new CommandReleaseUserToken(uri_securitytoken_service, was.getActiveApplicationTokenId(), was.getActiveApplicationTokenXML(), userTokenId).execute()) {
-            log.trace("Released userTokenId={}", userTokenId);
-        } else {
-            log.warn("releaseUserToken failed for userTokenId={}", userTokenId);
-        }
+      
     }
 
     public boolean verifyUserTokenId(String usertokenid) {
@@ -288,11 +321,10 @@ public class BaseAdminWhydahServiceClient {
         return new CommandValidateUserTokenId(uri_securitytoken_service, was.getActiveApplicationTokenId(), usertokenid).execute();
     }
 
-    public boolean sendUserSMSPin(String phoneNo) {
-        if (was.getActiveApplicationToken() == null) {
-            return false;
-//            was.renewWhydahApplicationSession();
-        }
+    public boolean sendUserSMSPin(String phoneNo) throws Exception {
+    		
+    		ensureActiveAppToken();
+    		
         if (phoneNo == null) {
             return false;
         }
@@ -302,11 +334,9 @@ public class BaseAdminWhydahServiceClient {
         return new CommandGenerateAndSendSmsPin(uri_securitytoken_service, was.getActiveApplicationTokenId(), phoneNo).execute();
     }
 
-    public boolean sendSMSMessage(String phoneNo, String msg) {
-        if (was.getActiveApplicationToken() == null) {
-            return false;
-//            was.renewWhydahApplicationSession();
-        }
+    public boolean sendSMSMessage(String phoneNo, String msg) throws Exception {
+    	
+    		ensureActiveAppToken();
 
         if (phoneNo == null || msg == null) {
             return false;
@@ -323,11 +353,10 @@ public class BaseAdminWhydahServiceClient {
         return redirectURI;
     }
 
-    public String createPinVerifiedUser(String adminUserTokenXml, String userTicket, String phoneNo, String pin, String userIdentityJson) {
-        if (was.getActiveApplicationToken() == null) {
-            return null;
-//was.renewWhydahApplicationSession();
-        }
+    public String createPinVerifiedUser(String adminUserTokenXml, String userTicket, String phoneNo, String pin, String userIdentityJson) throws Exception {
+
+    		ensureActiveAppToken();
+    		
         String result = new CommandCreatePinVerifiedUser(uri_securitytoken_service, was.getActiveApplicationTokenId(), was.getActiveApplicationTokenXML(), adminUserTokenXml, userTicket, phoneNo, pin, userIdentityJson).execute();
         String userName = phoneNo;
 
@@ -343,8 +372,9 @@ public class BaseAdminWhydahServiceClient {
     }
 
     //UPDATE OR CREATE ROLE ENTRY
-    public boolean updateOrCreateUserApplicationRoleEntry(String applicationId, String applicationName, String organization, String roleName, String roleValue, String userTokenXml, String adminUserTokenXml) {
+    public boolean updateOrCreateUserApplicationRoleEntry(String applicationId, String applicationName, String organization, String roleName, String roleValue, String userTokenXml, String adminUserTokenXml) throws Exception {
 
+    		ensureActiveAppToken();
        
         try {
             //    	a) find the correct application/website the customer shall return to (redirectURI/from view)

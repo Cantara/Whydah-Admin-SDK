@@ -46,7 +46,7 @@ public class AddUserRoleTest {
     }
 
 	@Test
-    public void testUpdateRoleAndRefreshUserTokenWithNonExistingApplication() {
+    public void testUpdateRoleAndRefreshUserTokenWithNonExistingApplication() throws Exception {
         if (config.isSystemTestEnabled()) {
             WhydahUserSession whydahUserSession = new WhydahUserSession(client.getWAS(), config.userCredential);
             assertFalse(client.updateOrCreateUserApplicationRoleEntry("4444", "NON-EXISTING", "Whydah", ROLE_NAME, "welcome", whydahUserSession.getActiveUserToken(), whydahUserSession.getActiveUserToken()));
@@ -55,7 +55,7 @@ public class AddUserRoleTest {
 	
 	@Test
     @Ignore // For now
-    public void testUpdateRoleAndRefreshUserTokenWithExistingApplciation() {
+    public void testUpdateRoleAndRefreshUserTokenWithExistingApplciation() throws Exception {
         if (config.isSystemTestEnabled()) {
             WhydahUserSession whydahUserSession = new WhydahUserSession(client.getWAS(), config.userCredential);
             assertTrue(client.updateOrCreateUserApplicationRoleEntry("101", "ACSResource", "Whydah", ROLE_NAME, "welcome", whydahUserSession.getActiveUserToken(), whydahUserSession.getActiveUserToken()));
