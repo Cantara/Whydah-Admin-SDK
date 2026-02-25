@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.whydah.sso</groupId>
     <artifactId>Whydah-Admin-SDK</artifactId>
-    <version>3.0.6-SNAPSHOT</version>
+    <version>3.1.1-SNAPSHOT</version>
     <name>Whydah-Admin-SDK</name>
     <packaging>jar</packaging>
     <url>https://wiki.cantara.no/display/iam/Whydah-Admin-SDK</url>
@@ -14,7 +14,7 @@
     <properties>
         <jdk.version>21</jdk.version>
         <service.name>Whydah-Admin-SDK</service.name>
-        <whydah.sdk.version>3.0.3</whydah.sdk.version>
+        <whydah.sdk.version>3.1.1</whydah.sdk.version>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <maven.compiler.release>21</maven.compiler.release>
