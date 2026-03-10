@@ -1,0 +1,25 @@
+id: Whydah-Admin-SDK
+name: Whydah Admin SDK
+version: 2.30.7-SNAPSHOT
+description: |
+  Java SDK for administrative operations on the Whydah IAM platform. Provides
+  a programmatic API for managing users, applications, and roles via the
+  UserAdminService.
+units:
+  - id: admin-client
+    name: Admin Client
+    type: sdk
+    description: AdminSDK main client — entry point for all administrative operations.
+    path: src/main/java/net/whydah/admin
+  - id: user-admin
+    name: User Administration
+    type: component
+    description: User management operations — create, update, delete, and search users.
+  - id: application-admin
+    name: Application Administration
+    type: component
+    description: Application registration and credential management operations.
+  - id: role-admin
+    name: Role Administration
+    type: component
+    description: Role and group management — assign, remove, and list user roles.
