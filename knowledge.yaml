@@ -17,25 +17,26 @@ signing:
   scheme: ed25519
   scope: this-manifest
   public_key: "MCowBQYDK2VwAyEAuipgusnqU9vjf3p2yPVLD/DmERT6tBbLOqEETdxAhMU="
-  signature: "https://raw.githubusercontent.com/Cantara/Whydah-Admin-SDK/master/knowledge.yaml.sig"
+  signature: "https://raw.githubusercontent.com/Cantara/Whydah-Admin-SDK/master/k\
+    nowledge.yaml.sig"
 units:
-- id: admin-client
-  name: Admin Client
-  type: sdk
-  description: "AdminSDK main client — entry point for all administrative operations."
-  path: src/main/java/net/whydah/sso
-  content_hash:
-    algorithm: sha256
-    value: ""
-- id: user-admin
-  name: User Administration
-  type: component
-  description: "User management operations — create, update, delete, and search users."
-- id: application-admin
-  name: Application Administration
-  type: component
-  description: "Application registration and credential management operations."
-- id: role-admin
-  name: Role Administration
-  type: component
-  description: "Role and group management — assign, remove, and list user roles."
+  - id: admin-client
+    name: Admin Client
+    type: sdk
+    description: "AdminSDK main client — entry point for all administrative operations."
+    path: src/main/java/net/whydah/sso
+    content_hash:
+      algorithm: sha256
+      value: "0e53451c7fa3e12e67c918a586469a3f7424bdfb2528bbd7679efc36ec4d1b0f"
+  - id: user-admin
+    name: User Administration
+    type: component
+    description: "User management operations — create, update, delete, and search users."
+  - id: application-admin
+    name: Application Administration
+    type: component
+    description: "Application registration and credential management operations."
+  - id: role-admin
+    name: Role Administration
+    type: component
+    description: "Role and group management — assign, remove, and list user roles."
