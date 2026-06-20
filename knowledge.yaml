@@ -3,15 +3,7 @@ updated: "2026-06-20"
 language: en
 license: "Apache-2.0"
 indexing: private
-temporal:
-  valid_from: "2026-03-10"
-signing:
-  scheme: ed25519
-  scope: this-manifest
-  public_key: "MCowBQYDK2VwAyEAuipgusnqU9vjf3p2yPVLD/DmERT6tBbLOqEETdxAhMU="
-  signature: "https://raw.githubusercontent.com/Cantara/Whydah-Admin-SDK/master/knowledge.yaml.sig"
 not_for: []
-
 id: Whydah-Admin-SDK
 name: Whydah Admin SDK
 version: 2.30.7-SNAPSHOT
@@ -19,33 +11,40 @@ description: |
   Java SDK for administrative operations on the Whydah IAM platform. Provides
   a programmatic API for managing users, applications, and roles via the
   UserAdminService.
+temporal:
+  valid_from: "2026-03-10"
+signing:
+  scheme: ed25519
+  scope: this-manifest
+  public_key: "MCowBQYDK2VwAyEAuipgusnqU9vjf3p2yPVLD/DmERT6tBbLOqEETdxAhMU="
+  signature: "https://raw.githubusercontent.com/Cantara/Whydah-Admin-SDK/master/knowledge.yaml.sig"
 units:
-  - id: admin-client
-    name: Admin Client
-    type: sdk
-    description: AdminSDK main client — entry point for all administrative operations.
-    path: src/main/java/net/whydah/admin
-      content_hash:
-        algorithm: sha256
-        value: ""
-  - id: user-admin
-    name: User Administration
-    type: component
-    description: User management operations — create, update, delete, and search users.
-      content_hash:
-        algorithm: sha256
-        value: ""
-  - id: application-admin
-    name: Application Administration
-    type: component
-    description: Application registration and credential management operations.
-      content_hash:
-        algorithm: sha256
-        value: ""
-  - id: role-admin
-    name: Role Administration
-    type: component
-    description: Role and group management — assign, remove, and list user roles.
-      content_hash:
-        algorithm: sha256
-        value: ""
+- id: admin-client
+  name: Admin Client
+  type: sdk
+  description: "AdminSDK main client — entry point for all administrative operations."
+  path: src/main/java/net/whydah/admin
+  content_hash:
+    algorithm: sha256
+    value: ""
+- id: user-admin
+  name: User Administration
+  type: component
+  description: "User management operations — create, update, delete, and search users."
+  content_hash:
+    algorithm: sha256
+    value: ""
+- id: application-admin
+  name: Application Administration
+  type: component
+  description: "Application registration and credential management operations."
+  content_hash:
+    algorithm: sha256
+    value: ""
+- id: role-admin
+  name: Role Administration
+  type: component
+  description: "Role and group management — assign, remove, and list user roles."
+  content_hash:
+    algorithm: sha256
+    value: ""
